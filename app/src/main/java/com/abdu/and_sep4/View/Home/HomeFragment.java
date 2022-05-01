@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.SaveInfo;
@@ -29,19 +31,19 @@ public class HomeFragment extends Fragment{
     private Bundle bundle = new Bundle();
     private ArrayList<Terrarium> terrariums = new ArrayList<>();
     private HomeFragmentViewModel homeFragmentViewModel;
+    private TextView terrariumError;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
         View inflate = inflater.inflate(R.layout.fragment_home, container, false);
 
-        recyclerView = inflate.findViewById(R.id.rv_home);
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        terrariumError = inflate.findViewById(R.id.tv_terrarium_error);
 
+        recyclerView = inflate.findViewById(R.id.rv_home);
+        recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
+        recyclerView.hasFixedSize();
 
 
         terrariumAdapter = new TerrariumAdapter(terrariums);
@@ -71,19 +73,17 @@ public class HomeFragment extends Fragment{
         homeFragmentViewModel.getTerrariumLiveData((int) SaveInfo.getInstance().getUser().getId()).observe(getViewLifecycleOwner(), terrariums1 -> {
 
             if (terrariums1 != null && !terrariums1.isEmpty()){
-
-
+                terrariumError.setVisibility(View.GONE);
+                terrariums.clear();
                 terrariums.addAll(terrariums1);
-
 
                 terrariumAdapter.notifyDataSetChanged();
 
-
+            } else {
+                Toast.makeText(getContext(),"Can not find any Terrarium",Toast.LENGTH_SHORT).show();
             }
 
         });
 
-
     }
-
 }
