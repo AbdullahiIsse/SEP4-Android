@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -39,11 +40,12 @@ public class TerrariumDetailsFragment extends Fragment {
 
 
     private TextView terrariumName;
-    private TextView  terrariumCurrentTemp;
+    private TextView terrariumCurrentTemp;
     private TextView textViewDate;
     private SparkView sparkView;
-    private TextView  terrariumTemp;
+    private TextView terrariumTemp;
     private ArrayList<Temperatur> temperaturArrayList = new ArrayList<>();
+    private TerrariumDetailsFragmentViewModel viewModel;
 
 
     @Override
@@ -62,51 +64,34 @@ public class TerrariumDetailsFragment extends Fragment {
         terrariumName.setText(terrarium.getTerrariumName());
         terrariumCurrentTemp.setText(Double.toString(20.1));
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(terrarium.getTerrariumName());
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(terrarium.getTerrariumName());
 
 
-        TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
-        Call<List<Temperatur>> call = terrariumApi.getTemperatureByTerrariumId(terrarium.getId());
+        viewModel = new ViewModelProvider(this).get(TerrariumDetailsFragmentViewModel.class);
 
-        call.enqueue(new Callback<List<Temperatur>>() {
+
+        viewModel.getTemperatureByTerrariumIdLiveData(terrarium.getId()).observe(getViewLifecycleOwner(), new Observer<List<Temperatur>>() {
             @Override
-            public void onResponse(Call<List<Temperatur>> call, Response<List<Temperatur>> response) {
+            public void onChanged(List<Temperatur> temperaturs) {
+                List<Temperatur> body = temperaturs;
+                Collections.reverse(body);
+                sparkView.setScrubEnabled(true);
+                sparkView.setScrubListener(t -> {
 
-                if (response.isSuccessful()){
+                    if (t instanceof Temperatur) {
+                        updateInfoForDate((Temperatur) t);
+                    }
+                });
+                temperaturArrayList = (ArrayList<Temperatur>) body;
+                Log.e("test","det virker");
+                updateDisplayWithData(temperaturArrayList);
 
-                    List<Temperatur> body = response.body();
-                    Collections.reverse(body);
-
-                    sparkView.setScrubEnabled(true);
-                    sparkView.setScrubListener( t -> {
-
-                        if (t instanceof Temperatur){
-                            updateInfoForDate((Temperatur) t);
-                        }
-                    });
-
-
-                    temperaturArrayList = (ArrayList<Temperatur>) body;
-                    Log.e("test","det virker");
-                    updateDisplayWithData(temperaturArrayList);
-
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Temperatur>> call, Throwable t) {
-                Log.e("Retrofit", "Something went wrong getting Temperature by Terrarium id :(");
 
             }
         });
 
-
         return inflate;
     }
-
-
 
 
     private void updateDisplayWithData(List<Temperatur> dailyData) {
@@ -116,9 +101,9 @@ public class TerrariumDetailsFragment extends Fragment {
 
         sparkView.setAdapter(stockSparkAdapter);
 
-        if (!dailyData.isEmpty()){
-            updateInfoForDate(dailyData.get(dailyData.size()-1));
-        } else{
+        if (!dailyData.isEmpty()) {
+            updateInfoForDate(dailyData.get(dailyData.size() - 1));
+        } else {
 
 
             terrariumCurrentTemp.setText("temperature is not available for terrarium");
@@ -136,13 +121,9 @@ public class TerrariumDetailsFragment extends Fragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
         textViewDate.setText(temperatur.getTemperatureDate());
         terrariumTemp.setText(Double.toString(temperatur.getTemperatureCelsius()));
-        terrariumCurrentTemp.setText( Double.toString(temperatur.getTemperatureCelsius()));
+        terrariumCurrentTemp.setText(Double.toString(temperatur.getTemperatureCelsius()));
 
     }
-
-
-
-
 
 
 }

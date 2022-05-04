@@ -6,6 +6,17 @@
     tools:context=".View.Home.HomeFragment"
     android:orientation="vertical">
 
+   <TextView
+       android:id="@+id/tv_terrarium_error"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:gravity="center"
+       android:text="Can not find any Terrarium"
+       android:textSize="25sp"
+       android:textStyle="bold"
+
+       />
+
    <androidx.recyclerview.widget.RecyclerView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
