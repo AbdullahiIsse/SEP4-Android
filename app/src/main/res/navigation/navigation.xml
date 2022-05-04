@@ -26,6 +26,7 @@
         tools:layout="@layout/fragment_terrarium_details" />
 
 
+
     <fragment
         android:id="@+id/settingsFragmentView"
         android:name="com.abdu.and_sep4.View.Setting.SettingsFragment"
