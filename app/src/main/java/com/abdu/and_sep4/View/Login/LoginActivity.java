@@ -28,9 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     private LoginActivityViewModel loginActivityViewModel;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +46,6 @@ public class LoginActivity extends AppCompatActivity {
 
         loginBtn.setOnClickListener(this::onLogin);
     }
-
-
-
 
 
 

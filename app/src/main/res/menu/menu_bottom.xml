@@ -17,5 +17,12 @@
 
         />
 
+    <item
+        android:id="@+id/settingsFragmentView"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Settings"
+        android:enabled="true"
+        />
+
 
 </menu>

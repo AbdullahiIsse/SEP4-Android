@@ -46,7 +46,6 @@ public class TerrariumDetailsFragment extends Fragment {
     private ArrayList<Temperatur> temperaturArrayList = new ArrayList<>();
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,7 +84,6 @@ public class TerrariumDetailsFragment extends Fragment {
                             updateInfoForDate((Temperatur) t);
                         }
                     });
-
 
 
                     temperaturArrayList = (ArrayList<Temperatur>) body;
