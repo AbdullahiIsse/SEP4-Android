@@ -1,6 +1,7 @@
 package com.abdu.and_sep4.View.Adapter;
 
 import com.abdu.and_sep4.Shared.Temperatur;
+import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 import com.abdu.and_sep4.Shared.Terrarium;
 import com.robinhood.spark.SparkAdapter;
 
@@ -8,10 +9,10 @@ import java.util.List;
 
 public class StockSparkAdapter extends SparkAdapter {
 
-    private List<Temperatur> dailyData;
+    private List<TemperatureMeasurement> dailyData;
 
 
-    public StockSparkAdapter(List<Temperatur> dailyData) {
+    public StockSparkAdapter(List<TemperatureMeasurement> dailyData) {
         this.dailyData = dailyData;
     }
 
@@ -28,8 +29,8 @@ public class StockSparkAdapter extends SparkAdapter {
     @Override
     public float getY(int index) {
 
-        Temperatur dayData = dailyData.get(index);
+        TemperatureMeasurement dayData = dailyData.get(index);
 
-        return (float) dayData.getTemperatureCelsius();
+        return (float) dayData.getTemperatureReading();
     }
 }

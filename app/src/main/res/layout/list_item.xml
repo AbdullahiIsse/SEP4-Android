@@ -2,21 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/terrarium_list"
+    android:id="@+id/list_view"
     android:orientation="horizontal"
     android:padding="20dp"
     >
 
 
     <TextView
-        android:id="@+id/t_name"
+        android:id="@+id/list_view_tv_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Terrarium1"
+        android:text="Id:1"
         android:textSize="24sp"
-        android:gravity="center"
+        android:gravity="left"
         />
+
+
 
 
 
