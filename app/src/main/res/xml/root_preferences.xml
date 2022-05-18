@@ -1,19 +1,16 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <PreferenceCategory
-        app:key="logout_category"
-        app:title="LogOut">
+        app:key="user_information"
+        app:title="User Information"
+        >
 
-        <Preference
-            app:key="logout"
-            app:title="logout from your account">
-
-        </Preference>
+        <EditTextPreference
+            app:key="username"
+            app:title="Your username"/>
 
 
     </PreferenceCategory>
-
 
     <PreferenceCategory
         app:key="help"
@@ -26,10 +23,20 @@
             app:fragment="com.abdu.and_sep4.View.Report.ReportFragment"
             />
 
-
-
     </PreferenceCategory>
 
+
+    <PreferenceCategory
+        app:key="Signout"
+        app:title="Signout">
+
+        <Preference
+            app:key="signout"
+            app:title="Signout from you're account">
+
+        </Preference>
+
+    </PreferenceCategory>
 
 
 </PreferenceScreen>

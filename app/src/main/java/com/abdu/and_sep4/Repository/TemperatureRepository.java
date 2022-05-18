@@ -8,9 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
 import com.abdu.and_sep4.Shared.Temperatur;
-import com.abdu.and_sep4.Shared.Terrarium;
-import com.microsoft.signalr.HubConnection;
-import com.microsoft.signalr.HubConnectionBuilder;
+
 
 import java.util.List;
 
@@ -23,7 +21,6 @@ public class TemperatureRepository {
     private static TemperatureRepository instance;
 
     private final MutableLiveData<List<Temperatur>> temperatureRepositoryMutableLiveData;
-
 
 
     public TemperatureRepository() {

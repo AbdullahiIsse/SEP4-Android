@@ -38,6 +38,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
+import com.abdu.and_sep4.API.TerrariumApi;
 import com.abdu.and_sep4.View.Login.LoginActivity;
 import com.abdu.and_sep4.View.Main.MainActivity;
 
@@ -61,6 +62,7 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.abdu.and_sep4", appContext.getPackageName());
     }
+
 
 
     @Test
@@ -184,5 +186,10 @@ public class ExampleInstrumentedTest {
             }
         };
     }
+
+
+
+
+
 
 }

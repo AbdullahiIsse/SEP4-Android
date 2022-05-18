@@ -65,7 +65,7 @@ public class UserRepository {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.e("Retrofit", "Something went wrong Validating users :(");
+                Log.e("Retrofit", t.getMessage());
             }
         });
 

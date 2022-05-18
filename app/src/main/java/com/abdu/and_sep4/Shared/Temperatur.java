@@ -5,12 +5,10 @@ import java.util.Date;
 
 public class Temperatur {
 
-
      private long id;
      private double temperatureCelsius;
      private String temperatureDate;
      private long terrariumId;
-
 
     public Temperatur(long id, double temperatureCelsius, String temperatureDate, long terrariumId) {
         this.id = id;
