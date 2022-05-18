@@ -9,10 +9,10 @@ import java.util.List;
 
 public class StockSparkAdapter extends SparkAdapter {
 
-    private List<TemperatureMeasurement> dailyData;
+    private List<Temperatur> dailyData;
 
 
-    public StockSparkAdapter(List<TemperatureMeasurement> dailyData) {
+    public StockSparkAdapter(List<Temperatur> dailyData) {
         this.dailyData = dailyData;
     }
 
@@ -29,8 +29,8 @@ public class StockSparkAdapter extends SparkAdapter {
     @Override
     public float getY(int index) {
 
-        TemperatureMeasurement dayData = dailyData.get(index);
+        Temperatur dayData = dailyData.get(index);
 
-        return (float) dayData.getTemperatureReading();
+        return (float) dayData.getTemperatureCelsius();
     }
 }
