@@ -11,7 +11,6 @@ import com.abdu.and_sep4.Shared.SaveInfo;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
 
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
@@ -23,8 +22,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             usernamePreference.setText(SaveInfo.getInstance().getUser().getUsername());
 
         }
-
-
 
 
     }

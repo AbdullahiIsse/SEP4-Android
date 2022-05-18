@@ -17,7 +17,14 @@
         <entry key="..\:/Users/abdul/AndroidStudioProjects/AND_SEP4/app/src/main/res/layout/listview_items.xml" value="1.1526162790697674" />
         <entry key="..\:/Users/abdul/AndroidStudioProjects/AND_SEP4/app/src/main/res/layout/terrarium_list.xml" value="0.34601449275362317" />
         <entry key="..\:/Users/abdul/AndroidStudioProjects/AND_SEP4/app/src/main/res/menu/menu_bottom.xml" value="0.3625" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.28894927536231885" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.28894927536231885" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.28894927536231885" />
+        <entry key="app/src/main/res/layout/fragment_add_pet.xml" value="0.25679347826086957" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28894927536231885" />
         <entry key="app/src/main/res/layout/fragment_report.xml" value="0.19122257053291536" />
+        <entry key="app/src/main/res/layout/fragment_terrarium_details.xml" value="0.28894927536231885" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.28894927536231885" />
         <entry key="app/src/main/res/menu/menu_bottom.xml" value="0.2953125" />
         <entry key="app/src/main/res/xml/root_preferences.xml" value="0.19122257053291536" />
       </map>

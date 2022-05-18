@@ -26,6 +26,12 @@
         tools:layout="@layout/fragment_terrarium_details" />
 
 
+    <fragment
+        android:id="@+id/AddPetFragment"
+        android:name="com.abdu.and_sep4.View.AddPet.AddPetFragment"
+        android:label="fragment_addPet"
+        tools:layout="@layout/fragment_add_pet" />
+
 
     <fragment
         android:id="@+id/settingsFragmentView"

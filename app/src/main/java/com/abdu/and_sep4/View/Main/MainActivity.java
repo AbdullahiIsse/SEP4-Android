@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.homeFragment,R.id.accountFragment
+                R.id.homeFragment,R.id.accountFragment, R.id.AddPetFragment
         ).build();
 
 

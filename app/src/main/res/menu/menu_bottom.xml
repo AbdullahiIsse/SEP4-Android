@@ -17,6 +17,13 @@
 
         />
 
+    <item
+        android:id="@+id/AddPetFragment"
+        android:icon="@drawable/ic_baseline_pets_24"
+        android:title="AddPet"
+
+        />
+
 
 
     <item
