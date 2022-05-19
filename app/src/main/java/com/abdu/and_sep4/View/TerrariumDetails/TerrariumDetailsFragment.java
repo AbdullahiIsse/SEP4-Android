@@ -61,7 +61,7 @@ public class TerrariumDetailsFragment extends Fragment {
     private TextView terrariumTemp;
     private ArrayList<Temperatur> temperaturArrayList = new ArrayList<>();
     private TerrariumDetailsFragmentViewModel viewModel;
-    private List<TemperatureMeasurement> temperatureMeasurements = new ArrayList<>();
+    private List<Temperatur> temperatureMeasurements = new ArrayList<>();
     private HubConnection hubConnection;
 
 
@@ -85,21 +85,35 @@ public class TerrariumDetailsFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(terrarium.getTerrariumName());
 
 
-        hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
 
 
 
-        hubConnection.start().blockingAwait();
 
-        Single<List> temperatureDataFromDataToAndroid = hubConnection.invoke(List.class, "TemperatureDataFromDataToAndroid", "1");
+          //  hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
 
-        Log.e("signalr",temperatureDataFromDataToAndroid.blockingGet().toString());
 
-        Gson gson = new Gson();
 
-        Type temp = new TypeToken<ArrayList<TemperatureMeasurement>>(){}.getType();
+  /*          hubConnection.start().blockingGet();
 
-        temperatureMeasurements = gson.fromJson(temperatureDataFromDataToAndroid.blockingGet().toString(), temp);
+            Single<List> temperatureDataFromDataToAndroid = hubConnection.invoke(List.class, "TemperatureDataFromDataToAndroid", "1");
+
+
+
+            Log.e("signalr",temperatureDataFromDataToAndroid.blockingGet().toString());
+
+            Gson gson = new Gson();
+
+            Type temp = new TypeToken<ArrayList<TemperatureMeasurement>>(){}.getType();
+
+
+            temperatureMeasurements = gson.fromJson(temperatureDataFromDataToAndroid.blockingGet().toString(), temp);
+*/
+
+
+
+
+
+
 
 
 
@@ -107,23 +121,23 @@ public class TerrariumDetailsFragment extends Fragment {
 
 
 
-//        viewModel.getTemperatureByTerrariumIdLiveData(terrarium.getId()).observe(getViewLifecycleOwner(), new Observer<List<Temperatur>>() {
-//            @Override
-//            public void onChanged(List<Temperatur> temperaturs) {
-//                List<Temperatur> body = temperaturs;
-//
-//                sparkView.setScrubEnabled(true);
-//                sparkView.setScrubListener(t -> {
-//
-//                    if (t instanceof Temperatur) {
-//                        updateInfoForDate((Temperatur) t);
-//                    }
-//                });
-//                temperaturArrayList = (ArrayList<Temperatur>) body;
-//                Log.e("test","det virker");
-//                updateDisplayWithData(temperaturArrayList);
-//            }
-//        });
+        viewModel.getTemperatureByTerrariumIdLiveData(terrarium.getId()).observe(getViewLifecycleOwner(), new Observer<List<Temperatur>>() {
+            @Override
+            public void onChanged(List<Temperatur> temperaturs) {
+                List<Temperatur> body = temperaturs;
+
+                sparkView.setScrubEnabled(true);
+                sparkView.setScrubListener(t -> {
+
+                    if (t instanceof Temperatur) {
+                        updateInfoForDate((Temperatur) t);
+                    }
+                });
+                temperaturArrayList = (ArrayList<Temperatur>) body;
+                Log.e("test","det virker");
+                updateDisplayWithData(temperaturArrayList);
+            }
+        });
 
         Collections.reverse(temperatureMeasurements);
 
@@ -131,7 +145,7 @@ public class TerrariumDetailsFragment extends Fragment {
                 sparkView.setScrubListener(t -> {
 
                     if (t instanceof TemperatureMeasurement) {
-                       updateInfoForDate((TemperatureMeasurement) t);
+                       updateInfoForDate((Temperatur) t);
                     }
               });
         Log.e("test","det virker");
@@ -142,7 +156,7 @@ public class TerrariumDetailsFragment extends Fragment {
     }
 
 
-    private void updateDisplayWithData(List<TemperatureMeasurement> dailyData) {
+    private void updateDisplayWithData(List<Temperatur> dailyData) {
 
 
         StockSparkAdapter stockSparkAdapter = new StockSparkAdapter(dailyData);
@@ -167,12 +181,12 @@ public class TerrariumDetailsFragment extends Fragment {
         hubConnection.close();
     }
 
-    private void updateInfoForDate(TemperatureMeasurement temperatur) {
+    private void updateInfoForDate(Temperatur temperatur) {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
-        textViewDate.setText(Integer.toString(temperatur.getId()));
-        terrariumTemp.setText(Integer.toString(temperatur.getTemperatureReading()));
-        terrariumCurrentTemp.setText(Integer.toString(temperatur.getTemperatureReading()));
+        textViewDate.setText(temperatur.getTemperatureDate());
+        terrariumTemp.setText(Double.toString(temperatur.getTemperatureCelsius()));
+        terrariumCurrentTemp.setText(Double.toString(temperatur.getTemperatureCelsius()));
 
     }
 
