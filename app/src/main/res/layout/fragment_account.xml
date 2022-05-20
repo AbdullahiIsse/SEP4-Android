@@ -5,10 +5,34 @@
     android:layout_height="match_parent"
     tools:context=".View.Account.AccountFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
+    <ProgressBar
+        android:id="@+id/petprogress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"/>
+
+
     <TextView
+        android:id="@+id/errormessage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Account" />
+        android:gravity="center"
+        android:text="Can not find any Pet in the terrarium"
+        android:textSize="22sp"
+        android:textStyle="bold"
+
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_Petlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        />
+
 
 </FrameLayout>

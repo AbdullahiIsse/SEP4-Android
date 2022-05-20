@@ -10,6 +10,8 @@ import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
 import com.abdu.and_sep4.Shared.Pet;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,11 +22,14 @@ public class PetRepository {
 
     private final MutableLiveData <Pet> petRepositoryMutableLiveData;
 
+    private final MutableLiveData<List<Pet>> pets;
+
+
     public PetRepository() {
         petRepositoryMutableLiveData = new MutableLiveData<>();
+        pets = new MutableLiveData<>();
+
     }
-
-
 
 
     public static synchronized PetRepository getInstance() {
@@ -40,6 +45,11 @@ public class PetRepository {
     public MutableLiveData<Pet> getPetRepositoryMutableLiveData() {
         return petRepositoryMutableLiveData;
     }
+
+    public LiveData<List<Pet>> getPets() {
+        return pets;
+    }
+
 
     public LiveData<Pet> addPet(Pet pet) {
 
@@ -69,5 +79,33 @@ public class PetRepository {
         return petRepositoryMutableLiveData;
 
     }
+
+
+
+
+    public LiveData <List<Pet>> getAllPets() {
+        TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
+        Call<List<Pet>> call = terrariumApi.getPets();
+
+        call.enqueue(new Callback<List<Pet>>() {
+            @Override
+            public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
+
+                if (response.isSuccessful()){
+                    pets.setValue(response.body());
+                    Log.e("Retrofit", "its working pet :(");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Pet>> call, Throwable t) {
+                Log.e("Retrofit", "Something went wrong getting pets :(");
+
+            }
+        });
+        return pets;
+    }
+
 
 }

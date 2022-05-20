@@ -29,9 +29,14 @@ public interface TerrariumApi {
    @GET("measurements/{id}")
     Call<List<Measurements>>getMeasurementsByTerrariumId(@Path("id") int id);
 
+    //addPet
     @POST("pet")
     Call<Pet> addPet(@Body Pet pet);
 
+
+    //GetPetList
+    @GET("pet")
+    Call<List<Pet>>getPets();
 
 
 
