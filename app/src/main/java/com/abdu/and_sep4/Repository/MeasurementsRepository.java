@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
+import com.abdu.and_sep4.Shared.Measurements;
 import com.abdu.and_sep4.Shared.Temperatur;
 
 
@@ -16,39 +17,39 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TemperatureRepository {
+public class MeasurementsRepository {
 
-    private static TemperatureRepository instance;
+    private static MeasurementsRepository instance;
 
-    private final MutableLiveData<List<Temperatur>> temperatureRepositoryMutableLiveData;
+    private final MutableLiveData<List<Measurements>> temperatureRepositoryMutableLiveData;
 
 
-    public TemperatureRepository() {
+    public MeasurementsRepository() {
         temperatureRepositoryMutableLiveData = new MutableLiveData<>();
 
     }
 
-    public static synchronized TemperatureRepository getInstance() {
+    public static synchronized MeasurementsRepository getInstance() {
 
         if (instance == null){
-            instance = new TemperatureRepository();
+            instance = new MeasurementsRepository();
         }
 
         return instance;
     }
 
-    public MutableLiveData<List<Temperatur>> getTerrariumMutableLiveData() {
+    public MutableLiveData<List<Measurements>> getTerrariumMutableLiveData() {
         return temperatureRepositoryMutableLiveData;
     }
 
-    public LiveData<List<Temperatur>> getTemperatureByTerrariumId(int id){
+    public LiveData<List<Measurements>> getMeasurementsByTerrariumId(int id){
 
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
-        Call<List<Temperatur>> call = terrariumApi.getTemperatureByTerrariumId(id);
+        Call<List<Measurements>> call = terrariumApi.getMeasurementsByTerrariumId(id);
 
-        call.enqueue(new Callback<List<Temperatur>>() {
+        call.enqueue(new Callback<List<Measurements>>() {
             @Override
-            public void onResponse(Call<List<Temperatur>> call, Response<List<Temperatur>> response) {
+            public void onResponse(Call<List<Measurements>> call, Response<List<Measurements>> response) {
 
                 if (response.isSuccessful()){
 
@@ -58,7 +59,7 @@ public class TemperatureRepository {
             }
 
             @Override
-            public void onFailure(Call<List<Temperatur>> call, Throwable t) {
+            public void onFailure(Call<List<Measurements>> call, Throwable t) {
                 Log.e("Retrofit", "Something went wrong getting Temperature by Terrarium id :(");
 
             }

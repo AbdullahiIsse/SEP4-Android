@@ -1,5 +1,6 @@
 package com.abdu.and_sep4.API;
 
+import com.abdu.and_sep4.Shared.Measurements;
 import com.abdu.and_sep4.Shared.Pet;
 import com.abdu.and_sep4.Shared.Temperatur;
 import com.abdu.and_sep4.Shared.Terrarium;
@@ -25,8 +26,8 @@ public interface TerrariumApi {
     Call<List<Terrarium>>getTerrariumByUserId(@Path("id") int id);
 
 
-   @GET("temperature/{id}")
-    Call<List<Temperatur>>getTemperatureByTerrariumId(@Path("id") int id);
+   @GET("measurements/{id}")
+    Call<List<Measurements>>getMeasurementsByTerrariumId(@Path("id") int id);
 
     @POST("pet")
     Call<Pet> addPet(@Body Pet pet);

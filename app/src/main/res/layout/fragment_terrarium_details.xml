@@ -24,7 +24,7 @@
             android:text="Terrarium 1"
             android:textStyle="bold"
             android:textSize="30sp"
-            android:gravity="center"
+            android:gravity="left"
             android:layout_marginBottom="10dp"/>
 
 
@@ -53,6 +53,41 @@
             android:textStyle="bold"
             android:textSize="34sp"/>
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:id="@+id/measurements_radio"
+            >
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Temperatur"
+                android:id="@+id/measurements_radio_temp"
+
+
+                />
+
+            <RadioButton
+                android:id="@+id/measurements_radio_air"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Luftfugtighed"/>
+
+            <RadioButton
+                android:id="@+id/measurements_radio_co2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CO2"/>
+
+
+
+
+
+        </RadioGroup>
+
 
 
 
@@ -63,13 +98,24 @@
     </LinearLayout>
 
 
-    <com.robinhood.spark.SparkView
-        android:layout_marginTop="25dp"
-        android:id="@+id/sparkview"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        app:spark_lineColor="#437512"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+
+
+
+        <com.robinhood.spark.SparkView
+            android:id="@+id/sparkview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            app:spark_lineColor="#5FB50A" />
+
+
+    </LinearLayout>
 
 
 
@@ -77,7 +123,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="15dp"
+        >
 
 
 
@@ -85,7 +132,7 @@
             android:id="@+id/tv_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:text="2020/05/05"
             android:textSize="20sp"
             android:layout_marginTop="10dp"/>
@@ -107,10 +154,7 @@
     </LinearLayout>
 
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"/>
+
 
 
 </LinearLayout>
