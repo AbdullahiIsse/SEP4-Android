@@ -54,6 +54,15 @@
 
             />
 
+        <TextView
+            android:id="@+id/petEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EDIT"
+            android:gravity="right"
+            android:textStyle="bold"/>
+
     </LinearLayout>
 
 </LinearLayout>

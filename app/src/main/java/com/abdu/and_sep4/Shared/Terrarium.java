@@ -14,6 +14,10 @@ public class Terrarium {
         this.userId = userId;
     }
 
+    public Terrarium(int id, String terrariumName) {
+        this.id = id;
+        this.terrariumName = terrariumName;
+    }
 
     public int getId() {
         return id;

@@ -13,6 +13,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -32,6 +33,9 @@ public interface TerrariumApi {
     @DELETE("terrarium/{id}")
     Call<Terrarium> deleteTerrarium(@Path("id") long id);
 
+    @PATCH("terrarium/{id}")
+    Call<Terrarium> updateTerrarium(@Path("id") long id,@Body Terrarium terrarium);
+
    @GET("measurements/{id}")
     Call<List<Measurements>>getMeasurementsByTerrariumId(@Path("id") int id);
 
@@ -46,6 +50,10 @@ public interface TerrariumApi {
 
     @DELETE("pet/{id}")
     Call<Pet> deletePet(@Path("id") long id);
+
+
+    @PATCH("pet/{id}")
+    Call<Pet> updatePet(@Path("id") long id,@Body Pet pet);
 
 
 

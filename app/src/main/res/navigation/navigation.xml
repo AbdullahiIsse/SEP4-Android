@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addTerrariumFragment"
             app:destination="@id/addTerrariumFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_updateTerrariumFragment"
+            app:destination="@id/updateTerrariumFragment" />
     </fragment>
     <fragment
         android:id="@+id/animalListFragment"
@@ -26,6 +29,9 @@
         <action
             android:id="@+id/action_animalListFragment_to_AddPetFragments"
             app:destination="@id/AddPetFragments" />
+        <action
+            android:id="@+id/action_animalListFragment_to_updatePetFragment"
+            app:destination="@id/updatePetFragment" />
     </fragment>
     <fragment
         android:id="@+id/terrariumDetailsFragment"
@@ -66,6 +72,24 @@
         tools:layout="@layout/fragment_add_terrarium" >
         <action
             android:id="@+id/action_addTerrariumFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updatePetFragment"
+        android:name="com.abdu.and_sep4.View.UpdatePet.UpdatePetFragment"
+        android:label="Update Pet"
+        tools:layout="@layout/fragment_update_pet" >
+        <action
+            android:id="@+id/action_updatePetFragment_to_animalListFragment"
+            app:destination="@id/animalListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateTerrariumFragment"
+        android:name="com.abdu.and_sep4.View.UpdateTerrarium.UpdateTerrariumFragment"
+        android:label="Update Terrarium"
+        tools:layout="@layout/fragment_update_terrarium" >
+        <action
+            android:id="@+id/action_updateTerrariumFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 

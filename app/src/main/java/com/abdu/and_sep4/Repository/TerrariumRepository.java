@@ -22,10 +22,12 @@ public class TerrariumRepository {
 
     private final MutableLiveData<List<Terrarium>> terrariumListMutableLiveData;
     private final MutableLiveData<Terrarium> terrariumMutableLiveData;
+    private final MutableLiveData<Terrarium> UpdateterrariumMutableLiveData;
 
     public TerrariumRepository() {
         terrariumListMutableLiveData = new MutableLiveData<>();
         terrariumMutableLiveData = new MutableLiveData<>();
+        UpdateterrariumMutableLiveData = new MutableLiveData<>();
 
 
 
@@ -119,6 +121,32 @@ public class TerrariumRepository {
                 Log.e("Retrofit", "Something went wrong deleting terrarium :(");
             }
         });
+    }
+
+
+    public LiveData<Terrarium> updateTerrarium(long id,Terrarium terrarium){
+
+        TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
+        Call<Terrarium> call = terrariumApi.updateTerrarium(id,terrarium);
+
+        call.enqueue(new Callback<Terrarium>() {
+            @Override
+            public void onResponse(Call<Terrarium> call, Response<Terrarium> response) {
+                if (response.isSuccessful()){
+                    UpdateterrariumMutableLiveData.setValue(response.body());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Terrarium> call, Throwable t) {
+                Log.e("Retrofit", "Something went wrong updating Terrarium :(");
+            }
+        });
+
+        return UpdateterrariumMutableLiveData;
+
+
     }
 
 

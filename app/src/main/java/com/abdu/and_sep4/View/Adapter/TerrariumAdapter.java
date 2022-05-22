@@ -1,11 +1,16 @@
 package com.abdu.and_sep4.View.Adapter;
 
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdu.and_sep4.Adapter.OnListItemClickListener;
@@ -18,6 +23,7 @@ public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.View
 
     private ArrayList<Terrarium> terrariums;
     OnListItemClickListener OnListItemClickListener;
+    private Bundle bundle = new Bundle();
 
 
 
@@ -37,8 +43,19 @@ public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
       holder.name.setText(terrariums.get(position).getTerrariumName());
+      holder.edit.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              bundle.putLong("TerrariumId",terrariums.get(position).getId());
+              bundle.putString("TerrariumName", terrariums.get(position).getTerrariumName());
+
+
+
+              Navigation.findNavController(holder.itemView).navigate(R.id.action_homeFragment_to_updateTerrariumFragment,bundle);
+          }
+      });
 
     }
 
@@ -56,10 +73,12 @@ public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.View
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView name;
+        private  final TextView edit;
 
          public ViewHolder(@NonNull View itemView) {
              super(itemView);
              name = itemView.findViewById(R.id.t_name);
+             edit = itemView.findViewById(R.id.terrarium_edit);
              itemView.setOnClickListener(v -> {
                  OnListItemClickListener.onClick(getAdapterPosition());
              });

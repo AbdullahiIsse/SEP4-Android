@@ -16,6 +16,12 @@ public class Pet {
         this.terrariumId = terrariumId;
     }
 
+    public Pet(long id, String name, String species, int age) {
+        this.id = id;
+        this.name = name;
+        this.species = species;
+        this.age = age;
+    }
 
     public long getId() {
         return id;

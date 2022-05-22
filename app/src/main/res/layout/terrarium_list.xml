@@ -15,8 +15,17 @@
         android:layout_weight="1"
         android:text="Terrarium1"
         android:textSize="24sp"
-        android:gravity="center"
+        android:gravity="left"
         />
+
+    <TextView
+        android:id="@+id/terrarium_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="EDIT"
+        android:gravity="right"
+        android:textStyle="bold"/>
 
 
 

@@ -42,6 +42,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     private TextView error;
     private View inflate;
     private TextView petListError;
+    private Bundle bundle = new Bundle();
 
 
     @Override
@@ -84,7 +85,6 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     private void getPetList() {
         Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
 
-
         animalListFragmentViewmodel.getPetsLiveData(terrarium.getId()).observe(getViewLifecycleOwner(), petsResponse -> {
             if (petsResponse != null && !petsResponse.isEmpty()) {
 
@@ -94,6 +94,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
                 petArrayList.clear();
                 petArrayList.addAll(pets);
                 petsResponse.clear();
+                petAdapter.notifyDataSetChanged();
                 Log.e("terrarium", petsResponse.toString());
 
             } else {
@@ -111,6 +112,10 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     public void onClick(int position) {
 
         Toast.makeText(getContext(), "Position: " + position, Toast.LENGTH_SHORT).show();
+
+
+
+
 
 
     }

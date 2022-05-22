@@ -1,7 +1,6 @@
 package com.abdu.and_sep4.Repository;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -20,14 +19,17 @@ public class PetRepository {
 
     private static PetRepository instance;
 
-    private final MutableLiveData <Pet> petRepositoryMutableLiveData;
+    private final MutableLiveData <Pet> addPetMutableLiveData;
 
-    private final MutableLiveData<List<Pet>> pets;
+    private final MutableLiveData<List<Pet>> getAllPetMutableLiveData;
+
+    private final MutableLiveData<Pet> updatePet;
 
 
     public PetRepository() {
-        petRepositoryMutableLiveData = new MutableLiveData<>();
-        pets = new MutableLiveData<>();
+        addPetMutableLiveData = new MutableLiveData<>();
+        getAllPetMutableLiveData = new MutableLiveData<>();
+        updatePet = new MutableLiveData<>();
 
     }
 
@@ -42,12 +44,12 @@ public class PetRepository {
     }
 
 
-    public MutableLiveData<Pet> getPetRepositoryMutableLiveData() {
-        return petRepositoryMutableLiveData;
+    public MutableLiveData<Pet> getAddPetMutableLiveData() {
+        return addPetMutableLiveData;
     }
 
-    public LiveData<List<Pet>> getPets() {
-        return pets;
+    public LiveData<List<Pet>> getGetAllPetMutableLiveData() {
+        return getAllPetMutableLiveData;
     }
 
 
@@ -61,7 +63,7 @@ public class PetRepository {
             @Override
             public void onResponse(Call<Pet> call, Response<Pet> response) {
              if(response.isSuccessful()) {
-                 petRepositoryMutableLiveData.setValue(response.body());
+                 addPetMutableLiveData.setValue(response.body());
                  Log.e("Retrofit", "working :(");
 
              }
@@ -76,7 +78,7 @@ public class PetRepository {
             }
         });
 
-        return petRepositoryMutableLiveData;
+        return addPetMutableLiveData;
 
     }
 
@@ -92,8 +94,8 @@ public class PetRepository {
             public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
 
                 if (response.isSuccessful()){
-                    pets.setValue(response.body());
-                    Log.e("Retrofit", "its working pet :(" + pets.getValue().size());
+                    getAllPetMutableLiveData.setValue(response.body());
+                    Log.e("Retrofit", "its working pet :(" + getAllPetMutableLiveData.getValue().size());
 
 
 
@@ -106,7 +108,7 @@ public class PetRepository {
 
             }
         });
-        return pets;
+        return getAllPetMutableLiveData;
     }
 
 
@@ -129,6 +131,33 @@ public class PetRepository {
         });
 
     }
+
+    public LiveData<Pet> updatePet(long id,Pet pet){
+
+        TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
+        Call<Pet> call = terrariumApi.updatePet(id,pet);
+
+        call.enqueue(new Callback<Pet>() {
+            @Override
+            public void onResponse(Call<Pet> call, Response<Pet> response) {
+                if (response.isSuccessful()){
+                  updatePet.setValue(response.body());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Pet> call, Throwable t) {
+                Log.e("Retrofit", "Something went wrong updating pets :(");
+            }
+        });
+
+        return updatePet;
+
+
+    }
+
+
 
 
 }

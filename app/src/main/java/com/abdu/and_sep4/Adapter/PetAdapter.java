@@ -1,12 +1,15 @@
 package com.abdu.and_sep4.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdu.and_sep4.R;
@@ -19,6 +22,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
     private ArrayList<Pet> pets;
     OnListItemClickListener listener;
     Context context;
+    private Bundle bundle = new Bundle();
 
 
     public PetAdapter(ArrayList<Pet> pets, OnListItemClickListener listener) {
@@ -39,11 +43,24 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PetsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PetsViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.species.setText(pets.get(position).getSpecies());
         holder.name.setText(pets.get(position).getName());
         holder.age.setText(Integer.toString(pets.get(position).getAge()));
+        holder.petEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bundle.putLong("id",pets.get(position).getId());
+                bundle.putString("name", pets.get(position).getName());
+                bundle.putString("species",pets.get(position).getSpecies());
+                bundle.putInt("age",pets.get(position).getAge());
+
+
+
+                Navigation.findNavController(holder.itemView).navigate(R.id.action_animalListFragment_to_updatePetFragment,bundle);
+            }
+        });
 
     }
 
@@ -65,6 +82,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
         TextView species;
         TextView name;
         TextView age;
+        TextView petEdit;
 
 
         public PetsViewHolder(@NonNull View itemView) {
@@ -79,6 +97,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
             species = itemView.findViewById(R.id.species);
             name = itemView.findViewById(R.id.name);
             age = itemView.findViewById(R.id.age);
+            petEdit = itemView.findViewById(R.id.petEdit);
 
 
         }
