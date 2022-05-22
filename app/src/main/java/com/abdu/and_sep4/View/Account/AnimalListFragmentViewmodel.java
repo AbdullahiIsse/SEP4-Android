@@ -9,21 +9,21 @@ import com.abdu.and_sep4.Shared.Pet;
 
 import java.util.List;
 
-public class AccountFragmentViewmodel extends ViewModel {
+public class AnimalListFragmentViewmodel extends ViewModel {
 
 
     private PetRepository petRepository;
-    private LiveData<List<Pet>> PetResponseLiveData;
 
-    public AccountFragmentViewmodel() {
+
+    public AnimalListFragmentViewmodel() {
 
         petRepository = PetRepository.getInstance();
-        PetResponseLiveData = petRepository.getAllPets();
+
     }
 
 
-    public LiveData<List<Pet>> getPetsLiveData() {
-        return petRepository.getPets();
+    public LiveData<List<Pet>> getPetsLiveData(long id) {
+        return petRepository.getAllPets(id);
     }
 
 

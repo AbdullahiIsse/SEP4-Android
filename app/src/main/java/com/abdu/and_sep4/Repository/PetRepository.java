@@ -83,9 +83,9 @@ public class PetRepository {
 
 
 
-    public LiveData <List<Pet>> getAllPets() {
+    public LiveData <List<Pet>> getAllPets(long id) {
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
-        Call<List<Pet>> call = terrariumApi.getPets();
+        Call<List<Pet>> call = terrariumApi.getPets(id);
 
         call.enqueue(new Callback<List<Pet>>() {
             @Override

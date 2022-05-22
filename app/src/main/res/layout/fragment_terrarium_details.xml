@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.TerrariumDetails.TerrariumDetailsFragment"
     android:orientation="vertical"
     android:padding="10dp"
+    tools:context=".View.TerrariumDetails.TerrariumDetailsFragment"
 
     >
 
@@ -13,22 +13,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_terrarium_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             android:layout_weight="3"
-            android:text="Terrarium 1"
-            android:textStyle="bold"
-            android:textSize="30sp"
             android:gravity="left"
-            android:layout_marginBottom="10dp"/>
-
-
-
+            android:text="Terrarium 1"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
 
     </LinearLayout>
@@ -36,75 +33,72 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_current_temp"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="32 °C"
+            android:textSize="34sp"
             android:textStyle="bold"
-            android:textSize="34sp"/>
 
-        <RadioGroup
-            android:layout_width="match_parent"
+            />
+
+        <Button
+            android:id="@+id/terrarium_animals"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:id="@+id/measurements_radio"
-            >
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Temperatur"
-                android:id="@+id/measurements_radio_temp"
-
-
-                />
-
-            <RadioButton
-                android:id="@+id/measurements_radio_air"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Luftfugtighed"/>
-
-            <RadioButton
-                android:id="@+id/measurements_radio_co2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CO2"/>
-
-
-
-
-
-        </RadioGroup>
-
-
-
-
-
-
-
+            android:layout_weight="1"
+            android:text="Animals"
+            android:textStyle="bold"/>
 
     </LinearLayout>
+
+    <RadioGroup
+        android:layout_marginTop="10dp"
+        android:id="@+id/measurements_radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/measurements_radio_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Temperatur"
+
+
+            />
+
+        <RadioButton
+            android:id="@+id/measurements_radio_air"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Luftfugtighed" />
+
+        <RadioButton
+            android:id="@+id/measurements_radio_co2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CO2" />
+
+
+    </RadioGroup>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
-
-
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
 
         <com.robinhood.spark.SparkView
@@ -118,43 +112,35 @@
     </LinearLayout>
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="15dp"
-        >
-
+        android:orientation="horizontal">
 
 
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_weight="1.5"
             android:text="2020/05/05"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"/>
+            android:textSize="20sp" />
 
 
         <TextView
             android:id="@+id/tv_temp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:text="22 °C"
-            android:textSize="20sp"
             android:gravity="right"
-            android:layout_marginTop="10dp"/>
-
-
+            android:text="22 °C"
+            android:textSize="20sp" />
 
 
     </LinearLayout>
-
-
-
 
 
 </LinearLayout>

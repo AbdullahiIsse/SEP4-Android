@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.os.Handler;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -72,13 +74,14 @@ public class TerrariumDetailsFragment extends Fragment {
     private RadioButton measurementTemp;
     private RadioButton measurementAir;
     private RadioButton measurementCo2;
-
+    private Button animalBtn;
+    private View inflate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View inflate = inflater.inflate(R.layout.fragment_terrarium_details, container, false);
+        inflate = inflater.inflate(R.layout.fragment_terrarium_details, container, false);
         terrariumName = inflate.findViewById(R.id.tv_terrarium_name);
         terrariumCurrentTemp = inflate.findViewById(R.id.tv_current_temp);
         textViewDate = inflate.findViewById(R.id.tv_date);
@@ -88,6 +91,7 @@ public class TerrariumDetailsFragment extends Fragment {
         measurementTemp = inflate.findViewById(R.id.measurements_radio_temp);
         measurementAir = inflate.findViewById(R.id.measurements_radio_air);
         measurementCo2 = inflate.findViewById(R.id.measurements_radio_co2);
+        animalBtn = inflate.findViewById(R.id.terrarium_animals);
 
         Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
         terrariumName.setText(terrarium.getTerrariumName());
@@ -135,20 +139,33 @@ public class TerrariumDetailsFragment extends Fragment {
                 measurementRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                        if (measurements!= null &&!measurements.isEmpty()){
+
+
+
                         if (i == R.id.measurements_radio_temp){
                             stockSparkAdapter.measurementsType = MeasurementsType.TEMPERATURE;
+                            textViewDate.setText(measurements.get(measurements.size()-1).getMeasurements_date());
+                            terrariumTemp.setText(Double.toString(measurements.get(measurements.size()-1).getMeasurement_temp()));
+                            terrariumCurrentTemp.setText(Double.toString(measurements.get(measurements.size()-1).getMeasurement_temp()));
 
                         } else if (i == R.id.measurements_radio_air){
                             stockSparkAdapter.measurementsType = MeasurementsType.AIRHUMIDITY;
+                            textViewDate.setText(measurements.get(measurements.size()-1).getMeasurements_date());
+                            terrariumTemp.setText(Double.toString(measurements.get(measurements.size()-1).getMeasurement_air()));
+                            terrariumCurrentTemp.setText(Double.toString(measurements.get(measurements.size()-1).getMeasurement_air()));
 
                         }
                         else {
                             stockSparkAdapter.measurementsType = MeasurementsType.CO2;
+                            textViewDate.setText(measurements.get(measurements.size()-1).getMeasurements_date());
+                            terrariumTemp.setText(Double.toString(measurements.get(measurements.size()-1).getMeasurement_co2()));
+                            terrariumCurrentTemp.setText(Double.toString(measurements.get(measurements.size()-1).getMeasurement_co2()));
 
                         }
                         stockSparkAdapter.notifyDataSetChanged();
                     }
-
+                    }
                 });
 
                 temperaturArrayList = (ArrayList<Measurements>) body;
@@ -157,17 +174,15 @@ public class TerrariumDetailsFragment extends Fragment {
             }
         });
 
-       /* Collections.reverse(temperatureMeasurements);
 
-        sparkView.setScrubEnabled(true);
-                sparkView.setScrubListener(t -> {
 
-                    if (t instanceof TemperatureMeasurement) {
-                       updateInfoForDate((Temperatur) t);
-                    }
-              });
-        Log.e("test","det virker");
-        updateDisplayWithData(temperatureMeasurements);*/
+        animalBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(inflate).navigate(R.id.action_terrariumDetailsFragment_to_animalListFragment);
+            }
+        });
+
 
 
         return inflate;
@@ -208,15 +223,18 @@ public class TerrariumDetailsFragment extends Fragment {
             terrariumTemp.setText(Double.toString(measurements.getMeasurement_co2()));
             terrariumCurrentTemp.setText(Double.toString(measurements.getMeasurement_co2()));
 
+
         } else if (stockSparkAdapter.measurementsType == MeasurementsType.TEMPERATURE) {
             textViewDate.setText(measurements.getMeasurements_date());
             terrariumTemp.setText(Double.toString(measurements.getMeasurement_temp()));
             terrariumCurrentTemp.setText(Double.toString(measurements.getMeasurement_temp()));
-        } else if (stockSparkAdapter.measurementsType == MeasurementsType.AIRHUMIDITY) {
+
+        } else  {
             textViewDate.setText(measurements.getMeasurements_date());
             terrariumTemp.setText(Double.toString(measurements.getMeasurement_air()));
             terrariumCurrentTemp.setText(Double.toString(measurements.getMeasurement_air()));
         }
+
 
     }
 

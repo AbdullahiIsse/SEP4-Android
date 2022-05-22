@@ -13,24 +13,41 @@
         <action
             android:id="@+id/action_homeFragment_to_terrariumDetailsFragment"
             app:destination="@id/terrariumDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addTerrariumFragment"
+            app:destination="@id/addTerrariumFragment" />
     </fragment>
     <fragment
-        android:id="@+id/accountFragment"
-        android:name="com.abdu.and_sep4.View.Account.AccountFragment"
-        android:label="Account"
-        tools:layout="@layout/fragment_account" />
+        android:id="@+id/animalListFragment"
+        android:name="com.abdu.and_sep4.View.Account.AnimalListFragment"
+        android:label="Animal List"
+        tools:layout="@layout/fragment_animal_list" >
+
+        <action
+            android:id="@+id/action_animalListFragment_to_AddPetFragments"
+            app:destination="@id/AddPetFragments" />
+    </fragment>
     <fragment
         android:id="@+id/terrariumDetailsFragment"
         android:name="com.abdu.and_sep4.View.TerrariumDetails.TerrariumDetailsFragment"
         android:label="fragment_terrarium_details"
-        tools:layout="@layout/fragment_terrarium_details" />
+        tools:layout="@layout/fragment_terrarium_details" >
+
+        <action
+            android:id="@+id/action_terrariumDetailsFragment_to_animalListFragment"
+            app:destination="@id/animalListFragment" />
+    </fragment>
 
 
     <fragment
-        android:id="@+id/AddPetFragment"
+        android:id="@+id/AddPetFragments"
         android:name="com.abdu.and_sep4.View.AddPet.AddPetFragment"
-        android:label="fragment_addPet"
-        tools:layout="@layout/fragment_add_pet" />
+        android:label="Add Animal"
+        tools:layout="@layout/fragment_add_pet" >
+        <action
+            android:id="@+id/action_AddPetFragments_to_animalListFragment"
+            app:destination="@id/animalListFragment" />
+    </fragment>
 
 
     <fragment
@@ -42,5 +59,14 @@
         android:id="@+id/reportFragment"
         android:name="com.abdu.and_sep4.View.Report.ReportFragment"
         android:label="Report" />
+    <fragment
+        android:id="@+id/addTerrariumFragment"
+        android:name="com.abdu.and_sep4.View.AddTerrarium.AddTerrariumFragment"
+        android:label="Add Terrarium"
+        tools:layout="@layout/fragment_add_terrarium" >
+        <action
+            android:id="@+id/action_addTerrariumFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 </navigation>

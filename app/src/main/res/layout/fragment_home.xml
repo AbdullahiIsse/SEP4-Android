@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.Home.HomeFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_weight="1"
+    >
 
    <TextView
        android:id="@+id/tv_terrarium_error"
@@ -19,8 +21,19 @@
 
    <androidx.recyclerview.widget.RecyclerView
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_weight="1"
        tools:listitem="@layout/terrarium_list"
        android:id="@+id/rv_home"/>
+
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/fab"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="end|bottom"
+       android:src="@drawable/ic_baseline_add_24"
+       android:contentDescription="addAnimal"
+       android:layout_margin="16dp" />
+
 
 </LinearLayout>

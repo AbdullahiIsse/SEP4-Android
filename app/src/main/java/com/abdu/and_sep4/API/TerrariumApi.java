@@ -25,6 +25,9 @@ public interface TerrariumApi {
    @GET("terrarium/user/{id}")
     Call<List<Terrarium>>getTerrariumByUserId(@Path("id") int id);
 
+   @POST("terrarium")
+   Call<Terrarium> addTerrarium(@Body Terrarium terrarium);
+
 
    @GET("measurements/{id}")
     Call<List<Measurements>>getMeasurementsByTerrariumId(@Path("id") int id);
@@ -35,8 +38,8 @@ public interface TerrariumApi {
 
 
     //GetPetList
-    @GET("pet")
-    Call<List<Pet>>getPets();
+    @GET("pet/{id}")
+    Call<List<Pet>>getPets(@Path("id") long id);
 
 
 

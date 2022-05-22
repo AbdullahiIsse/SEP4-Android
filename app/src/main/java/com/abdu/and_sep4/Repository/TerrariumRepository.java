@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
 import com.abdu.and_sep4.Shared.Terrarium;
-import com.abdu.and_sep4.Shared.UserResponse;
 
 import java.util.List;
 
@@ -20,9 +19,11 @@ public class TerrariumRepository {
 
     private static TerrariumRepository instance;
 
-    private final MutableLiveData<List<Terrarium>> terrariumMutableLiveData;
+    private final MutableLiveData<List<Terrarium>> terrariumListMutableLiveData;
+    private final MutableLiveData<Terrarium> terrariumMutableLiveData;
 
     public TerrariumRepository() {
+        terrariumListMutableLiveData = new MutableLiveData<>();
         terrariumMutableLiveData = new MutableLiveData<>();
 
 
@@ -38,9 +39,11 @@ public class TerrariumRepository {
         return instance;
     }
 
-    public MutableLiveData<List<Terrarium>> getTerrariumMutableLiveData() {
-        return terrariumMutableLiveData;
+    public MutableLiveData<List<Terrarium>> getTerrariumListMutableLiveData() {
+        return terrariumListMutableLiveData;
     }
+
+
 
 
 
@@ -56,7 +59,7 @@ public class TerrariumRepository {
 
                 if (response.isSuccessful()){
 
-                    terrariumMutableLiveData.setValue(response.body());
+                    terrariumListMutableLiveData.setValue(response.body());
                 }
 
             }
@@ -68,9 +71,41 @@ public class TerrariumRepository {
             }
         });
 
-
-       return terrariumMutableLiveData;
-
+       return terrariumListMutableLiveData;
 
     }
+
+    public LiveData<Terrarium> addTerrarium(Terrarium terrarium){
+        TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
+        Call<Terrarium> call = terrariumApi.addTerrarium(terrarium);
+
+        call.enqueue(new Callback<Terrarium>() {
+            @Override
+            public void onResponse(Call<Terrarium> call, Response<Terrarium> response) {
+                if(response.isSuccessful()) {
+                    terrariumMutableLiveData.setValue(response.body());
+                    Log.e("Retrofit", "working adding terrarium :(");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Terrarium> call, Throwable t) {
+                Log.e("Retrofit", "Something went wrong adding Terrarium :(");
+            }
+        });
+
+
+
+        return terrariumMutableLiveData;
+
+    }
+
+
+
+
+
+
+
+
 }

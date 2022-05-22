@@ -9,8 +9,7 @@ public class Terrarium {
     private String terrariumName;
     private int userId;
 
-    public Terrarium(int id, String terrariumName, int userId) {
-        this.id = id;
+    public Terrarium(String terrariumName, int userId) {
         this.terrariumName = terrariumName;
         this.userId = userId;
     }

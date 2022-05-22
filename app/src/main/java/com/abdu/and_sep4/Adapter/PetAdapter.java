@@ -43,6 +43,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
 
         holder.species.setText(pets.get(position).getSpecies());
         holder.name.setText(pets.get(position).getName());
+        holder.age.setText(Integer.toString(pets.get(position).getAge()));
 
     }
 
@@ -63,6 +64,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
 
         TextView species;
         TextView name;
+        TextView age;
 
 
         public PetsViewHolder(@NonNull View itemView) {
@@ -76,6 +78,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
             });
             species = itemView.findViewById(R.id.species);
             name = itemView.findViewById(R.id.name);
+            age = itemView.findViewById(R.id.age);
 
 
         }

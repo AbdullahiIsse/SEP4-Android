@@ -19,6 +19,7 @@ import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.View.Adapter.TerrariumAdapter;
 import com.abdu.and_sep4.View.Home.HomeFragmentViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,14 +33,17 @@ public class HomeFragment extends Fragment{
     private ArrayList<Terrarium> terrariums = new ArrayList<>();
     private HomeFragmentViewModel homeFragmentViewModel;
     private TextView terrariumError;
+    private FloatingActionButton floatingActionButton;
+    private View inflate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View inflate = inflater.inflate(R.layout.fragment_home, container, false);
+         inflate = inflater.inflate(R.layout.fragment_home, container, false);
 
         terrariumError = inflate.findViewById(R.id.tv_terrarium_error);
+        floatingActionButton = inflate.findViewById(R.id.fab);
 
         recyclerView = inflate.findViewById(R.id.rv_home);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
@@ -59,6 +63,13 @@ public class HomeFragment extends Fragment{
             SaveInfo.getInstance().setTerrarium(terrarium);
             Navigation.findNavController(inflate).navigate(R.id.action_homeFragment_to_terrariumDetailsFragment);
 
+        });
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(inflate).navigate(R.id.action_homeFragment_to_addTerrariumFragment);
+            }
         });
 
 

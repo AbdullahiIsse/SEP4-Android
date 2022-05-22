@@ -1,18 +1,16 @@
 package com.abdu.and_sep4.View.Account;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,55 +19,68 @@ import com.abdu.and_sep4.Adapter.OnListItemClickListener;
 import com.abdu.and_sep4.Adapter.PetAdapter;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Pet;
+import com.abdu.and_sep4.Shared.SaveInfo;
+import com.abdu.and_sep4.Shared.Terrarium;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class AccountFragment extends Fragment implements OnListItemClickListener  {
+public class AnimalListFragment extends Fragment implements OnListItemClickListener  {
 
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private ArrayList<Pet> petArrayList = new ArrayList<>();
-    private AccountFragmentViewmodel accountFragmentViewmodel;
+    private AnimalListFragmentViewmodel animalListFragmentViewmodel;
     private PetAdapter petAdapter;
-
-
+    private FloatingActionButton floatingActionButton;
     private TextView error;
+    private View inflate;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_account, container, false);
+         inflate = inflater.inflate(R.layout.fragment_animal_list, container, false);
 
 
 
-        recyclerView = view.findViewById(R.id.rv_Petlist);
+        recyclerView = inflate.findViewById(R.id.rv_Petlist);
 
-        progressBar = view.findViewById(R.id.petprogress_bar);
+        progressBar = inflate.findViewById(R.id.petprogress_bar);
+        floatingActionButton = inflate.findViewById(R.id.fab);
 
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
         recyclerView.hasFixedSize();
 
         petAdapter = new PetAdapter(petArrayList,this,getContext());
 
         recyclerView.setAdapter(petAdapter);
 
-        accountFragmentViewmodel = new ViewModelProvider(this).get(AccountFragmentViewmodel.class);
+        animalListFragmentViewmodel = new ViewModelProvider(this).get(AnimalListFragmentViewmodel.class);
 
         getPetList();
 
-        return view;
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(inflate).navigate(R.id.action_animalListFragment_to_AddPetFragments);
+            }
+        });
+
+        return inflate;
     }
 
 
     private void getPetList() {
+        Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
 
-        accountFragmentViewmodel.getPetsLiveData().observe(getViewLifecycleOwner(), petsResponse -> {
+        animalListFragmentViewmodel.getPetsLiveData(terrarium.getId()).observe(getViewLifecycleOwner(), petsResponse -> {
             if (petsResponse != null && !petsResponse.isEmpty()){
 
                 progressBar.setVisibility(View.GONE);
@@ -79,7 +90,6 @@ public class AccountFragment extends Fragment implements OnListItemClickListener
 
             }
         });
-
     }
 
 
