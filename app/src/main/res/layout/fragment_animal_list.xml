@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Account.AnimalListFragment"
-    android:orientation="vertical"
     android:layout_weight="1"
-    >
+    android:orientation="vertical"
+    tools:context=".View.Account.AnimalListFragment">
 
 
     <ProgressBar
@@ -14,11 +13,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:backgroundTint="@color/white"/>
+        android:backgroundTint="@color/white" />
 
 
+    <TextView
+        android:id="@+id/pet_list_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Pets is not available"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="25sp"
 
 
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_Petlist"
@@ -30,7 +38,6 @@
         >
 
 
-
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -38,10 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:src="@drawable/ic_baseline_add_24"
+        android:layout_margin="16dp"
         android:contentDescription="addAnimal"
-        android:layout_margin="16dp" />
-
+        android:src="@drawable/ic_baseline_add_24" />
 
 
 </LinearLayout>

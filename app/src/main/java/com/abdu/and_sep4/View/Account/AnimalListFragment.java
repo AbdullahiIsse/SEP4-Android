@@ -38,6 +38,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     private FloatingActionButton floatingActionButton;
     private TextView error;
     private View inflate;
+    private TextView petListError;
 
 
     @Override
@@ -52,7 +53,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
 
         progressBar = inflate.findViewById(R.id.petprogress_bar);
         floatingActionButton = inflate.findViewById(R.id.fab);
-
+         petListError = inflate.findViewById(R.id.pet_list_error);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
         recyclerView.hasFixedSize();
@@ -84,9 +85,15 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
             if (petsResponse != null && !petsResponse.isEmpty()){
 
                 progressBar.setVisibility(View.GONE);
+                petListError.setVisibility(View.GONE);
                 List<Pet> pets = petsResponse;
                 petArrayList.clear();
                 petArrayList.addAll(pets);
+
+            } else {
+                progressBar.setVisibility(View.GONE);
+
+
 
             }
         });
