@@ -8,25 +8,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.abdu.and_sep4.Adapter.OnListItemClickListener;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Terrarium;
 
 import java.util.ArrayList;
 
-public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.ViewHolder> {
+public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.ViewHolder> implements OnListItemClickListener{
 
     private ArrayList<Terrarium> terrariums;
-    private OnClickListener onClickListener;
+    OnListItemClickListener OnListItemClickListener;
 
 
-    public TerrariumAdapter(ArrayList<Terrarium> terrariums) {
+
+    public TerrariumAdapter(ArrayList<Terrarium> terrariums, OnListItemClickListener OnListItemClickListener) {
         this.terrariums = terrariums;
+        this.OnListItemClickListener = OnListItemClickListener;
     }
 
 
-    public void setOnClickListener(OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-    }
 
     @NonNull
     @Override
@@ -47,8 +47,13 @@ public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.View
         return terrariums.size();
     }
 
+    @Override
+    public void onClick(int position) {
 
-      class ViewHolder extends RecyclerView.ViewHolder {
+    }
+
+
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView name;
 
@@ -56,7 +61,7 @@ public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.View
              super(itemView);
              name = itemView.findViewById(R.id.t_name);
              itemView.setOnClickListener(v -> {
-                 onClickListener.onClick(terrariums.get(getAdapterPosition()));
+                 OnListItemClickListener.onClick(getAdapterPosition());
              });
          }
 

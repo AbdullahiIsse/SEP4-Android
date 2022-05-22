@@ -8,12 +8,14 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.abdu.and_sep4.Adapter.OnListItemClickListener;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment implements OnListItemClickListener {
 
     private RecyclerView recyclerView;
     private TerrariumAdapter terrariumAdapter;
@@ -50,7 +52,7 @@ public class HomeFragment extends Fragment{
         recyclerView.hasFixedSize();
 
 
-        terrariumAdapter = new TerrariumAdapter(terrariums);
+        terrariumAdapter = new TerrariumAdapter(terrariums,this);
 
         recyclerView.setAdapter(terrariumAdapter);
 
@@ -58,12 +60,7 @@ public class HomeFragment extends Fragment{
 
         getTerrariumByUserId();
 
-        terrariumAdapter.setOnClickListener(terrarium -> {
 
-            SaveInfo.getInstance().setTerrarium(terrarium);
-            Navigation.findNavController(inflate).navigate(R.id.action_homeFragment_to_terrariumDetailsFragment);
-
-        });
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,11 +87,21 @@ public class HomeFragment extends Fragment{
 
                 terrariumAdapter.notifyDataSetChanged();
 
+                Log.e("tester", String.valueOf(terrariums1.get(0).getId()));
+
             } else {
                 Toast.makeText(getContext(),"Can not find any Terrarium",Toast.LENGTH_SHORT).show();
             }
 
         });
+
+    }
+
+    @Override
+    public void onClick(int position) {
+
+        SaveInfo.getInstance().setTerrarium(terrariums.get(position));
+        Navigation.findNavController(inflate).navigate(R.id.action_homeFragment_to_terrariumDetailsFragment);
 
     }
 }

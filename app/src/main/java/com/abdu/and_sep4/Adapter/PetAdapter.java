@@ -21,10 +21,10 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
     Context context;
 
 
-    public PetAdapter(ArrayList<Pet> pets, OnListItemClickListener listener,Context context) {
+    public PetAdapter(ArrayList<Pet> pets, OnListItemClickListener listener) {
         this.pets = pets;
         this.listener = listener;
-        this.context = context;
+
     }
 
 

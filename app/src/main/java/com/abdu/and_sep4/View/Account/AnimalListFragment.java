@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
         recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
         recyclerView.hasFixedSize();
 
-        petAdapter = new PetAdapter(petArrayList,this,getContext());
+        petAdapter = new PetAdapter(petArrayList,this);
 
         recyclerView.setAdapter(petAdapter);
 
@@ -81,6 +82,9 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     private void getPetList() {
         Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
 
+
+
+
         animalListFragmentViewmodel.getPetsLiveData(terrarium.getId()).observe(getViewLifecycleOwner(), petsResponse -> {
             if (petsResponse != null && !petsResponse.isEmpty()){
 
@@ -89,14 +93,19 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
                 List<Pet> pets = petsResponse;
                 petArrayList.clear();
                 petArrayList.addAll(pets);
+                petsResponse.clear();
+                Log.e("terrarium", petsResponse.toString());
 
             } else {
                 progressBar.setVisibility(View.GONE);
 
 
 
+
             }
+
         });
+
     }
 
 

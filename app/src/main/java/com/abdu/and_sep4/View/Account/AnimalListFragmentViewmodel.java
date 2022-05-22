@@ -1,6 +1,8 @@
 package com.abdu.and_sep4.View.Account;
 
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -23,6 +25,7 @@ public class AnimalListFragmentViewmodel extends ViewModel {
 
 
     public LiveData<List<Pet>> getPetsLiveData(long id) {
+
         return petRepository.getAllPets(id);
     }
 

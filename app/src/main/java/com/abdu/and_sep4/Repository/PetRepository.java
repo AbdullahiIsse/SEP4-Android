@@ -93,7 +93,9 @@ public class PetRepository {
 
                 if (response.isSuccessful()){
                     pets.setValue(response.body());
-                    Log.e("Retrofit", "its working pet :(");
+                    Log.e("Retrofit", "its working pet :(" + pets.getValue().size());
+
+
 
                 }
             }
