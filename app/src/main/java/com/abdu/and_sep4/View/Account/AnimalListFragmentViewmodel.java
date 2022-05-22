@@ -29,6 +29,10 @@ public class AnimalListFragmentViewmodel extends ViewModel {
         return petRepository.getAllPets(id);
     }
 
+    public void deletingPet(long id){
+        petRepository.deletePets(id);
+    }
+
 
 
 

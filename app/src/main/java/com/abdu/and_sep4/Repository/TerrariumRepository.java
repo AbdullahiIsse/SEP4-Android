@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
+import com.abdu.and_sep4.Shared.Pet;
 import com.abdu.and_sep4.Shared.Terrarium;
 
 import java.util.List;
@@ -99,6 +100,25 @@ public class TerrariumRepository {
 
         return terrariumMutableLiveData;
 
+    }
+
+    public void deleteTerrarium(long id){
+        TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
+        Call<Terrarium> call = terrariumApi.deleteTerrarium(id);
+
+        call.enqueue(new Callback<Terrarium>() {
+            @Override
+            public void onResponse(Call<Terrarium> call, Response<Terrarium> response) {
+                if (response.isSuccessful()){
+                    Log.e("Retrofit", "deleting Terrarium successfully");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Terrarium> call, Throwable t) {
+                Log.e("Retrofit", "Something went wrong deleting terrarium :(");
+            }
+        });
     }
 
 

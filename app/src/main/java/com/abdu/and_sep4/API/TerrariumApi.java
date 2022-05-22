@@ -11,6 +11,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -28,6 +29,8 @@ public interface TerrariumApi {
    @POST("terrarium")
    Call<Terrarium> addTerrarium(@Body Terrarium terrarium);
 
+    @DELETE("terrarium/{id}")
+    Call<Terrarium> deleteTerrarium(@Path("id") long id);
 
    @GET("measurements/{id}")
     Call<List<Measurements>>getMeasurementsByTerrariumId(@Path("id") int id);
@@ -40,6 +43,11 @@ public interface TerrariumApi {
     //GetPetList
     @GET("pet/{id}")
     Call<List<Pet>>getPets(@Path("id") long id);
+
+    @DELETE("pet/{id}")
+    Call<Pet> deletePet(@Path("id") long id);
+
+
 
 
 

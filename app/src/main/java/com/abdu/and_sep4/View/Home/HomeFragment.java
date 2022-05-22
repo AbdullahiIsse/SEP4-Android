@@ -2,9 +2,11 @@ package com.abdu.and_sep4.View.Home;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,6 +55,7 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
 
 
         terrariumAdapter = new TerrariumAdapter(terrariums,this);
+        new ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(recyclerView);
 
         recyclerView.setAdapter(terrariumAdapter);
 
@@ -104,4 +107,19 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         Navigation.findNavController(inflate).navigate(R.id.action_homeFragment_to_terrariumDetailsFragment);
 
     }
+
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            Terrarium terrarium = terrariums.remove(viewHolder.getAdapterPosition());
+            terrariumAdapter.notifyDataSetChanged();
+            homeFragmentViewModel.deleteTerrarium(terrarium.getId());
+
+        }
+    };
 }

@@ -110,4 +110,25 @@ public class PetRepository {
     }
 
 
+    public void deletePets(long id){
+        TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
+        Call<Pet> call = terrariumApi.deletePet(id);
+
+        call.enqueue(new Callback<Pet>() {
+            @Override
+            public void onResponse(Call<Pet> call, Response<Pet> response) {
+                if (response.isSuccessful()){
+                    Log.e("Retrofit", "deleting pet successfully");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Pet> call, Throwable t) {
+                Log.e("Retrofit", "Something went wrong deleting pets :(");
+            }
+        });
+
+    }
+
+
 }

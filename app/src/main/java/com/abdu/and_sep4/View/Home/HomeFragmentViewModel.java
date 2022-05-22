@@ -29,6 +29,10 @@ public class HomeFragmentViewModel extends ViewModel {
         return terrariumRepository.getTerrariumByUserId(id);
     }
 
+    public void deleteTerrarium(long id){
+        terrariumRepository.deleteTerrarium(id);
+    }
+
 
 
 

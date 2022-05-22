@@ -2,9 +2,11 @@ package com.abdu.and_sep4.View.Account;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AnimalListFragment extends Fragment implements OnListItemClickListener  {
+public class AnimalListFragment extends Fragment implements OnListItemClickListener {
 
 
     private RecyclerView recyclerView;
@@ -46,20 +48,20 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-         inflate = inflater.inflate(R.layout.fragment_animal_list, container, false);
-
+        inflate = inflater.inflate(R.layout.fragment_animal_list, container, false);
 
 
         recyclerView = inflate.findViewById(R.id.rv_Petlist);
 
         progressBar = inflate.findViewById(R.id.petprogress_bar);
         floatingActionButton = inflate.findViewById(R.id.fab);
-         petListError = inflate.findViewById(R.id.pet_list_error);
+        petListError = inflate.findViewById(R.id.pet_list_error);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
         recyclerView.hasFixedSize();
 
-        petAdapter = new PetAdapter(petArrayList,this);
+        petAdapter = new PetAdapter(petArrayList, this);
+        new ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(recyclerView);
 
         recyclerView.setAdapter(petAdapter);
 
@@ -83,10 +85,8 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
         Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
 
 
-
-
         animalListFragmentViewmodel.getPetsLiveData(terrarium.getId()).observe(getViewLifecycleOwner(), petsResponse -> {
-            if (petsResponse != null && !petsResponse.isEmpty()){
+            if (petsResponse != null && !petsResponse.isEmpty()) {
 
                 progressBar.setVisibility(View.GONE);
                 petListError.setVisibility(View.GONE);
@@ -100,8 +100,6 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
                 progressBar.setVisibility(View.GONE);
 
 
-
-
             }
 
         });
@@ -109,11 +107,27 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     }
 
 
-
     @Override
     public void onClick(int position) {
 
         Toast.makeText(getContext(), "Position: " + position, Toast.LENGTH_SHORT).show();
 
+
     }
+
+
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            Pet remove = petArrayList.remove(viewHolder.getAdapterPosition());
+            petAdapter.notifyDataSetChanged();
+            animalListFragmentViewmodel.deletingPet(remove.getId());
+
+        }
+    };
 }
