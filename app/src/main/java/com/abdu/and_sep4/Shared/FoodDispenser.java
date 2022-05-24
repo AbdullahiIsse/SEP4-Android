@@ -8,8 +8,8 @@ public class FoodDispenser {
 
 
 
-    public FoodDispenser(long id, long terrariumId) {
-        this.id = id;
+    public FoodDispenser(int food, long terrariumId) {
+        this.food = food;
         this.terrariumId = terrariumId;
     }
 

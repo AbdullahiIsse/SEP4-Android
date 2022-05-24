@@ -1,5 +1,7 @@
 package com.abdu.and_sep4.View.TerrariumDetails;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
@@ -38,6 +41,7 @@ import com.abdu.and_sep4.View.Adapter.StockSparkAdapter;
 
 
 import com.abdu.and_sep4.View.AddTerrarium.AddTerrariumFragmentViewModel;
+import com.abdu.and_sep4.View.Login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -81,8 +85,10 @@ public class TerrariumDetailsFragment extends Fragment {
     private Button animalBtn;
     private View inflate;
 
+
+
     private Button foodBtn;
-    private Integer food = 1;
+
 
     private TerrariumDetailsFragmentViewModel viewModel;
 
@@ -136,18 +142,17 @@ public class TerrariumDetailsFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(TerrariumDetailsFragmentViewModel.class);
 
 
-        foodBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            foodBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                FoodDispenser addFood = new FoodDispenser(food,terrarium.getId());
+                    FoodDispenser addFood = new FoodDispenser(1, terrarium.getId());
 
-                viewModel.addFood(addFood);
+                    viewModel.addFood(addFood);
 
 
-            }
-        });
-
+                }
+            });
 
 
 
