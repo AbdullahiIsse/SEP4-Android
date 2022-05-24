@@ -51,7 +51,7 @@ public class TerrariumRepository {
 
 
 
-    public LiveData<List<Terrarium>> getTerrariumByUserId(int userid){
+    public LiveData<List<Terrarium>> getTerrariumByUserId(String userid){
 
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
         Call<List<Terrarium>> call = terrariumApi.getTerrariumByUserId(userid);

@@ -1,33 +1,28 @@
 package com.abdu.and_sep4.Shared;
 
-import java.util.ArrayList;
-
 public class User {
 
 
-    private long id;
+    private String id;
     private String username;
-    private String password;
+    private String email;
 
 
 
-    public User(long id, String username, String password) {
+    public User(String id, String username, String email) {
         this.id = id;
         this.username = username;
-        this.password = password;
+        this.email = email;
 
     }
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 
-    public long getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -39,12 +34,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 
@@ -53,7 +48,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + email + '\'' +
                 '}';
     }
 }

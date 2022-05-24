@@ -1,15 +1,13 @@
 package com.abdu.and_sep4.Shared;
 
-import java.util.ArrayList;
-
 public class Terrarium {
 
 
     private int id;
     private String terrariumName;
-    private int userId;
+    private String userId;
 
-    public Terrarium(String terrariumName, int userId) {
+    public Terrarium(String terrariumName, String userId) {
         this.terrariumName = terrariumName;
         this.userId = userId;
     }
@@ -35,11 +33,11 @@ public class Terrarium {
         this.terrariumName = terrariumName;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 }

@@ -25,7 +25,7 @@ public class HomeFragmentViewModel extends ViewModel {
     }
 
 
-    public LiveData<List<Terrarium>> getTerrariumLiveData( int id) {
+    public LiveData<List<Terrarium>> getTerrariumLiveData( String id) {
         return terrariumRepository.getTerrariumByUserId(id);
     }
 

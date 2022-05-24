@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1018992224359",
+    "project_id": "terraeyes-fd4fd",
+    "storage_bucket": "terraeyes-fd4fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018992224359:android:eb8765887b0eb13e568cc2",
+        "android_client_info": {
+          "package_name": "com.abdu.and_sep4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018992224359-0kgpovb6oasrkuujtvvkapvcmjbh22pa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abdu.and_sep4",
+            "certificate_hash": "459ba0fd04053a2fe71cb9e5b9c18540f7c2d1cf"
+          }
+        },
+        {
+          "client_id": "1018992224359-mqebqo9hhkbi4dlmetqa19so5i9e5443.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDp-S90ne8qQ-f7epX6KA-pTjZAmxX8UWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1018992224359-mqebqo9hhkbi4dlmetqa19so5i9e5443.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

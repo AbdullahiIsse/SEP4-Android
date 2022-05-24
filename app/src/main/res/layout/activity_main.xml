@@ -7,6 +7,15 @@
     tools:context=".View.Main.MainActivity"
     android:orientation="vertical">
 
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        app:title="TEST"
+        />
+
     <fragment
         android:id="@+id/nav_host_fragment"
         android:layout_width="match_parent"
@@ -17,16 +26,12 @@
         app:navGraph="@navigation/navigation"
         />
 
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#4FA879"
-        android:layout_weight="12"
+        android:layout_height="wrap_content"
         app:menu="@menu/menu_bottom"
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
-
         />
 
 

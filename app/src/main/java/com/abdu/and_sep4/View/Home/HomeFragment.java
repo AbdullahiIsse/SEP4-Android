@@ -24,6 +24,7 @@ import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.View.Adapter.TerrariumAdapter;
 import com.abdu.and_sep4.View.Home.HomeFragmentViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,7 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
 
     private void getTerrariumByUserId() {
 
-        homeFragmentViewModel.getTerrariumLiveData((int) SaveInfo.getInstance().getUser().getId()).observe(getViewLifecycleOwner(), terrariums1 -> {
+        homeFragmentViewModel.getTerrariumLiveData(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), terrariums1 -> {
 
             if (terrariums1 != null && !terrariums1.isEmpty()){
                 terrariumError.setVisibility(View.GONE);

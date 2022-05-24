@@ -1,12 +1,10 @@
 package com.abdu.and_sep4.View.Login;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.abdu.and_sep4.Repository.UserRepository;
 import com.abdu.and_sep4.Shared.User;
-import com.abdu.and_sep4.Shared.UserResponse;
 
 public class LoginActivityViewModel extends ViewModel {
 
@@ -29,6 +27,9 @@ public class LoginActivityViewModel extends ViewModel {
 
     }
 
+    public LiveData<User> addUser(User user){
+        return userRepository.addUser(user);
+    }
 
 
 

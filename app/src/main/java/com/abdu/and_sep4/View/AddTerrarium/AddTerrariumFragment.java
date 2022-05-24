@@ -16,6 +16,7 @@ import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.Shared.User;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class AddTerrariumFragment extends Fragment {
@@ -41,9 +42,9 @@ public class AddTerrariumFragment extends Fragment {
              @Override
              public void onClick(View view) {
 
-                 User user = SaveInfo.getInstance().getUser();
 
-                 Terrarium terrarium = new Terrarium(et_TerrariumName.getText().toString(), (int) user.getId());
+
+                 Terrarium terrarium = new Terrarium(et_TerrariumName.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                  addTerrariumFragmentViewModel.addTerrarium(terrarium);
 

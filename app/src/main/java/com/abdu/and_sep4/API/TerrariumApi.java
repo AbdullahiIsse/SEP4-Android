@@ -2,10 +2,8 @@ package com.abdu.and_sep4.API;
 
 import com.abdu.and_sep4.Shared.Measurements;
 import com.abdu.and_sep4.Shared.Pet;
-import com.abdu.and_sep4.Shared.Temperatur;
 import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.Shared.User;
-import com.abdu.and_sep4.Shared.UserResponse;
 
 import java.util.List;
 
@@ -16,7 +14,6 @@ import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface TerrariumApi {
 
@@ -25,7 +22,7 @@ public interface TerrariumApi {
 
 
    @GET("terrarium/user/{id}")
-    Call<List<Terrarium>>getTerrariumByUserId(@Path("id") int id);
+    Call<List<Terrarium>>getTerrariumByUserId(@Path("id") String id);
 
    @POST("terrarium")
    Call<Terrarium> addTerrarium(@Body Terrarium terrarium);
@@ -55,6 +52,13 @@ public interface TerrariumApi {
     @PATCH("pet/{id}")
     Call<Pet> updatePet(@Path("id") long id,@Body Pet pet);
 
+
+
+
+    //User
+
+    @POST("user")
+    Call<User> addUser(@Body User user);
 
 
 
