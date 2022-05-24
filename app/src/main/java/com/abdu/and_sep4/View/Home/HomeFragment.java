@@ -25,6 +25,7 @@ import com.abdu.and_sep4.View.Adapter.TerrariumAdapter;
 import com.abdu.and_sep4.View.Home.HomeFragmentViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +41,16 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
     private TextView terrariumError;
     private FloatingActionButton floatingActionButton;
     private View inflate;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
          inflate = inflater.inflate(R.layout.fragment_home, container, false);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
         terrariumError = inflate.findViewById(R.id.tv_terrarium_error);
         floatingActionButton = inflate.findViewById(R.id.fab);
@@ -82,22 +87,26 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
 
     private void getTerrariumByUserId() {
 
-        homeFragmentViewModel.getTerrariumLiveData(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), terrariums1 -> {
+        if (firebaseUser != null){
+            homeFragmentViewModel.getTerrariumLiveData(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), terrariums1 -> {
 
-            if (terrariums1 != null && !terrariums1.isEmpty()){
-                terrariumError.setVisibility(View.GONE);
-                terrariums.clear();
-                terrariums.addAll(terrariums1);
+                if (terrariums1 != null && !terrariums1.isEmpty()){
+                    terrariumError.setVisibility(View.GONE);
+                    terrariums.clear();
+                    terrariums.addAll(terrariums1);
 
-                terrariumAdapter.notifyDataSetChanged();
+                    terrariumAdapter.notifyDataSetChanged();
 
-                Log.e("tester", String.valueOf(terrariums1.get(0).getId()));
+                    Log.e("tester", String.valueOf(terrariums1.get(0).getId()));
 
-            } else {
-                Toast.makeText(getContext(),"Can not find any Terrarium",Toast.LENGTH_SHORT).show();
-            }
+                } else {
+                    Toast.makeText(getContext(),"Can not find any Terrarium",Toast.LENGTH_SHORT).show();
+                }
 
-        });
+            });
+        }
+
+
 
     }
 
