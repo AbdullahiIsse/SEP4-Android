@@ -30,7 +30,6 @@ public class TerrariumRepository {
         UpdateterrariumMutableLiveData = new MutableLiveData<>();
 
 
-
     }
 
     public static synchronized TerrariumRepository getInstance() {
@@ -45,9 +44,6 @@ public class TerrariumRepository {
     public MutableLiveData<List<Terrarium>> getTerrariumListMutableLiveData() {
         return terrariumListMutableLiveData;
     }
-
-
-
 
 
 

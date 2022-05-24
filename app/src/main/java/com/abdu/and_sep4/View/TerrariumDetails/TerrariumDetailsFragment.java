@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
 import com.abdu.and_sep4.R;
+import com.abdu.and_sep4.Shared.FoodDispenser;
 import com.abdu.and_sep4.Shared.Measurements;
 import com.abdu.and_sep4.Shared.MeasurementsType;
 import com.abdu.and_sep4.Shared.SaveInfo;
@@ -35,6 +37,8 @@ import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.View.Adapter.StockSparkAdapter;
 
 
+import com.abdu.and_sep4.View.AddTerrarium.AddTerrariumFragmentViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
@@ -66,7 +70,7 @@ public class TerrariumDetailsFragment extends Fragment {
     private SparkView sparkView;
     private TextView terrariumTemp;
     private ArrayList<Measurements> temperaturArrayList = new ArrayList<>();
-    private TerrariumDetailsFragmentViewModel viewModel;
+
     private List<Temperatur> temperatureMeasurements = new ArrayList<>();
     private HubConnection hubConnection;
     private StockSparkAdapter stockSparkAdapter;
@@ -76,6 +80,13 @@ public class TerrariumDetailsFragment extends Fragment {
     private RadioButton measurementCo2;
     private Button animalBtn;
     private View inflate;
+
+    private Button foodBtn;
+    private Integer food = 1;
+
+    private TerrariumDetailsFragmentViewModel viewModel;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,6 +103,7 @@ public class TerrariumDetailsFragment extends Fragment {
         measurementAir = inflate.findViewById(R.id.measurements_radio_air);
         measurementCo2 = inflate.findViewById(R.id.measurements_radio_co2);
         animalBtn = inflate.findViewById(R.id.terrarium_animals);
+        foodBtn = inflate.findViewById(R.id.addFood);
 
         Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
         terrariumName.setText(terrarium.getTerrariumName());
@@ -122,6 +134,21 @@ public class TerrariumDetailsFragment extends Fragment {
 
 
         viewModel = new ViewModelProvider(this).get(TerrariumDetailsFragmentViewModel.class);
+
+
+        foodBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FoodDispenser addFood = new FoodDispenser(food,terrarium.getId());
+
+                viewModel.addFood(addFood);
+
+
+            }
+        });
+
+
 
 
         viewModel.getTemperatureByTerrariumIdLiveData(terrarium.getId()).observe(getViewLifecycleOwner(), new Observer<List<Measurements>>() {
@@ -182,6 +209,8 @@ public class TerrariumDetailsFragment extends Fragment {
                 Navigation.findNavController(inflate).navigate(R.id.action_terrariumDetailsFragment_to_animalListFragment);
             }
         });
+
+
 
 
 
