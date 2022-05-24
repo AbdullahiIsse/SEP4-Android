@@ -87,20 +87,18 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
 
     private void getTerrariumByUserId() {
 
-        if (firebaseUser != null){
+        if (firebaseUser!= null){
             homeFragmentViewModel.getTerrariumLiveData(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), terrariums1 -> {
 
                 if (terrariums1 != null && !terrariums1.isEmpty()){
                     terrariumError.setVisibility(View.GONE);
                     terrariums.clear();
                     terrariums.addAll(terrariums1);
-
+                    terrariums1.clear();
                     terrariumAdapter.notifyDataSetChanged();
 
-                    Log.e("tester", String.valueOf(terrariums1.get(0).getId()));
 
-                } else {
-                    Toast.makeText(getContext(),"Can not find any Terrarium",Toast.LENGTH_SHORT).show();
+
                 }
 
             });
