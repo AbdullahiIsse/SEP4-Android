@@ -47,9 +47,10 @@ public class ValueWorker extends Worker {
             @Override
             public void onResponse(Call<List<Measurements>> call, Response<List<Measurements>> response) {
 
-                if (response.isSuccessful()){
-                    Log.e("worker",response.body().toString());
-                    notification();
+                if (response.isSuccessful()) {
+                    Log.e("worker", response.body().toString());
+                    if (response.body().get( response.body().size()-1).getMeasurement_temp() == 41.14)
+                   notification("Kritisk Temperatur tilstand",  "Temperaturen har overstreget din grænse" );
 
 
                 }
@@ -68,39 +69,38 @@ public class ValueWorker extends Worker {
     }
 
 
+    public void notification(String title,String text) {
 
 
-    public void notification(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          createNotificationChannel(getApplicationContext());
+        }
+
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                .setContentTitle("My notification")
-                .setContentText("Much longer text that cannot fit one line...")
+                .setContentTitle(title)
+                .setContentText(text)
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Much longer text that cannot fit one line..."))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                        .bigText(text))
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
 
-
-
-
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-        notificationManagerCompat.notify(1, notificationCompat.build());
-
+        notificationManager.notify(1, builder.build());
 
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
+    private void createNotificationChannel(Context context) {
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "ch½";
             String description = "test";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }
