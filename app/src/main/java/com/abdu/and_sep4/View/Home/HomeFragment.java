@@ -1,14 +1,21 @@
 package com.abdu.and_sep4.View.Home;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,14 +28,17 @@ import com.abdu.and_sep4.Adapter.OnListItemClickListener;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
+import com.abdu.and_sep4.ValueWorker;
 import com.abdu.and_sep4.View.Adapter.TerrariumAdapter;
 import com.abdu.and_sep4.View.Home.HomeFragmentViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class HomeFragment extends Fragment implements OnListItemClickListener {
@@ -44,11 +54,12 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-         inflate = inflater.inflate(R.layout.fragment_home, container, false);
+        inflate = inflater.inflate(R.layout.fragment_home, container, false);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -60,7 +71,7 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         recyclerView.hasFixedSize();
 
 
-        terrariumAdapter = new TerrariumAdapter(terrariums,this);
+        terrariumAdapter = new TerrariumAdapter(terrariums, this);
         new ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(recyclerView);
 
         recyclerView.setAdapter(terrariumAdapter);
@@ -68,7 +79,6 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
 
         getTerrariumByUserId();
-
 
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +89,17 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         });
 
 
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        @SuppressLint("InvalidPeriodicWorkRequestInterval")
+        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(ValueWorker.class, Duration.ofMinutes(1))
+                .setConstraints(constraints).build();
+
+
+        WorkManager.getInstance(getContext()).enqueue(periodicWorkRequest);
+
 
         return inflate;
 
@@ -87,10 +108,10 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
 
     private void getTerrariumByUserId() {
 
-        if (firebaseUser!= null){
+        if (firebaseUser != null) {
             homeFragmentViewModel.getTerrariumLiveData(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), terrariums1 -> {
 
-                if (terrariums1 != null && !terrariums1.isEmpty()){
+                if (terrariums1 != null && !terrariums1.isEmpty()) {
                     terrariumError.setVisibility(View.GONE);
                     terrariums.clear();
                     terrariums.addAll(terrariums1);
@@ -98,12 +119,10 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
                     terrariumAdapter.notifyDataSetChanged();
 
 
-
                 }
 
             });
         }
-
 
 
     }

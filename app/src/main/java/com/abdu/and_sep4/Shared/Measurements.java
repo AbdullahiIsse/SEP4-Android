@@ -67,4 +67,16 @@ public class Measurements {
     public void setTerrariumId(long terrariumId) {
         this.terrariumId = terrariumId;
     }
+
+    @Override
+    public String toString() {
+        return "Measurements{" +
+                "id=" + id +
+                ", measurement_temp=" + measurement_temp +
+                ", measurement_air=" + measurement_air +
+                ", measurement_co2=" + measurement_co2 +
+                ", measurements_date='" + measurements_date + '\'' +
+                ", terrariumId=" + terrariumId +
+                '}';
+    }
 }
