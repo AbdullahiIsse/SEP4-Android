@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".View.CriticalValue.CriticalValueFragment"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Temperature Critical Values:"
+        android:textStyle="bold"
+        android:textSize="20sp"
+
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/Temp_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Max Temperature"
+            android:inputType="numberDecimal"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/Temp_min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Min Temperature"
+            android:inputType="numberDecimal"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Humidity Critical Values:"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/Hum_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Max Humidity"
+            android:inputType="numberDecimal"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/Hum_min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Min Humidity"
+            android:inputType="numberDecimal"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CO2 Critical Values:"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/CO2_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Max CO2"
+            android:inputType="numberDecimal"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/CO2_min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Min CO2"
+            android:inputType="numberDecimal"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/addCriticalValues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADD Critical Values and be notified"
+            />
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

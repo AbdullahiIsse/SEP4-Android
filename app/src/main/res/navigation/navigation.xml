@@ -92,5 +92,10 @@
             android:id="@+id/action_updateTerrariumFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/criticalValueFragment"
+        android:name="com.abdu.and_sep4.View.CriticalValue.CriticalValueFragment"
+        android:label="Critical Values"
+        tools:layout="@layout/fragment_critical_value" />
 
 </navigation>

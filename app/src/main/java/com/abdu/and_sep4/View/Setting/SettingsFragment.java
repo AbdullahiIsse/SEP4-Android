@@ -30,8 +30,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         EditTextPreference usernamePreference = findPreference("username");
 
-        if (SaveInfo.getInstance().getUser() != null) {
-            usernamePreference.setText(SaveInfo.getInstance().getUser().getUsername());
+        if (firebaseUser != null) {
+            usernamePreference.setText(firebaseUser.getEmail());
 
         }
 

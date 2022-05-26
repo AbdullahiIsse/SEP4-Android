@@ -17,28 +17,23 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.abdu.and_sep4.Adapter.OnListItemClickListener;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
-import com.abdu.and_sep4.ValueWorker;
 import com.abdu.and_sep4.View.Adapter.TerrariumAdapter;
-import com.abdu.and_sep4.View.Home.HomeFragmentViewModel;
+import com.abdu.and_sep4.View.WorkManager.CriticalValueWorker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 public class HomeFragment extends Fragment implements OnListItemClickListener {
@@ -54,7 +49,7 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,16 +84,6 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         });
 
 
-        Constraints constraints = new Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build();
-
-        @SuppressLint("InvalidPeriodicWorkRequestInterval")
-        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(ValueWorker.class, Duration.ofMinutes(1))
-                .setConstraints(constraints).build();
-
-
-        WorkManager.getInstance(getContext()).enqueue(periodicWorkRequest);
 
 
         return inflate;

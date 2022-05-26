@@ -2,6 +2,9 @@ package com.abdu.and_sep4.View.TerrariumDetails;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +16,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.os.Handler;
 import android.util.Log;
@@ -42,6 +49,7 @@ import com.abdu.and_sep4.View.Adapter.StockSparkAdapter;
 
 import com.abdu.and_sep4.View.AddTerrarium.AddTerrariumFragmentViewModel;
 import com.abdu.and_sep4.View.Login.LoginActivity;
+import com.abdu.and_sep4.View.WorkManager.CriticalValueWorker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -53,6 +61,7 @@ import com.robinhood.spark.SparkView;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,10 +93,13 @@ public class TerrariumDetailsFragment extends Fragment {
     private RadioButton measurementCo2;
     private Button animalBtn;
     private View inflate;
+    private SharedPreferences sharedPreferences;
 
 
 
-    private Button foodBtn;
+   // private Button foodBtn;
+
+    private Button notifyMe;
 
 
     private TerrariumDetailsFragmentViewModel viewModel;
@@ -109,13 +121,25 @@ public class TerrariumDetailsFragment extends Fragment {
         measurementAir = inflate.findViewById(R.id.measurements_radio_air);
         measurementCo2 = inflate.findViewById(R.id.measurements_radio_co2);
         animalBtn = inflate.findViewById(R.id.terrarium_animals);
-        foodBtn = inflate.findViewById(R.id.addFood);
-
+       // foodBtn = inflate.findViewById(R.id.addFood);
+        notifyMe = inflate.findViewById(R.id.notifyMe);
+        sharedPreferences = getActivity().getSharedPreferences("terrariumId", Context.MODE_PRIVATE);
         Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
         terrariumName.setText(terrarium.getTerrariumName());
         terrariumCurrentTemp.setText(Double.toString(20.1));
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(terrarium.getTerrariumName());
+
+
+
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt("id",terrarium.getId());
+
+         editor.apply();
+
+
 
 
         //  hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
@@ -142,17 +166,36 @@ public class TerrariumDetailsFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(TerrariumDetailsFragmentViewModel.class);
 
 
-            foodBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+//            foodBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    FoodDispenser addFood = new FoodDispenser(1, terrarium.getId());
+//
+//                    viewModel.addFood(addFood);
+//
+//
+//                }
+//            });
 
-                    FoodDispenser addFood = new FoodDispenser(1, terrarium.getId());
 
-                    viewModel.addFood(addFood);
+        notifyMe.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                Constraints constraints = new Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build();
 
 
-                }
-            });
+                @SuppressLint("InvalidPeriodicWorkRequestInterval")
+                PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(CriticalValueWorker.class, Duration.ofMinutes(1))
+                        .setConstraints(constraints).build();
+
+
+                WorkManager.getInstance(getContext()).enqueue(periodicWorkRequest);
+            }
+        });
 
 
 

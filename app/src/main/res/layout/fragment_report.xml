@@ -1,51 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Report.ReportFragment">
+    tools:context=".View.Report.ReportFragment"
+    android:orientation="vertical"
+    android:padding="20dp"
+    >
 
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Subject"
-        android:layout_marginTop="140dp"
-        android:textSize="15sp"
-        />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <EditText
-        android:id="@+id/Subject"
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/Subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Subject"
+            android:inputType="textEmailSubject"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="150dp"
-        />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
 
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Text"
+            android:inputType="text"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Text"
-        android:layout_marginTop="240dp"
-        android:textSize="15sp"
-        />
 
-    <EditText
-        android:id="@+id/Text"
-        android:layout_width="match_parent"
-        android:layout_height="122dp"
-        android:layout_marginTop="250dp"
-        />
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
+        android:layout_marginTop="20dp"
         android:id="@+id/button_send_mail"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="400dp"
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Send Email"
-        android:textSize="15sp" />
+        />
 
-</FrameLayout>
+</LinearLayout>
