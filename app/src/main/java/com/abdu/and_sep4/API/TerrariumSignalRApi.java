@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.abdu.and_sep4.Shared.Animal;
 import com.abdu.and_sep4.Shared.Co2Measurement;
+import com.abdu.and_sep4.Shared.FoodDispenser;
 import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 import com.abdu.and_sep4.Shared.TerrariumV2;
@@ -42,6 +43,9 @@ public class TerrariumSignalRApi {
     private final MutableLiveData<List<TerrariumV2>> terrariumByUserIdMutableLiveData;
     private final MutableLiveData<List<Animal>> animalByEuiMutableLiveData;
 
+    private final MutableLiveData <Animal> animalMutableLiveData;
+
+
     public static TerrariumSignalRApi getInstance() {
         if (instance == null) {
             instance = new TerrariumSignalRApi();
@@ -56,6 +60,7 @@ public class TerrariumSignalRApi {
         terrariumCo2ByEuiMutableLiveData = new MutableLiveData<>();
         terrariumByUserIdMutableLiveData = new MutableLiveData<>();
         animalByEuiMutableLiveData = new MutableLiveData<>();
+        animalMutableLiveData = new MutableLiveData<>();
     }
 
 
@@ -223,5 +228,24 @@ public class TerrariumSignalRApi {
 
     }
 
+    public MutableLiveData<Animal> AddAnimalToDb(Animal animal, AnimalAddListener listener) {
+        executorService.execute(() -> {
+            hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
+
+            hubConnection.start().blockingAwait();
+
+            hubConnection.invoke("AddAnimalToDb", animal);
+
+            hubConnection.send("AddAnimalToDb", animal);
+
+            mainThreadHandler.post(() -> listener.AnimalAddListener(animalMutableLiveData));
+
+            hubConnection.close();
+
+        });
+
+        return animalMutableLiveData;
+
+    }
 
 }
