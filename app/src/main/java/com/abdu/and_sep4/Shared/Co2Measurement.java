@@ -1,22 +1,18 @@
 package com.abdu.and_sep4.Shared;
 
-public class TemperatureMeasurement {
-
+public class Co2Measurement {
 
     private int id;
     private String eui;
     private String timestamp;
-    private double measurement;
+    private int measurement;
 
-
-    public TemperatureMeasurement(int id, String eui, String timestamp, double measurement) {
+    public Co2Measurement(int id, String eui, String timestamp, int measurement) {
         this.id = id;
         this.eui = eui;
-        this.timestamp = timestamp ;
+        this.timestamp = timestamp;
         this.measurement = measurement;
     }
-
-
 
     public int getId() {
         return id;
@@ -42,17 +38,17 @@ public class TemperatureMeasurement {
         this.timestamp = timestamp;
     }
 
-    public double getMeasurement() {
+    public int getMeasurement() {
         return measurement;
     }
 
-    public void setMeasurement(double measurement) {
+    public void setMeasurement(int measurement) {
         this.measurement = measurement;
     }
 
     @Override
     public String toString() {
-        return "TemperatureMeasurement{" +
+        return "Co2Measurement{" +
                 "id=" + id +
                 ", eui='" + eui + '\'' +
                 ", timestamp='" + timestamp + '\'' +

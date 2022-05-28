@@ -1,4 +1,4 @@
-package com.abdu.and_sep4.Adapter;
+package com.abdu.and_sep4.View.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Pet;
 

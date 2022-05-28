@@ -7,7 +7,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
-import com.abdu.and_sep4.Shared.Pet;
+import com.abdu.and_sep4.API.TerrariumSignalRApi;
+import com.abdu.and_sep4.Shared.Co2Measurement;
+import com.abdu.and_sep4.Shared.HumidityMeasurement;
+import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 import com.abdu.and_sep4.Shared.Terrarium;
 
 import java.util.List;
@@ -23,18 +26,23 @@ public class TerrariumRepository {
     private final MutableLiveData<List<Terrarium>> terrariumListMutableLiveData;
     private final MutableLiveData<Terrarium> terrariumMutableLiveData;
     private final MutableLiveData<Terrarium> UpdateterrariumMutableLiveData;
+    private final MutableLiveData<List<TemperatureMeasurement>> temperatureMeasurementMutableLiveData;
+
+    private final TerrariumSignalRApi terrariumSignalRApi;
 
     public TerrariumRepository() {
         terrariumListMutableLiveData = new MutableLiveData<>();
         terrariumMutableLiveData = new MutableLiveData<>();
         UpdateterrariumMutableLiveData = new MutableLiveData<>();
+        terrariumSignalRApi = TerrariumSignalRApi.getInstance();
+        temperatureMeasurementMutableLiveData = new MutableLiveData<>();
 
 
     }
 
     public static synchronized TerrariumRepository getInstance() {
 
-        if (instance == null){
+        if (instance == null) {
             instance = new TerrariumRepository();
         }
 
@@ -45,9 +53,33 @@ public class TerrariumRepository {
         return terrariumListMutableLiveData;
     }
 
+    public MutableLiveData<List<TemperatureMeasurement>> getTemperatureFromSignalR(com.abdu.and_sep4.API.Callback callback, String eui) {
+        return terrariumSignalRApi.getTerrariumTemperatureByEui(temperatureMeasurement -> {
+            callback.call();
+        }, eui);
+
+    }
+
+    public MutableLiveData<List<HumidityMeasurement>> getHumidityFromSignalR(com.abdu.and_sep4.API.Callback callback, String eui) {
+        return terrariumSignalRApi.getTerrariumHumidityByEui(humidityMeasurement -> {
+            callback.call();
+        }, eui);
+
+    }
+
+    public MutableLiveData<List<Co2Measurement>> getCo2FromSignalR(com.abdu.and_sep4.API.Callback callback, String eui){
+        return terrariumSignalRApi.getTerrariumCo2ByEui(co2Measurement -> {
+            callback.call();
+        },eui);
 
 
-    public LiveData<List<Terrarium>> getTerrariumByUserId(String userid){
+    }
+
+
+
+
+
+    public LiveData<List<Terrarium>> getTerrariumByUserId(String userid) {
 
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
         Call<List<Terrarium>> call = terrariumApi.getTerrariumByUserId(userid);
@@ -56,7 +88,7 @@ public class TerrariumRepository {
             @Override
             public void onResponse(Call<List<Terrarium>> call, Response<List<Terrarium>> response) {
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 
                     terrariumListMutableLiveData.setValue(response.body());
                 }
@@ -70,18 +102,18 @@ public class TerrariumRepository {
             }
         });
 
-       return terrariumListMutableLiveData;
+        return terrariumListMutableLiveData;
 
     }
 
-    public LiveData<Terrarium> addTerrarium(Terrarium terrarium){
+    public LiveData<Terrarium> addTerrarium(Terrarium terrarium) {
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
         Call<Terrarium> call = terrariumApi.addTerrarium(terrarium);
 
         call.enqueue(new Callback<Terrarium>() {
             @Override
             public void onResponse(Call<Terrarium> call, Response<Terrarium> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     terrariumMutableLiveData.setValue(response.body());
                     Log.e("Retrofit", "working adding terrarium :(");
 
@@ -95,19 +127,18 @@ public class TerrariumRepository {
         });
 
 
-
         return terrariumMutableLiveData;
 
     }
 
-    public void deleteTerrarium(long id){
+    public void deleteTerrarium(long id) {
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
         Call<Terrarium> call = terrariumApi.deleteTerrarium(id);
 
         call.enqueue(new Callback<Terrarium>() {
             @Override
             public void onResponse(Call<Terrarium> call, Response<Terrarium> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Log.e("Retrofit", "deleting Terrarium successfully");
                 }
             }
@@ -120,15 +151,15 @@ public class TerrariumRepository {
     }
 
 
-    public LiveData<Terrarium> updateTerrarium(long id,Terrarium terrarium){
+    public LiveData<Terrarium> updateTerrarium(long id, Terrarium terrarium) {
 
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
-        Call<Terrarium> call = terrariumApi.updateTerrarium(id,terrarium);
+        Call<Terrarium> call = terrariumApi.updateTerrarium(id, terrarium);
 
         call.enqueue(new Callback<Terrarium>() {
             @Override
             public void onResponse(Call<Terrarium> call, Response<Terrarium> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     UpdateterrariumMutableLiveData.setValue(response.body());
                 }
 
@@ -144,12 +175,6 @@ public class TerrariumRepository {
 
 
     }
-
-
-
-
-
-
 
 
 }

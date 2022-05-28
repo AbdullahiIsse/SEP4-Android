@@ -1,22 +1,18 @@
 package com.abdu.and_sep4.Shared;
 
-public class TemperatureMeasurement {
-
+public class HumidityMeasurement {
 
     private int id;
     private String eui;
     private String timestamp;
     private double measurement;
 
-
-    public TemperatureMeasurement(int id, String eui, String timestamp, double measurement) {
+    public HumidityMeasurement(int id, String eui, String timestamp, double measurement) {
         this.id = id;
         this.eui = eui;
-        this.timestamp = timestamp ;
+        this.timestamp = timestamp;
         this.measurement = measurement;
     }
-
-
 
     public int getId() {
         return id;
@@ -52,7 +48,7 @@ public class TemperatureMeasurement {
 
     @Override
     public String toString() {
-        return "TemperatureMeasurement{" +
+        return "HumidityMeasurement{" +
                 "id=" + id +
                 ", eui='" + eui + '\'' +
                 ", timestamp='" + timestamp + '\'' +

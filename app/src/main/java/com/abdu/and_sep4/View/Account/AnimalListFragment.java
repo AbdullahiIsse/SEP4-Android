@@ -18,8 +18,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.abdu.and_sep4.Adapter.OnListItemClickListener;
-import com.abdu.and_sep4.Adapter.PetAdapter;
+import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
+import com.abdu.and_sep4.View.Adapter.PetAdapter;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Pet;
 import com.abdu.and_sep4.Shared.SaveInfo;

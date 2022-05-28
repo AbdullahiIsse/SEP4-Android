@@ -1,4 +1,4 @@
-package com.abdu.and_sep4.Adapter;
+package com.abdu.and_sep4.ClickListener;
 
 public interface OnListItemClickListener {
 

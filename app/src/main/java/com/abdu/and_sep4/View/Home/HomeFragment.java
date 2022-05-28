@@ -1,38 +1,29 @@
 package com.abdu.and_sep4.View.Home;
 
-import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.Constraints;
-import androidx.work.NetworkType;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.abdu.and_sep4.Adapter.OnListItemClickListener;
+import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.View.Adapter.TerrariumAdapter;
-import com.abdu.and_sep4.View.WorkManager.CriticalValueWorker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.time.Duration;
 import java.util.ArrayList;
 
 

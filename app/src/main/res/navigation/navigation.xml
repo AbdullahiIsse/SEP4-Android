@@ -42,6 +42,12 @@
         <action
             android:id="@+id/action_terrariumDetailsFragment_to_animalListFragment"
             app:destination="@id/animalListFragment" />
+        <action
+            android:id="@+id/action_terrariumDetailsFragment_to_humidityFragment"
+            app:destination="@id/humidityFragment" />
+        <action
+            android:id="@+id/action_terrariumDetailsFragment_to_co2Fragment"
+            app:destination="@id/co2Fragment" />
     </fragment>
 
 
@@ -97,5 +103,15 @@
         android:name="com.abdu.and_sep4.View.CriticalValue.CriticalValueFragment"
         android:label="Critical Values"
         tools:layout="@layout/fragment_critical_value" />
+    <fragment
+        android:id="@+id/humidityFragment"
+        android:name="com.abdu.and_sep4.View.Humidity.HumidityFragment"
+        android:label="Humidity"
+        tools:layout="@layout/fragment_humidity" />
+    <fragment
+        android:id="@+id/co2Fragment"
+        android:name="com.abdu.and_sep4.View.CO2.Co2Fragment"
+        android:label="CO2"
+        tools:layout="@layout/fragment_co2" />
 
 </navigation>
