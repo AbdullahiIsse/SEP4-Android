@@ -7,9 +7,11 @@ import android.util.Log;
 import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.MutableLiveData;
 
+import com.abdu.and_sep4.Shared.Animal;
 import com.abdu.and_sep4.Shared.Co2Measurement;
 import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
+import com.abdu.and_sep4.Shared.TerrariumV2;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.microsoft.signalr.HubConnection;
@@ -31,10 +33,14 @@ public class TerrariumSignalRApi {
     private HubConnection hubConnection;
     private ArrayList<TemperatureMeasurement> temperatureMeasurements = new ArrayList<>();
     private ArrayList<HumidityMeasurement> humidityMeasurements = new ArrayList<>();
-    private ArrayList<Co2Measurement>co2Measurements = new ArrayList<>();
+    private ArrayList<Co2Measurement> co2Measurements = new ArrayList<>();
+    private ArrayList<TerrariumV2> terrarium = new ArrayList<>();
+    private ArrayList<Animal> animal = new ArrayList<>();
     private final MutableLiveData<List<TemperatureMeasurement>> terrariumTemperatureByEuiMutableLiveData;
-    private final MutableLiveData<List<HumidityMeasurement>>terrariumHumidityByEuiMutableLiveData;
-    private final MutableLiveData<List<Co2Measurement>>terrariumCo2ByEuiMutableLiveData;
+    private final MutableLiveData<List<HumidityMeasurement>> terrariumHumidityByEuiMutableLiveData;
+    private final MutableLiveData<List<Co2Measurement>> terrariumCo2ByEuiMutableLiveData;
+    private final MutableLiveData<List<TerrariumV2>> terrariumByUserIdMutableLiveData;
+    private final MutableLiveData<List<Animal>> animalByEuiMutableLiveData;
 
     public static TerrariumSignalRApi getInstance() {
         if (instance == null) {
@@ -48,6 +54,8 @@ public class TerrariumSignalRApi {
         terrariumTemperatureByEuiMutableLiveData = new MutableLiveData<>();
         terrariumHumidityByEuiMutableLiveData = new MutableLiveData<>();
         terrariumCo2ByEuiMutableLiveData = new MutableLiveData<>();
+        terrariumByUserIdMutableLiveData = new MutableLiveData<>();
+        animalByEuiMutableLiveData = new MutableLiveData<>();
     }
 
 
@@ -61,11 +69,12 @@ public class TerrariumSignalRApi {
 
             Log.e("signalr", temperatureDataFromDataToAndroid.blockingGet().toString());
 
-            String json = new Gson().toJson(temperatureDataFromDataToAndroid.blockingGet() );
+            String json = new Gson().toJson(temperatureDataFromDataToAndroid.blockingGet());
 
             Gson gson = new Gson();
 
-            Type temp = new TypeToken<ArrayList<TemperatureMeasurement>>(){}.getType();
+            Type temp = new TypeToken<ArrayList<TemperatureMeasurement>>() {
+            }.getType();
 
             temperatureMeasurements = gson.fromJson(json, temp);
 
@@ -82,7 +91,7 @@ public class TerrariumSignalRApi {
     }
 
 
-    public MutableLiveData<List<HumidityMeasurement>> getTerrariumHumidityByEui(HumidityReceivedListener listener,String eui){
+    public MutableLiveData<List<HumidityMeasurement>> getTerrariumHumidityByEui(HumidityReceivedListener listener, String eui) {
         executorService.execute(() -> {
             hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
 
@@ -92,11 +101,12 @@ public class TerrariumSignalRApi {
 
             Log.e("signalr", humidityDataFromDataToAndroid.blockingGet().toString());
 
-            String json = new Gson().toJson(humidityDataFromDataToAndroid.blockingGet() );
+            String json = new Gson().toJson(humidityDataFromDataToAndroid.blockingGet());
 
             Gson gson = new Gson();
 
-            Type temp = new TypeToken<ArrayList<HumidityMeasurement>>(){}.getType();
+            Type temp = new TypeToken<ArrayList<HumidityMeasurement>>() {
+            }.getType();
 
             humidityMeasurements = gson.fromJson(json, temp);
 
@@ -114,7 +124,7 @@ public class TerrariumSignalRApi {
     }
 
 
-    public MutableLiveData<List<Co2Measurement>> getTerrariumCo2ByEui(Co2ReceivedListener listener,String eui){
+    public MutableLiveData<List<Co2Measurement>> getTerrariumCo2ByEui(Co2ReceivedListener listener, String eui) {
         executorService.execute(() -> {
             hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
 
@@ -124,11 +134,12 @@ public class TerrariumSignalRApi {
 
             Log.e("signalr", co2DataFromDataToAndroid.blockingGet().toString());
 
-            String json = new Gson().toJson(co2DataFromDataToAndroid.blockingGet() );
+            String json = new Gson().toJson(co2DataFromDataToAndroid.blockingGet());
 
             Gson gson = new Gson();
 
-            Type temp = new TypeToken<ArrayList<Co2Measurement>>(){}.getType();
+            Type temp = new TypeToken<ArrayList<Co2Measurement>>() {
+            }.getType();
 
             co2Measurements = gson.fromJson(json, temp);
 
@@ -143,6 +154,72 @@ public class TerrariumSignalRApi {
         });
 
         return terrariumCo2ByEuiMutableLiveData;
+
+    }
+
+    public MutableLiveData<List<TerrariumV2>> getTerrariumByUserId(TerrariumReceivedListener listener, String userId) {
+        executorService.execute(() -> {
+            hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
+
+            hubConnection.start().blockingAwait();
+
+            Single<List> terrariumByUserDataFromDataToAndroid = hubConnection.invoke(List.class, "UsersTerrariumDataFromDataToAndroid", userId);
+
+            Log.e("signalr", terrariumByUserDataFromDataToAndroid.blockingGet().toString());
+
+            String json = new Gson().toJson(terrariumByUserDataFromDataToAndroid.blockingGet());
+
+            Gson gson = new Gson();
+
+            Type temp = new TypeToken<ArrayList<TerrariumV2>>() {
+            }.getType();
+
+            terrarium = gson.fromJson(json, temp);
+
+            Log.e("gson", terrarium.toString());
+
+            terrariumByUserIdMutableLiveData.postValue(terrarium);
+
+            mainThreadHandler.post(() -> listener.onTerrariumReceived(terrariumByUserIdMutableLiveData));
+
+            hubConnection.close();
+
+        });
+
+        return terrariumByUserIdMutableLiveData;
+
+    }
+
+    public MutableLiveData<List<Animal>> getAnimalByEui(AnimalReceivedListener listener, String eui) {
+        executorService.execute(() -> {
+            hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
+
+            hubConnection.start().blockingAwait();
+
+            Single<List> animalByEuiFromDataToAndroid = hubConnection.invoke(List.class, "TerrariumAnimalsDataFromDataToAndroid", eui);
+
+            Log.e("signalr", animalByEuiFromDataToAndroid.blockingGet().toString());
+
+            String json = new Gson().toJson(animalByEuiFromDataToAndroid.blockingGet());
+
+            Gson gson = new Gson();
+
+            Type temp = new TypeToken<ArrayList<Animal>>() {
+            }.getType();
+
+            animal = gson.fromJson(json, temp);
+
+            Log.e("gson", animal.toString());
+
+            animalByEuiMutableLiveData.postValue(animal);
+
+            mainThreadHandler.post(() -> listener.onAnimalReceived(animalByEuiMutableLiveData));
+
+            hubConnection.close();
+
+        });
+
+        return animalByEuiMutableLiveData;
 
     }
 

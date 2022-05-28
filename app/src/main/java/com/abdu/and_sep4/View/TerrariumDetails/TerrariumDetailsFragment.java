@@ -138,6 +138,20 @@ public class TerrariumDetailsFragment extends Fragment {
             }
         });
 
+        viewModel.getHum("abc123").observe(getViewLifecycleOwner(), new Observer<List<HumidityMeasurement>>() {
+            @Override
+            public void onChanged(List<HumidityMeasurement> humidityMeasurements) {
+                Log.e("Viewmodel-hum", humidityMeasurements.toString());
+            }
+        });
+
+        viewModel.getCo2("abc").observe(getViewLifecycleOwner(), new Observer<List<Co2Measurement>>() {
+            @Override
+            public void onChanged(List<Co2Measurement> co2Measurements) {
+                Log.e("Viewmodel-co2", co2Measurements.toString());
+            }
+        });
+
 
 
 

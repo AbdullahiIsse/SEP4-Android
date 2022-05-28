@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
+import com.abdu.and_sep4.Shared.Animal;
 import com.abdu.and_sep4.View.Adapter.PetAdapter;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Pet;
@@ -69,6 +71,13 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
         animalListFragmentViewmodel = new ViewModelProvider(this).get(AnimalListFragmentViewmodel.class);
 
         getPetList();
+
+        animalListFragmentViewmodel.getAnimalByEui("abc123").observe(getViewLifecycleOwner(), new Observer<List<Animal>>() {
+            @Override
+            public void onChanged(List<Animal> animals) {
+                Log.e("Viewmodel-Animal", animals.toString());
+            }
+        });
 
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {

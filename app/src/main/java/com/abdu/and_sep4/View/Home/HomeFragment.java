@@ -4,12 +4,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +21,14 @@ import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
+import com.abdu.and_sep4.Shared.TerrariumV2;
 import com.abdu.and_sep4.View.Adapter.TerrariumAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment implements OnListItemClickListener {
@@ -65,6 +69,13 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
 
         getTerrariumByUserId();
+
+        homeFragmentViewModel.getTerrariumByUserId("jack").observe(getViewLifecycleOwner(), new Observer<List<TerrariumV2>>() {
+            @Override
+            public void onChanged(List<TerrariumV2> terrariumV2s) {
+                Log.e("Viewmodel-Terrarium", terrariumV2s.toString());
+            }
+        });
 
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {

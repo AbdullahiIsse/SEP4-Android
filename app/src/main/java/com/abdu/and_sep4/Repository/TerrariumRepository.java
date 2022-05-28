@@ -7,11 +7,14 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
+import com.abdu.and_sep4.API.TerrariumReceivedListener;
 import com.abdu.and_sep4.API.TerrariumSignalRApi;
+import com.abdu.and_sep4.Shared.Animal;
 import com.abdu.and_sep4.Shared.Co2Measurement;
 import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 import com.abdu.and_sep4.Shared.Terrarium;
+import com.abdu.and_sep4.Shared.TerrariumV2;
 
 import java.util.List;
 
@@ -67,17 +70,26 @@ public class TerrariumRepository {
 
     }
 
-    public MutableLiveData<List<Co2Measurement>> getCo2FromSignalR(com.abdu.and_sep4.API.Callback callback, String eui){
+    public MutableLiveData<List<Co2Measurement>> getCo2FromSignalR(com.abdu.and_sep4.API.Callback callback, String eui) {
         return terrariumSignalRApi.getTerrariumCo2ByEui(co2Measurement -> {
             callback.call();
-        },eui);
+        }, eui);
 
 
     }
 
+    public MutableLiveData<List<TerrariumV2>> getTerrariumByUserIdFromSignalR(com.abdu.and_sep4.API.Callback callback, String userId) {
+        return terrariumSignalRApi.getTerrariumByUserId(terrarium -> {
+            callback.call();
+        }, userId);
+    }
 
 
-
+    public MutableLiveData<List<Animal>> getAnimalFromSignalR(com.abdu.and_sep4.API.Callback callback, String eui) {
+        return terrariumSignalRApi.getAnimalByEui(animal -> {
+            callback.call();
+        },eui);
+    }
 
     public LiveData<List<Terrarium>> getTerrariumByUserId(String userid) {
 
