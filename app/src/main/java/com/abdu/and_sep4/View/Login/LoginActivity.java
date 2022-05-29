@@ -116,8 +116,6 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth.signInWithCredential(credential).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                User user = new User(FirebaseAuth.getInstance().getCurrentUser().getUid(),authResult.getUser().getDisplayName(), authResult.getUser().getEmail());
-                loginActivityViewModel.addUser(user);
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
 
@@ -154,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
             et_password.requestFocus();
             return;
         }
+
 
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

@@ -12,8 +12,7 @@ public class Animal {
     private boolean hibernating;
     private boolean hasOffSpring;
 
-    public Animal(int id, String eui, String name, int age, String species, char gender, boolean shedding, boolean hibernating, boolean hasOffSpring) {
-        this.id = id;
+    public Animal( String eui, String name, int age, String species, char gender, boolean shedding, boolean hibernating, boolean hasOffSpring) {
         this.eui = eui;
         this.name = name;
         this.age = age;

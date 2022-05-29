@@ -92,9 +92,7 @@ public class AddTerrariumFragment extends Fragment {
         addTerrariumFragmentViewModel.addTerrariumToDb(terrariumV2).observe(getViewLifecycleOwner(), new Observer<TerrariumV2>() {
             @Override
             public void onChanged(TerrariumV2 terrariumV2) {
-                if (terrariumV2 != null) {
-                    Navigation.findNavController(inflate).navigate(R.id.action_addTerrariumFragment_to_homeFragment);
-                }
+                Log.e("addedTerrarium", terrariumV2.toString());
             }
         });
     }

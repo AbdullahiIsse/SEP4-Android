@@ -13,6 +13,8 @@ import com.abdu.and_sep4.Shared.FoodDispenser;
 import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 import com.abdu.and_sep4.Shared.TerrariumV2;
+import com.abdu.and_sep4.Shared.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.microsoft.signalr.HubConnection;
@@ -45,6 +47,7 @@ public class TerrariumSignalRApi {
 
     private final MutableLiveData<TerrariumV2> terrariumV2MutableLiveData;
     private final MutableLiveData<Animal> animalMutableLiveData;
+    private final MutableLiveData<User> userMutableLiveData;
 
 
     public static TerrariumSignalRApi getInstance() {
@@ -63,6 +66,7 @@ public class TerrariumSignalRApi {
         animalByEuiMutableLiveData = new MutableLiveData<>();
         animalMutableLiveData = new MutableLiveData<>();
         terrariumV2MutableLiveData = new MutableLiveData<>();
+        userMutableLiveData = new MutableLiveData<>();
     }
 
 
@@ -236,9 +240,11 @@ public class TerrariumSignalRApi {
 
             hubConnection.start().blockingAwait();
 
-            hubConnection.invoke("AddAnimalToDb", animal);
+            Single<Animal> addAnimalToDb = hubConnection.invoke(Animal.class, "AddAnimalToDb", animal);
 
-            hubConnection.send("AddAnimalToDb", animal);
+            Log.e("signalr", addAnimalToDb.blockingGet().toString());
+
+            animalMutableLiveData.postValue(addAnimalToDb.blockingGet());
 
             mainThreadHandler.post(() -> listener.AnimalAddListener(animalMutableLiveData));
 
@@ -256,22 +262,44 @@ public class TerrariumSignalRApi {
             hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
 
             hubConnection.start().blockingAwait();
+            String json = new Gson().toJson(terrarium);
 
             Single<TerrariumV2> addTerrariumToDb = hubConnection.invoke(TerrariumV2.class, "AddTerrariumToDb", terrarium);
 
-            Log.e("signalr", addTerrariumToDb.blockingGet().toString());
+            Log.e("signalr Add Terrarium", addTerrariumToDb.blockingGet().toString());
 
             terrariumV2MutableLiveData.postValue(addTerrariumToDb.blockingGet());
 
             mainThreadHandler.post(() -> listener.onTerrariumAdded(terrariumV2MutableLiveData));
 
             hubConnection.close();
-
         });
-
         return terrariumV2MutableLiveData;
-
     }
+
+    public MutableLiveData<User> addUser(UserAddListener listener, User user) {
+        executorService.execute(() -> {
+            hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
+
+            hubConnection.start().blockingAwait();
+
+
+            Single<User> addUserToDb = hubConnection.invoke(User.class, "AddUserToDb", user);
+
+            Log.e("signalr", addUserToDb.blockingGet().toString());
+
+            userMutableLiveData.postValue(addUserToDb.blockingGet());
+
+            mainThreadHandler.post(() -> listener.UserAddListener(userMutableLiveData));
+
+            hubConnection.close();
+        });
+        return userMutableLiveData;
+    }
+
+
+
+
 
 
 

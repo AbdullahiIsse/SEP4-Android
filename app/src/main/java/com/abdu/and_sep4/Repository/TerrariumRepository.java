@@ -15,6 +15,7 @@ import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.Shared.TerrariumV2;
+import com.abdu.and_sep4.Shared.User;
 
 import java.util.List;
 
@@ -96,6 +97,19 @@ public class TerrariumRepository {
             callback.call();
         },eui);
     }
+
+    public MutableLiveData<Animal> addAnimal(com.abdu.and_sep4.API.Callback callback, Animal animal) {
+        return terrariumSignalRApi.AddAnimalToDb(animal,addAnimal -> {
+            callback.call();
+        });
+    }
+
+    public MutableLiveData<User> addUser(com.abdu.and_sep4.API.Callback callback, User user) {
+        return terrariumSignalRApi.addUser(addUser -> {
+            callback.call();
+        },user);
+    }
+
 
     public LiveData<List<Terrarium>> getTerrariumByUserId(String userid) {
 
