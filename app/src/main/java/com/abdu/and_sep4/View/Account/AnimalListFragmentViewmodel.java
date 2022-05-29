@@ -26,7 +26,7 @@ public class AnimalListFragmentViewmodel extends ViewModel {
 
         petRepository = PetRepository.getInstance();
         terrariumRepository = TerrariumRepository.getInstance();
-        loading = new MutableLiveData<>(false);
+        loading = new MutableLiveData<>(true);
     }
 
 

@@ -37,7 +37,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private ArrayList<Pet> petArrayList = new ArrayList<>();
+    private ArrayList<Animal> petArrayList = new ArrayList<>();
     private AnimalListFragmentViewmodel animalListFragmentViewmodel;
     private PetAdapter petAdapter;
     private FloatingActionButton floatingActionButton;
@@ -72,13 +72,8 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
 
         getPetList();
 
-        animalListFragmentViewmodel.getAnimalByEui("abc123").observe(getViewLifecycleOwner(), new Observer<List<Animal>>() {
-            @Override
-            public void onChanged(List<Animal> animals) {
-                Log.e("Viewmodel-Animal", animals.toString());
-            }
-        });
 
+        animalListFragmentViewmodel.loading().observe(getViewLifecycleOwner(), this::setProgressbarVisibility);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,25 +89,38 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     private void getPetList() {
         TerrariumV2 terrarium = SaveInfo.getInstance().getTerrarium();
 
-        animalListFragmentViewmodel.getPetsLiveData(Long.parseLong(terrarium.getEui())).observe(getViewLifecycleOwner(), petsResponse -> {
-            if (petsResponse != null && !petsResponse.isEmpty()) {
+        animalListFragmentViewmodel.getAnimalByEui(terrarium.getEui()).observe(getViewLifecycleOwner(), new Observer<List<Animal>>() {
+            @Override
+            public void onChanged(List<Animal> animals) {
+                if (animals != null && !animals.isEmpty()) {
+                    petArrayList.clear();
+                    petArrayList.addAll(animals);
+                    petListError.setText("");
+                    petAdapter.notifyDataSetChanged();
+                    Log.e("terrarium", animals.toString());
+                    petListError.setVisibility(View.GONE);
 
-                progressBar.setVisibility(View.GONE);
-                petListError.setVisibility(View.GONE);
-                List<Pet> pets = petsResponse;
-                petArrayList.clear();
-                petArrayList.addAll(pets);
-                petsResponse.clear();
-                petAdapter.notifyDataSetChanged();
-                Log.e("terrarium", petsResponse.toString());
+                } else {
+                    petListError.setVisibility(View.VISIBLE);
+                    petListError.setText("Can not find any pets");
 
-            } else {
-                progressBar.setVisibility(View.GONE);
-
-
+                }
             }
-
         });
+
+
+    }
+
+
+    private void setProgressbarVisibility(Boolean aBoolean) {
+        if (aBoolean) {
+            progressBar.setVisibility(View.VISIBLE);
+            floatingActionButton.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            floatingActionButton.setVisibility(View.VISIBLE);
+
+        }
 
     }
 
@@ -121,10 +129,6 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     public void onClick(int position) {
 
         Toast.makeText(getContext(), "Position: " + position, Toast.LENGTH_SHORT).show();
-
-
-
-
 
 
     }
@@ -138,7 +142,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            Pet remove = petArrayList.remove(viewHolder.getAdapterPosition());
+            Animal remove = petArrayList.remove(viewHolder.getAdapterPosition());
             petAdapter.notifyDataSetChanged();
             animalListFragmentViewmodel.deletingPet(remove.getId());
 

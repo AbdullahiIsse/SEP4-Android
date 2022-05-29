@@ -14,19 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
 import com.abdu.and_sep4.R;
+import com.abdu.and_sep4.Shared.Animal;
 import com.abdu.and_sep4.Shared.Pet;
 
 import java.util.ArrayList;
 
 public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> implements OnListItemClickListener {
 
-    private ArrayList<Pet> pets;
+    private ArrayList<Animal> pets;
     OnListItemClickListener listener;
     Context context;
     private Bundle bundle = new Bundle();
 
 
-    public PetAdapter(ArrayList<Pet> pets, OnListItemClickListener listener) {
+    public PetAdapter(ArrayList<Animal> pets, OnListItemClickListener listener) {
         this.pets = pets;
         this.listener = listener;
 
@@ -49,6 +50,11 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
         holder.species.setText(pets.get(position).getSpecies());
         holder.name.setText(pets.get(position).getName());
         holder.age.setText(Integer.toString(pets.get(position).getAge()));
+        holder.petGender.setText(Character.toString(pets.get(position).getGender()));
+        holder.shedding.setText(Boolean.toString(pets.get(position).isShedding()));
+        holder.hibernating.setText(Boolean.toString(pets.get(position).isHibernating()));
+        holder.hasOfSpring.setText(Boolean.toString(pets.get(position).isHasOffSpring()));
+
         holder.petEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +90,10 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
         TextView name;
         TextView age;
         TextView petEdit;
+        TextView petGender;
+        TextView shedding;
+        TextView hibernating;
+        TextView hasOfSpring;
 
 
         public PetsViewHolder(@NonNull View itemView) {
@@ -99,7 +109,10 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
             name = itemView.findViewById(R.id.name);
             age = itemView.findViewById(R.id.age);
             petEdit = itemView.findViewById(R.id.petEdit);
-
+            petGender = itemView.findViewById(R.id.petGender);
+            shedding = itemView.findViewById(R.id.shedding);
+            hibernating = itemView.findViewById(R.id.hibernating);
+            hasOfSpring = itemView.findViewById(R.id.hasOffSpring);
 
         }
 
