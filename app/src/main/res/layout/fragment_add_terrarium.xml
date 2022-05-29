@@ -15,11 +15,119 @@
 
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/Terrarium_name"
+            android:id="@+id/Terrarium_Eui"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Terrarium Name"
+            android:hint="Terrarium Eui"
             android:inputType="textCapWords"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/Temp_min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Min Temperature"
+            android:inputType="numberDecimal"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/Temp_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Max Temperature"
+            android:inputType="numberDecimal"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/Hum_min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Min Humidity"
+            android:inputType="numberDecimal"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/Hum_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Max Humidity"
+            android:inputType="numberDecimal"
+            android:textColor="#363A43"
+            android:textColorHint="#7A8089"
+
+            />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/CO2_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Max CO2"
+            android:inputType="numberDecimal"
             android:textColor="#363A43"
             android:textColorHint="#7A8089"
 

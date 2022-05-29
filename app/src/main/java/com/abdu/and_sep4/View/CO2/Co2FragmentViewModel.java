@@ -17,7 +17,7 @@ public class Co2FragmentViewModel extends ViewModel {
 
     public Co2FragmentViewModel() {
         terrariumRepository = TerrariumRepository.getInstance();
-        loading = new MutableLiveData<>(false);
+        loading = new MutableLiveData<>(true);
     }
 
 

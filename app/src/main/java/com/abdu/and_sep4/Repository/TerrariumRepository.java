@@ -84,6 +84,12 @@ public class TerrariumRepository {
         }, userId);
     }
 
+    public MutableLiveData<TerrariumV2> addTerrarium(com.abdu.and_sep4.API.Callback callback, TerrariumV2 terrarium) {
+        return terrariumSignalRApi.addTerrarium(terrarium1 -> {
+            callback.call();
+        },terrarium);
+    }
+
 
     public MutableLiveData<List<Animal>> getAnimalFromSignalR(com.abdu.and_sep4.API.Callback callback, String eui) {
         return terrariumSignalRApi.getAnimalByEui(animal -> {

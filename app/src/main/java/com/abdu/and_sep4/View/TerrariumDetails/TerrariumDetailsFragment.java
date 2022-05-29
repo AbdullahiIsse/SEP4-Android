@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.abdu.and_sep4.R;
@@ -31,7 +32,7 @@ import com.abdu.and_sep4.Shared.Measurements;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Temperatur;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
-import com.abdu.and_sep4.Shared.Terrarium;
+import com.abdu.and_sep4.Shared.TerrariumV2;
 import com.abdu.and_sep4.View.Adapter.TemperatureSparkAdapter;
 
 
@@ -61,6 +62,7 @@ public class TerrariumDetailsFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private Button humidityGraphBtn;
     private Button co2GraphBtn;
+    private ProgressBar progressBar;
 
 
     // private Button foodBtn;
@@ -81,22 +83,23 @@ public class TerrariumDetailsFragment extends Fragment {
         textViewDate = inflate.findViewById(R.id.tv_date);
         sparkView = inflate.findViewById(R.id.sparkview);
         terrariumTemp = inflate.findViewById(R.id.tv_temp);
+        progressBar = inflate.findViewById(R.id.progressBar);
         animalBtn = inflate.findViewById(R.id.terrarium_animals);
         humidityGraphBtn = inflate.findViewById(R.id.Humidity);
         co2GraphBtn = inflate.findViewById(R.id.CO2);
         // foodBtn = inflate.findViewById(R.id.addFood);
         notifyMe = inflate.findViewById(R.id.notifyMe);
         sharedPreferences = getActivity().getSharedPreferences("terrariumId", Context.MODE_PRIVATE);
-        Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
-        terrariumName.setText(terrarium.getTerrariumName());
+        TerrariumV2 terrarium = SaveInfo.getInstance().getTerrarium();
+        terrariumName.setText(terrarium.getEui());
         terrariumCurrentTemp.setText(Double.toString(20.1));
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(terrarium.getTerrariumName());
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(terrarium.getEui());
 
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putInt("id", terrarium.getId());
+       // editor.putInt("id", terrarium.getId());
 
         editor.apply();
 
@@ -104,6 +107,7 @@ public class TerrariumDetailsFragment extends Fragment {
 
 
         viewModel = new ViewModelProvider(this).get(TerrariumDetailsFragmentViewModel.class);
+
 
 
 //            foodBtn.setOnClickListener(new View.OnClickListener() {
@@ -138,19 +142,8 @@ public class TerrariumDetailsFragment extends Fragment {
             }
         });
 
-        viewModel.getHum("abc123").observe(getViewLifecycleOwner(), new Observer<List<HumidityMeasurement>>() {
-            @Override
-            public void onChanged(List<HumidityMeasurement> humidityMeasurements) {
-                Log.e("Viewmodel-hum", humidityMeasurements.toString());
-            }
-        });
+        viewModel.loading().observe(getViewLifecycleOwner(), this::setProgressbarVisibility);
 
-        viewModel.getCo2("abc").observe(getViewLifecycleOwner(), new Observer<List<Co2Measurement>>() {
-            @Override
-            public void onChanged(List<Co2Measurement> co2Measurements) {
-                Log.e("Viewmodel-co2", co2Measurements.toString());
-            }
-        });
 
 
 
@@ -199,6 +192,14 @@ public class TerrariumDetailsFragment extends Fragment {
 
         return inflate;
     }
+
+    private void setProgressbarVisibility(Boolean aBoolean) {
+        if (aBoolean)
+            progressBar.setVisibility(View.VISIBLE);
+        else
+            progressBar.setVisibility(View.INVISIBLE);
+    }
+
 
 
     private void updateDisplayWithData(List<TemperatureMeasurement> dailyData) {

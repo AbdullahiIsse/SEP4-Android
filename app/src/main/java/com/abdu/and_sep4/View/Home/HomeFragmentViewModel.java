@@ -24,7 +24,7 @@ public class HomeFragmentViewModel extends ViewModel {
         terrariumRepository = TerrariumRepository.getInstance();
 
         terrariumLiveData = new MutableLiveData<>();
-        loading = new MutableLiveData<>(false);
+        loading = new MutableLiveData<>(true);
 
     }
 

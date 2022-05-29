@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class SaveInfo {
 
     private User user;
-    private Terrarium terrarium;
+    private TerrariumV2 terrarium;
 
 
     private static SaveInfo instance;
@@ -35,11 +35,11 @@ public class SaveInfo {
     }
 
 
-    public Terrarium getTerrarium() {
+    public TerrariumV2 getTerrarium() {
         return terrarium;
     }
 
-    public void setTerrarium(Terrarium terrarium) {
+    public void setTerrarium(TerrariumV2 terrarium) {
         this.terrarium = terrarium;
     }
 

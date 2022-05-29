@@ -21,11 +21,11 @@ import android.widget.Toast;
 
 import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
 import com.abdu.and_sep4.Shared.Animal;
+import com.abdu.and_sep4.Shared.TerrariumV2;
 import com.abdu.and_sep4.View.Adapter.PetAdapter;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Pet;
 import com.abdu.and_sep4.Shared.SaveInfo;
-import com.abdu.and_sep4.Shared.Terrarium;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -92,9 +92,9 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
 
 
     private void getPetList() {
-        Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
+        TerrariumV2 terrarium = SaveInfo.getInstance().getTerrarium();
 
-        animalListFragmentViewmodel.getPetsLiveData(terrarium.getId()).observe(getViewLifecycleOwner(), petsResponse -> {
+        animalListFragmentViewmodel.getPetsLiveData(Long.parseLong(terrarium.getEui())).observe(getViewLifecycleOwner(), petsResponse -> {
             if (petsResponse != null && !petsResponse.isEmpty()) {
 
                 progressBar.setVisibility(View.GONE);

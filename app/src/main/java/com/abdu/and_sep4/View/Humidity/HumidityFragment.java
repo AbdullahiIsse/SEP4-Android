@@ -10,16 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.SaveInfo;
-import com.abdu.and_sep4.Shared.TemperatureMeasurement;
-import com.abdu.and_sep4.Shared.Terrarium;
+import com.abdu.and_sep4.Shared.TerrariumV2;
 import com.abdu.and_sep4.View.Adapter.HumiditySparkAdapter;
-import com.abdu.and_sep4.View.Adapter.TemperatureSparkAdapter;
-import com.abdu.and_sep4.View.TerrariumDetails.TerrariumDetailsFragmentViewModel;
 import com.robinhood.spark.SparkView;
 
 import java.util.ArrayList;
@@ -38,6 +36,8 @@ public class HumidityFragment extends Fragment {
     private ArrayList<HumidityMeasurement> humidityMeasurementArrayList = new ArrayList<>();
     private HumiditySparkAdapter humiditySparkAdapter;
     private HumidityFragmentViewModel viewModel;
+    private ProgressBar progressBar;
+
 
 
     @Override
@@ -50,8 +50,9 @@ public class HumidityFragment extends Fragment {
         textViewDate = inflate.findViewById(R.id.tv_date);
         sparkView = inflate.findViewById(R.id.sparkview);
         terrariumTemp = inflate.findViewById(R.id.tv_temp);
-        Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
-        terrariumName.setText(terrarium.getTerrariumName());
+        progressBar = inflate.findViewById(R.id.progressBar);
+        TerrariumV2 terrarium = SaveInfo.getInstance().getTerrarium();
+        terrariumName.setText(terrarium.getEui());
 
         viewModel = new ViewModelProvider(this).get(HumidityFragmentViewModel.class);
 
@@ -75,8 +76,17 @@ public class HumidityFragment extends Fragment {
             }
         });
 
+        viewModel.loading().observe(getViewLifecycleOwner(), this::setProgressbarVisibility);
 
         return inflate;
+    }
+
+
+    private void setProgressbarVisibility(Boolean aBoolean) {
+        if (aBoolean)
+            progressBar.setVisibility(View.VISIBLE);
+        else
+            progressBar.setVisibility(View.INVISIBLE);
     }
 
 

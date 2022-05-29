@@ -43,7 +43,8 @@ public class TerrariumSignalRApi {
     private final MutableLiveData<List<TerrariumV2>> terrariumByUserIdMutableLiveData;
     private final MutableLiveData<List<Animal>> animalByEuiMutableLiveData;
 
-    private final MutableLiveData <Animal> animalMutableLiveData;
+    private final MutableLiveData<TerrariumV2> terrariumV2MutableLiveData;
+    private final MutableLiveData<Animal> animalMutableLiveData;
 
 
     public static TerrariumSignalRApi getInstance() {
@@ -61,6 +62,7 @@ public class TerrariumSignalRApi {
         terrariumByUserIdMutableLiveData = new MutableLiveData<>();
         animalByEuiMutableLiveData = new MutableLiveData<>();
         animalMutableLiveData = new MutableLiveData<>();
+        terrariumV2MutableLiveData = new MutableLiveData<>();
     }
 
 
@@ -245,6 +247,29 @@ public class TerrariumSignalRApi {
         });
 
         return animalMutableLiveData;
+
+    }
+
+
+    public MutableLiveData<TerrariumV2> addTerrarium(TerrariumAddListener listener, TerrariumV2 terrarium) {
+        executorService.execute(() -> {
+            hubConnection = HubConnectionBuilder.create("https://terraeyes.azurewebsites.net/AppHub").build();
+
+            hubConnection.start().blockingAwait();
+
+            Single<TerrariumV2> addTerrariumToDb = hubConnection.invoke(TerrariumV2.class, "AddTerrariumToDb", terrarium);
+
+            Log.e("signalr", addTerrariumToDb.blockingGet().toString());
+
+            terrariumV2MutableLiveData.postValue(addTerrariumToDb.blockingGet());
+
+            mainThreadHandler.post(() -> listener.onTerrariumAdded(terrariumV2MutableLiveData));
+
+            hubConnection.close();
+
+        });
+
+        return terrariumV2MutableLiveData;
 
     }
 

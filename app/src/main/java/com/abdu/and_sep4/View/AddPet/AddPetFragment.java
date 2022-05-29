@@ -15,10 +15,7 @@ import android.widget.EditText;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Pet;
 import com.abdu.and_sep4.Shared.SaveInfo;
-import com.abdu.and_sep4.Shared.Terrarium;
-
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.abdu.and_sep4.Shared.TerrariumV2;
 
 
 public class AddPetFragment extends Fragment {
@@ -39,13 +36,13 @@ public class AddPetFragment extends Fragment {
         EditText age = (EditText) inflate.findViewById(R.id.age);
 
         Button addPet = (Button) inflate.findViewById(R.id.addPet);
-        Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
+        TerrariumV2 terrarium = SaveInfo.getInstance().getTerrarium();
         addPet.setOnClickListener((view1) -> {
 
             Pet pet = new Pet(
                     name.getText().toString(),
                     species.getText().toString(),
-                    Integer.parseInt(age.getText().toString()),terrarium.getId()
+                    Integer.parseInt(age.getText().toString()), Long.parseLong(terrarium.getEui())
 
             );
 

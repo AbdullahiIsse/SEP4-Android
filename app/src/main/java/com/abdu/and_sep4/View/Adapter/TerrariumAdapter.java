@@ -14,18 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Terrarium;
+import com.abdu.and_sep4.Shared.TerrariumV2;
 
 import java.util.ArrayList;
 
 public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.ViewHolder> implements OnListItemClickListener{
 
-    private ArrayList<Terrarium> terrariums;
+    private ArrayList<TerrariumV2> terrariums;
     OnListItemClickListener OnListItemClickListener;
     private Bundle bundle = new Bundle();
 
 
 
-    public TerrariumAdapter(ArrayList<Terrarium> terrariums, OnListItemClickListener OnListItemClickListener) {
+    public TerrariumAdapter(ArrayList<TerrariumV2> terrariums, OnListItemClickListener OnListItemClickListener) {
         this.terrariums = terrariums;
         this.OnListItemClickListener = OnListItemClickListener;
     }
@@ -42,12 +43,12 @@ public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-      holder.name.setText(terrariums.get(position).getTerrariumName());
+      holder.name.setText(terrariums.get(position).getEui());
       holder.edit.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              bundle.putLong("TerrariumId",terrariums.get(position).getId());
-              bundle.putString("TerrariumName", terrariums.get(position).getTerrariumName());
+              bundle.putString("TerrariumId",terrariums.get(position).getEui());
+              bundle.putString("TerrariumName", terrariums.get(position).getEui());
 
 
 

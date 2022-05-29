@@ -43,7 +43,6 @@ public class AnimalListFragmentViewmodel extends ViewModel {
         return  terrariumRepository.getAnimalFromSignalR(() -> loading.setValue(false),eui);
     }
 
-
     public LiveData<Boolean> loading() {
         return loading;
     }

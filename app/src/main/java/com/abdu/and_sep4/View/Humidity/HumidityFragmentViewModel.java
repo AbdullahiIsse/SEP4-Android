@@ -15,7 +15,7 @@ public class HumidityFragmentViewModel extends ViewModel {
 
     public HumidityFragmentViewModel() {
         terrariumRepository = TerrariumRepository.getInstance();
-        loading = new MutableLiveData<>(false);
+        loading = new MutableLiveData<>(true);
     }
 
 

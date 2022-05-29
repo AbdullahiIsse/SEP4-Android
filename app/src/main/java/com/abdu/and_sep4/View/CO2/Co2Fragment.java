@@ -10,16 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Co2Measurement;
-import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.SaveInfo;
-import com.abdu.and_sep4.Shared.Terrarium;
+import com.abdu.and_sep4.Shared.TerrariumV2;
 import com.abdu.and_sep4.View.Adapter.Co2SparkAdapter;
-import com.abdu.and_sep4.View.Adapter.HumiditySparkAdapter;
-import com.abdu.and_sep4.View.Humidity.HumidityFragmentViewModel;
 import com.robinhood.spark.SparkView;
 
 import java.util.ArrayList;
@@ -37,6 +35,8 @@ public class Co2Fragment extends Fragment {
     private ArrayList<Co2Measurement> co2MeasurementArrayList = new ArrayList<>();
     private Co2SparkAdapter co2SparkAdapter;
     private Co2FragmentViewModel viewModel;
+    private ProgressBar progressBar;
+
 
 
     @Override
@@ -49,8 +49,9 @@ public class Co2Fragment extends Fragment {
         textViewDate = inflate.findViewById(R.id.tv_date);
         sparkView = inflate.findViewById(R.id.sparkview);
         terrariumTemp = inflate.findViewById(R.id.tv_temp);
-        Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
-        terrariumName.setText(terrarium.getTerrariumName());
+        progressBar = inflate.findViewById(R.id.progressBar);
+        TerrariumV2 terrarium = SaveInfo.getInstance().getTerrarium();
+        terrariumName.setText(terrarium.getEui());
 
         viewModel = new ViewModelProvider(this).get(Co2FragmentViewModel.class);
 
@@ -75,7 +76,17 @@ public class Co2Fragment extends Fragment {
             }
         });
 
+        viewModel.loading().observe(getViewLifecycleOwner(), this::setProgressbarVisibility);
+
         return inflate;
+    }
+
+
+    private void setProgressbarVisibility(Boolean aBoolean) {
+        if (aBoolean)
+            progressBar.setVisibility(View.VISIBLE);
+        else
+            progressBar.setVisibility(View.INVISIBLE);
     }
 
     private void updateDisplayWithData(List<Co2Measurement> dailyData) {

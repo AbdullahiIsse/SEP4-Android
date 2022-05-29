@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
@@ -36,13 +37,14 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
     private RecyclerView recyclerView;
     private TerrariumAdapter terrariumAdapter;
     private Bundle bundle = new Bundle();
-    private ArrayList<Terrarium> terrariums = new ArrayList<>();
+    private ArrayList<TerrariumV2> terrariums = new ArrayList<>();
     private HomeFragmentViewModel homeFragmentViewModel;
-    private TextView terrariumError;
     private FloatingActionButton floatingActionButton;
     private View inflate;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private ProgressBar progressBar;
+    private TextView error;
 
 
     @Override
@@ -53,7 +55,8 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        terrariumError = inflate.findViewById(R.id.tv_terrarium_error);
+        progressBar = inflate.findViewById(R.id.progressBar);
+        error = inflate.findViewById(R.id.terrariumError);
         floatingActionButton = inflate.findViewById(R.id.fab);
 
         recyclerView = inflate.findViewById(R.id.rv_home);
@@ -70,12 +73,8 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
 
         getTerrariumByUserId();
 
-        homeFragmentViewModel.getTerrariumByUserId("jack").observe(getViewLifecycleOwner(), new Observer<List<TerrariumV2>>() {
-            @Override
-            public void onChanged(List<TerrariumV2> terrariumV2s) {
-                Log.e("Viewmodel-Terrarium", terrariumV2s.toString());
-            }
-        });
+
+        homeFragmentViewModel.loading().observe(getViewLifecycleOwner(), this::setProgressbarVisibility);
 
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -96,21 +95,43 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
     private void getTerrariumByUserId() {
 
         if (firebaseUser != null) {
-            homeFragmentViewModel.getTerrariumLiveData(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), terrariums1 -> {
 
-                if (terrariums1 != null && !terrariums1.isEmpty()) {
-                    terrariumError.setVisibility(View.GONE);
-                    terrariums.clear();
-                    terrariums.addAll(terrariums1);
-                    terrariums1.clear();
-                    terrariumAdapter.notifyDataSetChanged();
+            homeFragmentViewModel.getTerrariumByUserId("jack").observe(getViewLifecycleOwner(), new Observer<List<TerrariumV2>>() {
+                @Override
+                public void onChanged(List<TerrariumV2> terrariumV2s) {
+                    if (terrariumV2s != null && !terrariumV2s.isEmpty()) {
+                        terrariums.clear();
+                        terrariums.addAll(terrariumV2s);
+                        error.setText("");
+                        terrariumAdapter.notifyDataSetChanged();
+                        error.setVisibility(View.GONE);
 
+
+
+                    } else {
+                        error.setVisibility(View.VISIBLE);
+                        error.setText("Can not find any Terrarium");
+                        Log.e("Viewmodel-Terrarium", "terrariumV2s.toString()");
+                    }
 
                 }
-
             });
+
         }
 
+
+    }
+
+    private void setProgressbarVisibility(Boolean aBoolean) {
+        if (aBoolean){
+            progressBar.setVisibility(View.VISIBLE);
+            floatingActionButton.setVisibility(View.GONE);
+        }
+        else{
+            progressBar.setVisibility(View.GONE);
+            floatingActionButton.setVisibility(View.VISIBLE);
+
+        }
 
     }
 
@@ -130,9 +151,9 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            Terrarium terrarium = terrariums.remove(viewHolder.getAdapterPosition());
+            TerrariumV2 terrarium = terrariums.remove(viewHolder.getAdapterPosition());
             terrariumAdapter.notifyDataSetChanged();
-            homeFragmentViewModel.deleteTerrarium(terrarium.getId());
+            homeFragmentViewModel.deleteTerrarium(Long.parseLong(terrarium.getEui()));
 
         }
     };
