@@ -1,4 +1,4 @@
-package com.abdu.and_sep4.Repository;
+package com.abdu.and_sep4.Repository.Web;
 
 import android.app.Application;
 import android.util.Log;
@@ -9,10 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
 import com.abdu.and_sep4.Dao.AnimalDao;
-import com.abdu.and_sep4.Dao.MeasurementDao;
 import com.abdu.and_sep4.Dao.TerrariumDatabase;
 import com.abdu.and_sep4.Shared.Animal;
-import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;

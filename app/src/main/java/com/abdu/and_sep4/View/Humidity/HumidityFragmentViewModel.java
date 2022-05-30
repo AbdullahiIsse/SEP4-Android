@@ -4,28 +4,26 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.abdu.and_sep4.Repository.MeasurementsRepository;
-import com.abdu.and_sep4.Repository.TerrariumRepository;
+import com.abdu.and_sep4.Repository.Web.MeasurementsRepository;
+import com.abdu.and_sep4.Repository.WebOrLocale.MeasurementWebOrLocaleRepository;
 import com.abdu.and_sep4.Shared.HumidityMeasurement;
 
 import java.util.List;
 
 public class HumidityFragmentViewModel extends AndroidViewModel {
-    private MeasurementsRepository measurementsRepository;
+    private MeasurementWebOrLocaleRepository measurementWebOrLocaleRepository;
 
 
     public HumidityFragmentViewModel(Application application) {
         super(application);
-        measurementsRepository = MeasurementsRepository.getInstance(application);
+        measurementWebOrLocaleRepository = MeasurementWebOrLocaleRepository.getInstance(application);
 
     }
 
 
     public LiveData<List<HumidityMeasurement>> getHum(String userId,String eui){
-        return  measurementsRepository.getHumidityMeasurementsByUserIdAndEui(userId, eui);
+        return  measurementWebOrLocaleRepository.getHumidityMeasurementsByUserIdAndEui(userId, eui);
     }
 
 

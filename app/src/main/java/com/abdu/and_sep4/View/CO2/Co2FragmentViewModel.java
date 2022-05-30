@@ -4,30 +4,27 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.abdu.and_sep4.Repository.MeasurementsRepository;
-import com.abdu.and_sep4.Repository.TerrariumRepository;
+import com.abdu.and_sep4.Repository.Web.MeasurementsRepository;
+import com.abdu.and_sep4.Repository.WebOrLocale.MeasurementWebOrLocaleRepository;
 import com.abdu.and_sep4.Shared.Co2Measurement;
-import com.abdu.and_sep4.Shared.HumidityMeasurement;
 
 import java.util.List;
 
 public class Co2FragmentViewModel extends AndroidViewModel {
 
-    private MeasurementsRepository measurementsRepository;
+    private MeasurementWebOrLocaleRepository measurementWebOrLocaleRepository;
 
 
     public Co2FragmentViewModel(Application application) {
         super(application);
-        measurementsRepository = MeasurementsRepository.getInstance(application);
-        ;
+        measurementWebOrLocaleRepository = MeasurementWebOrLocaleRepository.getInstance(application);
+
     }
 
 
     public LiveData<List<Co2Measurement>> getCo2(String userId,String eui){
-        return   measurementsRepository.getCo2MeasurementsByUserIdAndEui(userId, eui);
+        return   measurementWebOrLocaleRepository.getCo2MeasurementsByUserIdAndEui(userId, eui);
     }
 
 

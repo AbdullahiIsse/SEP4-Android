@@ -16,7 +16,6 @@ import androidx.work.WorkerParameters;
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
 import com.abdu.and_sep4.R;
-import com.abdu.and_sep4.Repository.MeasurementsRepository;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class CriticalValueWorker extends Worker {
 
     public CriticalValueWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        
+
     }
 
     @NonNull
