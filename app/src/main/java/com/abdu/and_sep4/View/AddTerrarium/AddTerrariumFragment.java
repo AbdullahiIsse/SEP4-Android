@@ -32,6 +32,7 @@ public class AddTerrariumFragment extends Fragment {
     private AddTerrariumFragmentViewModel addTerrariumFragmentViewModel;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class AddTerrariumFragment extends Fragment {
         et_humMin = inflate.findViewById(R.id.Hum_min);
         et_co2Max = inflate.findViewById(R.id.CO2_max);
         addTerrariumBtn = inflate.findViewById(R.id.addTerrarium);
-        sharedPreferences = getActivity().getSharedPreferences("CriticalValues", Context.MODE_PRIVATE);
+        //sharedPreferences = getActivity().getSharedPreferences("CriticalValues", Context.MODE_PRIVATE);
         addTerrariumFragmentViewModel = new ViewModelProvider(this).get(AddTerrariumFragmentViewModel.class);
 
         addTerrariumBtn.setOnClickListener(this::addTerrarium);
@@ -68,15 +69,15 @@ public class AddTerrariumFragment extends Fragment {
             addTerrariumToDb(eui, Double.parseDouble(tempMin), Double.parseDouble(tempMax), Double.parseDouble(humMin), Double.parseDouble(humMax), Integer.parseInt(co2Max));
 
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-
-            editor.putString("tempMax",tempMax);
-            editor.putString("tempMin",tempMin);
-            editor.putString("humMax",humMax);
-            editor.putString("humMin",humMin);
-            editor.putString("co2Max",co2Max);
-
-            editor.apply();
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//
+//            editor.putString("tempMax",tempMax);
+//            editor.putString("tempMin",tempMin);
+//            editor.putString("humMax",humMax);
+//            editor.putString("humMin",humMin);
+//            editor.putString("co2Max",co2Max);
+//
+//            editor.apply();
 
 
             et_TerrariumEui.setText("");

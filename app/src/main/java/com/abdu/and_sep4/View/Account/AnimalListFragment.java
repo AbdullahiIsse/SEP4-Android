@@ -86,7 +86,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     private void getPetList() {
         Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
 
-        animalListFragmentViewmodel.getPetsLiveData("jack","abc123").observe(getViewLifecycleOwner(), new Observer<List<Animal>>() {
+        animalListFragmentViewmodel.getPetsLiveData("jack",SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<Animal>>() {
             @Override
             public void onChanged(List<Animal> animals) {
                 if (animals != null && !animals.isEmpty()) {

@@ -87,7 +87,7 @@ public class AddPetFragment extends Fragment {
     private void addPetToDb(String name, int age, String species, String gender, boolean shedding, boolean hibernating, boolean hasOffSpring) {
 
 
-        Animal animal = new Animal("abc123", name, age, species, gender, shedding, hibernating, hasOffSpring);
+        Animal animal = new Animal(SaveInfo.getInstance().getTerrarium().getEui(), name, age, species, gender, shedding, hibernating, hasOffSpring);
         Log.e("animal", animal.toString());
 
         addPetVM.addAnimal(animal);

@@ -57,7 +57,7 @@ public class HumidityFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(HumidityFragmentViewModel.class);
 
 
-        viewModel.getHum("jack","abc123").observe(getViewLifecycleOwner(), new Observer<List<HumidityMeasurement>>() {
+        viewModel.getHum("jack",SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<HumidityMeasurement>>() {
             @Override
             public void onChanged(List<HumidityMeasurement> humidityMeasurements) {
                 progressBar.setVisibility(View.GONE);

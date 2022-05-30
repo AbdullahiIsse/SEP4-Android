@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
 import com.abdu.and_sep4.R;
+import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.View
             @Override
             public void onClick(View view) {
 
+                SaveInfo.getInstance().setTerrarium(terrariums.get(position));
                 bundle.putString("TerrariumEui", terrariums.get(position).getEui());
                 bundle.putString("TerrariumUser", terrariums.get(position).getUserId());
                 bundle.putDouble("TerrariumMinTemp", terrariums.get(position).getMinTemperature());

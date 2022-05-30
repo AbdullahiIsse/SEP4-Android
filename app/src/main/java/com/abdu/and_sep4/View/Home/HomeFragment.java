@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         progressBar = inflate.findViewById(R.id.progress_bar3);
        // error = inflate.findViewById(R.id.terrariumError);
         floatingActionButton = inflate.findViewById(R.id.fab);
-//        progressBar.setVisibility(View.GONE);
+//      progressBar.setVisibility(View.GONE);
 
         recyclerView = inflate.findViewById(R.id.rv_home);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
