@@ -25,7 +25,7 @@ import retrofit2.Response;
 public class TerrariumRepository {
 
     private static TerrariumRepository instance;
-    private final TerrariumDao terrariumDao;
+    //private final TerrariumDao terrariumDao;
 
     private final MutableLiveData<List<Terrarium>> terrariumListMutableLiveData;
     private final MutableLiveData<Terrarium> terrariumMutableLiveData;
@@ -34,9 +34,9 @@ public class TerrariumRepository {
     private final ExecutorService executorService;
 
 
-    public TerrariumRepository(Application application) {
-        TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
-        terrariumDao = terrariumDatabase.terrariumDao();
+    public TerrariumRepository() {
+       // TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
+      //  terrariumDao = terrariumDatabase.terrariumDao();
         terrariumListMutableLiveData = new MutableLiveData<>();
         terrariumMutableLiveData = new MutableLiveData<>();
         UpdateterrariumMutableLiveData = new MutableLiveData<>();
@@ -46,10 +46,10 @@ public class TerrariumRepository {
 
     }
 
-    public static synchronized TerrariumRepository getInstance(Application application) {
+    public static synchronized TerrariumRepository getInstance() {
 
         if (instance == null) {
-            instance = new TerrariumRepository(application);
+            instance = new TerrariumRepository();
         }
 
         return instance;
@@ -67,18 +67,7 @@ public class TerrariumRepository {
 
                 if (response.isSuccessful()) {
 
-                    List<Terrarium> terrariums = response.body();
                     terrariumListMutableLiveData.setValue(response.body());
-
-                    terrariumListMutableLiveData.getValue();
-
-                    for (Terrarium t : Objects.requireNonNull(terrariumListMutableLiveData.getValue())) {
-                        Log.e("database", "test");
-                        executorService.execute(() -> terrariumDao.addTerrarium(t));
-                    }
-
-
-
 
                 }
 

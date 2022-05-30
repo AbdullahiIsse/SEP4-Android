@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "animal_table")
+
 public class Animal {
 
-    @PrimaryKey
+
     private int id;
     private String eui;
     private String name;
@@ -20,7 +20,7 @@ public class Animal {
     private boolean hibernating;
     private boolean shedding;
 
-    @Ignore
+
     public Animal(String eui, String name, int age, String species, String gender, boolean hasOffSpring, boolean hibernating, boolean shedding) {
         this.eui = eui;
         this.name = name;

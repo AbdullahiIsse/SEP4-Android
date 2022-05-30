@@ -13,7 +13,7 @@ import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 import com.abdu.and_sep4.Shared.Terrarium;
 
-@Database(entities = {Terrarium.class}, version = 1)
+
 public abstract class TerrariumDatabase extends RoomDatabase {
 
     private static TerrariumDatabase instance;

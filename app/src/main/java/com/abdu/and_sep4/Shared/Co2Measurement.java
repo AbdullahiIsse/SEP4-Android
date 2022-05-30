@@ -3,10 +3,10 @@ package com.abdu.and_sep4.Shared;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "co2Measurement_table")
+
 public class Co2Measurement {
 
-    @PrimaryKey
+
     private int id;
     private String eui;
     private String timestamp;
