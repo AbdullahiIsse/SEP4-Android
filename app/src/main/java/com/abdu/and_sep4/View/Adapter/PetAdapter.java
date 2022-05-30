@@ -2,11 +2,14 @@ package com.abdu.and_sep4.View.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
@@ -24,6 +27,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
     OnListItemClickListener listener;
     Context context;
     private Bundle bundle = new Bundle();
+    private View inflate;
 
 
     public PetAdapter(ArrayList<Animal> pets, OnListItemClickListener listener) {
@@ -36,8 +40,8 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
     @NonNull
     @Override
     public PetsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pet_item,parent,false);
-        PetsViewHolder holder = new PetsViewHolder(view);
+        inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.pet_item,parent,false);
+        PetsViewHolder holder = new PetsViewHolder(inflate);
 
         return holder;
 
@@ -57,21 +61,43 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
         holder.petEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putInt("id",pets.get(position).getId());
-                bundle.putString("name", pets.get(position).getName());
-                bundle.putString("species",pets.get(position).getSpecies());
-                bundle.putInt("age",pets.get(position).getAge());
-                bundle.putString("gender", pets.get(position).getGender());
-                bundle.putBoolean("shedding", pets.get(position).isShedding());
-                bundle.putBoolean("hibernating", pets.get(position).isHibernating());
-                bundle.putBoolean("hasOfSpring", pets.get(position).isHasOffSpring());
+                if (ifNetworkIsAvailable()){
 
-                Navigation.findNavController(holder.itemView).navigate(R.id.action_animalListFragment_to_updatePetFragment,bundle);
+                    bundle.putInt("id",pets.get(position).getId());
+                    bundle.putString("name", pets.get(position).getName());
+                    bundle.putString("species",pets.get(position).getSpecies());
+                    bundle.putInt("age",pets.get(position).getAge());
+                    bundle.putString("gender", pets.get(position).getGender());
+                    bundle.putBoolean("shedding", pets.get(position).isShedding());
+                    bundle.putBoolean("hibernating", pets.get(position).isHibernating());
+                    bundle.putBoolean("hasOfSpring", pets.get(position).isHasOffSpring());
+
+                    Navigation.findNavController(holder.itemView).navigate(R.id.action_animalListFragment_to_updatePetFragment,bundle);
+
+
+                } else {
+                    Toast.makeText(inflate.getContext(),"Please connect to the internet",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
     }
+    public boolean ifNetworkIsAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) inflate.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
 
+        if (info != null) {
+            if (info.isConnected()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
 
 
     @Override

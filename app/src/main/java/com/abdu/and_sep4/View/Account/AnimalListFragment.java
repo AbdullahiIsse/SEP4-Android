@@ -1,5 +1,8 @@
 package com.abdu.and_sep4.View.Account;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -75,7 +78,13 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(inflate).navigate(R.id.action_animalListFragment_to_AddPetFragments);
+                if (ifNetworkIsAvailable()){
+                    Navigation.findNavController(inflate).navigate(R.id.action_animalListFragment_to_AddPetFragments);
+                } else {
+                    Toast.makeText(inflate.getContext(),"Please connect to the internet",Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
 
@@ -109,7 +118,21 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     }
 
 
+    public boolean ifNetworkIsAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) inflate.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
 
+        if (info != null) {
+            if (info.isConnected()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
 
 
     @Override

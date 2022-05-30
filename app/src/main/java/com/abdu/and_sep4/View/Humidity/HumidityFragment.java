@@ -1,5 +1,8 @@
 package com.abdu.and_sep4.View.Humidity;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -81,7 +84,6 @@ public class HumidityFragment extends Fragment {
 
         return inflate;
     }
-
 
 
 

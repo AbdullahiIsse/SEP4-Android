@@ -1,11 +1,15 @@
 package com.abdu.and_sep4.View.Adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
@@ -23,6 +27,7 @@ public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.View
     private ArrayList<Terrarium> terrariums;
     OnListItemClickListener OnListItemClickListener;
     private Bundle bundle = new Bundle();
+    private LayoutInflater inflater;
 
 
     public TerrariumAdapter(ArrayList<Terrarium> terrariums, OnListItemClickListener OnListItemClickListener) {
@@ -34,7 +39,7 @@ public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.terrarium_list, parent, false);
         return new ViewHolder(view);
     }
@@ -46,19 +51,43 @@ public class TerrariumAdapter extends RecyclerView.Adapter<TerrariumAdapter.View
             @Override
             public void onClick(View view) {
 
-                SaveInfo.getInstance().setTerrarium(terrariums.get(position));
-                bundle.putString("TerrariumEui", terrariums.get(position).getEui());
-                bundle.putString("TerrariumUser", terrariums.get(position).getUserId());
-                bundle.putDouble("TerrariumMinTemp", terrariums.get(position).getMinTemperature());
-                bundle.putDouble("TerrariumMaxTemp", terrariums.get(position).getMaxTemperature());
-                bundle.putDouble("TerrariumMinHum", terrariums.get(position).getMinHumidity());
-                bundle.putDouble("TerrariumMaxHum", terrariums.get(position).getMaxHumidity());
-                bundle.putInt("TerrariumMaxCo2", terrariums.get(position).getMaxCarbonDioxide());
 
 
-                Navigation.findNavController(holder.itemView).navigate(R.id.action_homeFragment_to_updateTerrariumFragment, bundle);
+                if (ifNetworkIsAvailable()){
+                    SaveInfo.getInstance().setTerrarium(terrariums.get(position));
+                    bundle.putString("TerrariumEui", terrariums.get(position).getEui());
+                    bundle.putString("TerrariumUser", terrariums.get(position).getUserId());
+                    bundle.putDouble("TerrariumMinTemp", terrariums.get(position).getMinTemperature());
+                    bundle.putDouble("TerrariumMaxTemp", terrariums.get(position).getMaxTemperature());
+                    bundle.putDouble("TerrariumMinHum", terrariums.get(position).getMinHumidity());
+                    bundle.putDouble("TerrariumMaxHum", terrariums.get(position).getMaxHumidity());
+                    bundle.putInt("TerrariumMaxCo2", terrariums.get(position).getMaxCarbonDioxide());
+                    Navigation.findNavController(holder.itemView).navigate(R.id.action_homeFragment_to_updateTerrariumFragment, bundle);
+
+                } else {
+                    Toast.makeText(inflater.getContext(),"Please connect to the internet",Toast.LENGTH_LONG).show();
+                }
+
+
+
             }
         });
+
+    }
+
+    public boolean ifNetworkIsAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) inflater.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+
+        if (info != null) {
+            if (info.isConnected()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
 
     }
 

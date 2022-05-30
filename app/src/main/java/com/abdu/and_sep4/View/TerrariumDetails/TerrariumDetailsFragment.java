@@ -3,6 +3,8 @@ package com.abdu.and_sep4.View.TerrariumDetails;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -24,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.SaveInfo;
@@ -93,29 +96,29 @@ public class TerrariumDetailsFragment extends Fragment {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-       editor.putString("id", terrarium.getEui());
+        editor.putString("id", terrarium.getEui());
 
         editor.apply();
-
-
 
 
         viewModel = new ViewModelProvider(this).get(TerrariumDetailsFragmentViewModel.class);
 
 
-
-            foodBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                  viewModel.feedAnimal(SaveInfo.getInstance().getTerrarium().getEui());
-
-
+        foodBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ifNetworkIsAvailable()) {
+                    viewModel.feedAnimal(SaveInfo.getInstance().getTerrarium().getEui());
+                } else {
+                    Toast.makeText(inflate.getContext(), "Please connect to the internet", Toast.LENGTH_LONG).show();
                 }
-            });
 
 
-        viewModel.getTemperatureByUserIdAndEuiLiveData("jack",SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<TemperatureMeasurement>>() {
+            }
+        });
+
+
+        viewModel.getTemperatureByUserIdAndEuiLiveData("jack", SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<TemperatureMeasurement>>() {
             @Override
             public void onChanged(List<TemperatureMeasurement> temperatureMeasurements) {
                 progressBar.setVisibility(View.GONE);
@@ -129,40 +132,43 @@ public class TerrariumDetailsFragment extends Fragment {
                     }
                 });
                 temperatureMeasurementArrayList = (ArrayList<TemperatureMeasurement>) body;
-                Log.e("test","det virker");
+                Log.e("test", "det virker");
                 updateDisplayWithData(temperatureMeasurementArrayList);
                 Log.e("Viewmodel-temp", temperatureMeasurements.toString());
             }
         });
 
 
-
-
-
-
-
         notifyMe.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                Constraints constraints = new Constraints.Builder()
-                        .setRequiredNetworkType(NetworkType.CONNECTED)
-                        .build();
+                if (ifNetworkIsAvailable()) {
+                    Constraints constraints = new Constraints.Builder()
+                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                            .build();
 
 
-                @SuppressLint("InvalidPeriodicWorkRequestInterval")
-                PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(CriticalValueWorker.class, Duration.ofMinutes(1))
-                        .setConstraints(constraints).build();
+                    @SuppressLint("InvalidPeriodicWorkRequestInterval")
+                    PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(CriticalValueWorker.class, Duration.ofMinutes(1))
+                            .setConstraints(constraints).build();
 
 
-                WorkManager.getInstance(getContext()).enqueue(periodicWorkRequest);
+                    WorkManager.getInstance(getContext()).enqueue(periodicWorkRequest);
+                } else {
+                    Toast.makeText(inflate.getContext(), "Please connect to the internet", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
         animalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Navigation.findNavController(inflate).navigate(R.id.action_terrariumDetailsFragment_to_animalListFragment);
+
+
             }
         });
 
@@ -181,13 +187,25 @@ public class TerrariumDetailsFragment extends Fragment {
         });
 
 
-
-
         return inflate;
     }
 
 
+    public boolean ifNetworkIsAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) inflate.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
 
+        if (info != null) {
+            if (info.isConnected()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
 
 
     private void updateDisplayWithData(List<TemperatureMeasurement> dailyData) {

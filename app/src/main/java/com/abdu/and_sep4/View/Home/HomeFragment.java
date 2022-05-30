@@ -1,5 +1,8 @@
 package com.abdu.and_sep4.View.Home;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
 import com.abdu.and_sep4.R;
@@ -78,7 +82,12 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(inflate).navigate(R.id.action_homeFragment_to_addTerrariumFragment);
+                if (ifNetworkIsAvailable()){
+                    Navigation.findNavController(inflate).navigate(R.id.action_homeFragment_to_addTerrariumFragment);
+                } else {
+                    Toast.makeText(inflate.getContext(),"Please connect to the internet",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -87,6 +96,23 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
 
         return inflate;
 
+
+    }
+
+
+    public boolean ifNetworkIsAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) inflate.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+
+        if (info != null) {
+            if (info.isConnected()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
 
     }
 

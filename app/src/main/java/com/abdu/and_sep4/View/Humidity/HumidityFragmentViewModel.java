@@ -12,6 +12,7 @@ import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import java.util.List;
 
 public class HumidityFragmentViewModel extends AndroidViewModel {
+
     private MeasurementWebOrLocaleRepository measurementWebOrLocaleRepository;
 
 
