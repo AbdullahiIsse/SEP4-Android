@@ -59,6 +59,7 @@ public class Co2Fragment extends Fragment {
         viewModel.getCo2("jack","abc123").observe(getViewLifecycleOwner(), new Observer<List<Co2Measurement>>() {
             @Override
             public void onChanged(List<Co2Measurement> co2Measurements) {
+                progressBar.setVisibility(View.GONE);
                 List<Co2Measurement> body = co2Measurements;
 
                 sparkView.setScrubEnabled(true);

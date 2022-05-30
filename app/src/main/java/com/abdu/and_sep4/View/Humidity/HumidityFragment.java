@@ -60,6 +60,7 @@ public class HumidityFragment extends Fragment {
         viewModel.getHum("jack","abc123").observe(getViewLifecycleOwner(), new Observer<List<HumidityMeasurement>>() {
             @Override
             public void onChanged(List<HumidityMeasurement> humidityMeasurements) {
+                progressBar.setVisibility(View.GONE);
                 List<HumidityMeasurement> body = humidityMeasurements;
 
                 sparkView.setScrubEnabled(true);

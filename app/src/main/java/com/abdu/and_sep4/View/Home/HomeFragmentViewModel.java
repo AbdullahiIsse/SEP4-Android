@@ -1,5 +1,8 @@
 package com.abdu.and_sep4.View.Home;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,15 +14,16 @@ import java.util.List;
 
 
 
-public class HomeFragmentViewModel extends ViewModel {
+public class HomeFragmentViewModel extends AndroidViewModel {
 
     private TerrariumRepository terrariumRepository;
     private LiveData<List<Terrarium>> terrariumLiveData;
 
 
 
-    public HomeFragmentViewModel() {
-        terrariumRepository = TerrariumRepository.getInstance();
+    public HomeFragmentViewModel(Application app) {
+        super(app);
+        terrariumRepository = TerrariumRepository.getInstance(app);
 
         terrariumLiveData = new MutableLiveData<>();
 

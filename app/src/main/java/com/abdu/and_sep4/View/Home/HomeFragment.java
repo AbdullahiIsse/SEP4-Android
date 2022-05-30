@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        //progressBar = inflate.findViewById(R.id.progressBar);
+        progressBar = inflate.findViewById(R.id.progress_bar3);
        // error = inflate.findViewById(R.id.terrariumError);
         floatingActionButton = inflate.findViewById(R.id.fab);
 //        progressBar.setVisibility(View.GONE);
@@ -98,6 +98,7 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
                 @Override
                 public void onChanged(List<Terrarium> terrariums) {
                     if (terrariums != null && !terrariums.isEmpty()) {
+                        progressBar.setVisibility(View.GONE);
                         HomeFragment.this.terrariums.clear();
                         HomeFragment.this.terrariums.addAll(terrariums);
                         terrariums.clear();

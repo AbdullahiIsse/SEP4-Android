@@ -90,6 +90,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
             @Override
             public void onChanged(List<Animal> animals) {
                 if (animals != null && !animals.isEmpty()) {
+                    progressBar.setVisibility(View.GONE);
                     petArrayList.clear();
                     petArrayList.addAll(animals);
                     animals.clear();

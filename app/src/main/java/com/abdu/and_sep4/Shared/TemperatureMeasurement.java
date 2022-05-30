@@ -1,8 +1,12 @@
 package com.abdu.and_sep4.Shared;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "temperatureMeasurement_table")
 public class TemperatureMeasurement {
 
-
+    @PrimaryKey
     private int id;
     private String eui;
     private String timestamp;
@@ -12,10 +16,9 @@ public class TemperatureMeasurement {
     public TemperatureMeasurement(int id, String eui, String timestamp, double measurement) {
         this.id = id;
         this.eui = eui;
-        this.timestamp = timestamp ;
+        this.timestamp = timestamp;
         this.measurement = measurement;
     }
-
 
 
     public int getId() {

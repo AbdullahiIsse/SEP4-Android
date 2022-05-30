@@ -120,6 +120,7 @@ public class TerrariumDetailsFragment extends Fragment {
         viewModel.getTemperatureByUserIdAndEuiLiveData("jack","abc123").observe(getViewLifecycleOwner(), new Observer<List<TemperatureMeasurement>>() {
             @Override
             public void onChanged(List<TemperatureMeasurement> temperatureMeasurements) {
+                progressBar.setVisibility(View.GONE);
                 List<TemperatureMeasurement> body = temperatureMeasurements;
 
                 sparkView.setScrubEnabled(true);

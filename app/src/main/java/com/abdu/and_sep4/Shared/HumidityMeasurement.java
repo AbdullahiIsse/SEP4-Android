@@ -1,7 +1,11 @@
 package com.abdu.and_sep4.Shared;
 
-public class HumidityMeasurement {
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "humidityMeasurement_table")
+public class HumidityMeasurement {
+    @PrimaryKey
     private int id;
     private String eui;
     private String timestamp;

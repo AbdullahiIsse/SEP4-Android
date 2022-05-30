@@ -1,20 +1,24 @@
 package com.abdu.and_sep4.View.AddTerrarium;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.abdu.and_sep4.Repository.TerrariumRepository;
 import com.abdu.and_sep4.Shared.Terrarium;
 
-public class AddTerrariumFragmentViewModel extends ViewModel {
+public class AddTerrariumFragmentViewModel extends AndroidViewModel {
 
     private TerrariumRepository terrariumRepository;
 
 
 
-    public AddTerrariumFragmentViewModel() {
+    public AddTerrariumFragmentViewModel(Application application) {
+        super(application);
 
-        terrariumRepository = TerrariumRepository.getInstance();
+        terrariumRepository = TerrariumRepository.getInstance(application);
 
     }
 

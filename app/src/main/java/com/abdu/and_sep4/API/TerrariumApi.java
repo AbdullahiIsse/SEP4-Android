@@ -23,9 +23,12 @@ public interface TerrariumApi {
     @POST("user")
     Call<User> addUser(@Body User user);
 
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
     //Terrarium
     @GET("terrarium/{userId}")
-    Call<List<Terrarium>>getTerrariumByUserId(@Path("userId") String userId);
+    Call<List<Terrarium>> getTerrariumByUserId(@Path("userId") String userId);
 
     @POST("terrarium")
     Call<Terrarium> addTerrarium(@Body Terrarium terrarium);
@@ -34,37 +37,34 @@ public interface TerrariumApi {
     @PATCH("terrarium/{eui}")
     Call<Terrarium> updateTerrarium(@Path("eui") String eui, @Body Terrarium terrarium);
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     ///Measurement
 
     //Temp
     @GET("temperatures/{userId}/{eui}")
-    Call<List<TemperatureMeasurement>>getTemperatureMeasurementByUserId(@Path("userId") String UserId,@Path("eui") String eui);
+    Call<List<TemperatureMeasurement>> getTemperatureMeasurementByUserId(@Path("userId") String UserId, @Path("eui") String eui);
 
-     //Humidity
+    //Humidity
     @GET("humidity/{userId}/{eui}")
-    Call<List<HumidityMeasurement>>getHumidityMeasurementByUserId(@Path("userId") String UserId,@Path("eui") String eui);
+    Call<List<HumidityMeasurement>> getHumidityMeasurementByUserId(@Path("userId") String UserId, @Path("eui") String eui);
 
-     // CO2
+    // CO2
     @GET("carbondioxides/{userId}/{eui}")
-    Call<List<Co2Measurement>>getCo2MeasurementByUserId(@Path("userId") String UserId,@Path("eui") String eui);
+    Call<List<Co2Measurement>> getCo2MeasurementByUserId(@Path("userId") String UserId, @Path("eui") String eui);
 
 
-
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //Animals
     @POST("animals")
     Call<Animal> addAnimal(@Body Animal animal);
 
     @GET("animals/{userId}/{eui}")
-    Call<List<Animal>> getAnimalByUserId(@Path("userId") String userId,@Path("eui") String eui);
-
+    Call<List<Animal>> getAnimalByUserId(@Path("userId") String userId, @Path("eui") String eui);
 
 
     @PATCH("animals/{id}")
-    Call<Animal> updateAnimal(@Path("id") int id,@Body Animal animal);
-
-
-
+    Call<Animal> updateAnimal(@Path("id") int id, @Body Animal animal);
 
 
 }

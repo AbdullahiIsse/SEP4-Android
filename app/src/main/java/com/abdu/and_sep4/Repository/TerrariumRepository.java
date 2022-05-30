@@ -1,5 +1,6 @@
 package com.abdu.and_sep4.Repository;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -7,10 +8,14 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
+import com.abdu.and_sep4.Dao.TerrariumDao;
+import com.abdu.and_sep4.Dao.TerrariumDatabase;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 import com.abdu.and_sep4.Shared.Terrarium;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,85 +24,35 @@ import retrofit2.Response;
 public class TerrariumRepository {
 
     private static TerrariumRepository instance;
+    private final TerrariumDao terrariumDao;
 
     private final MutableLiveData<List<Terrarium>> terrariumListMutableLiveData;
     private final MutableLiveData<Terrarium> terrariumMutableLiveData;
     private final MutableLiveData<Terrarium> UpdateterrariumMutableLiveData;
     private final MutableLiveData<List<TemperatureMeasurement>> temperatureMeasurementMutableLiveData;
+    private final ExecutorService executorService;
 
 
-
-    public TerrariumRepository() {
+    public TerrariumRepository(Application application) {
+        TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
+        terrariumDao = terrariumDatabase.terrariumDao();
         terrariumListMutableLiveData = new MutableLiveData<>();
         terrariumMutableLiveData = new MutableLiveData<>();
         UpdateterrariumMutableLiveData = new MutableLiveData<>();
         temperatureMeasurementMutableLiveData = new MutableLiveData<>();
+        executorService = Executors.newFixedThreadPool(2);
 
 
     }
 
-    public static synchronized TerrariumRepository getInstance() {
+    public static synchronized TerrariumRepository getInstance(Application application) {
 
         if (instance == null) {
-            instance = new TerrariumRepository();
+            instance = new TerrariumRepository(application);
         }
 
         return instance;
     }
-
-
-//    public MutableLiveData<List<TemperatureMeasurement>> getTemperatureFromSignalR(com.abdu.and_sep4.API.Callback callback, String eui) {
-//        return terrariumSignalRApi.getTerrariumTemperatureByEui(temperatureMeasurement -> {
-//            callback.call();
-//        }, eui);
-//
-//    }
-//
-//    public MutableLiveData<List<HumidityMeasurement>> getHumidityFromSignalR(com.abdu.and_sep4.API.Callback callback, String eui) {
-//        return terrariumSignalRApi.getTerrariumHumidityByEui(humidityMeasurement -> {
-//            callback.call();
-//        }, eui);
-//
-//    }
-//
-//    public MutableLiveData<List<Co2Measurement>> getCo2FromSignalR(com.abdu.and_sep4.API.Callback callback, String eui) {
-//        return terrariumSignalRApi.getTerrariumCo2ByEui(co2Measurement -> {
-//            callback.call();
-//        }, eui);
-//
-//
-//    }
-//
-//    public MutableLiveData<List<TerrariumV2>> getTerrariumByUserIdFromSignalR(com.abdu.and_sep4.API.Callback callback, String userId) {
-//        return terrariumSignalRApi.getTerrariumByUserId(terrarium -> {
-//            callback.call();
-//        }, userId);
-//    }
-//
-//    public MutableLiveData<TerrariumV2> addTerrarium(com.abdu.and_sep4.API.Callback callback, TerrariumV2 terrarium) {
-//        return terrariumSignalRApi.addTerrarium(terrarium1 -> {
-//            callback.call();
-//        },terrarium);
-//    }
-//
-//
-//    public MutableLiveData<List<Animal>> getAnimalFromSignalR(com.abdu.and_sep4.API.Callback callback, String eui) {
-//        return terrariumSignalRApi.getAnimalByEui(animal -> {
-//            callback.call();
-//        },eui);
-//    }
-//
-//    public MutableLiveData<Animal> addAnimal(com.abdu.and_sep4.API.Callback callback, Animal animal) {
-//        return terrariumSignalRApi.AddAnimalToDb(addAnimal -> {
-//            callback.call();
-//        }, animal);
-//    }
-//
-//    public MutableLiveData<User> addUser(com.abdu.and_sep4.API.Callback callback, User user) {
-//        return terrariumSignalRApi.addUser(addUser -> {
-//            callback.call();
-//        },user);
-//    }
 
 
     public LiveData<List<Terrarium>> getTerrariumByUserId(String userid) {
@@ -112,6 +67,11 @@ public class TerrariumRepository {
                 if (response.isSuccessful()) {
 
                     terrariumListMutableLiveData.setValue(response.body());
+
+                    for (Terrarium t : response.body()) {
+                        executorService.execute(() -> terrariumDao.addTerrarium(t));
+                    }
+
                 }
 
             }

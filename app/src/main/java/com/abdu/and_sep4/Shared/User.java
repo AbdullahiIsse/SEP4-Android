@@ -1,5 +1,9 @@
 package com.abdu.and_sep4.Shared;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+
 public class User {
 
     private String id;
