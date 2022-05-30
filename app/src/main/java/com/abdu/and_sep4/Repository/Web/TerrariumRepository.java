@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.abdu.and_sep4.API.ServiceGenerator;
+import com.abdu.and_sep4.API.SignalRApi;
 import com.abdu.and_sep4.API.TerrariumApi;
 import com.abdu.and_sep4.Dao.TerrariumDao;
 import com.abdu.and_sep4.Dao.TerrariumDatabase;
@@ -31,6 +32,7 @@ public class TerrariumRepository {
     private final MutableLiveData<Terrarium> UpdateterrariumMutableLiveData;
     private final MutableLiveData<List<TemperatureMeasurement>> temperatureMeasurementMutableLiveData;
     private final ExecutorService executorService;
+    private final SignalRApi signalRApii;
 
 
     public TerrariumRepository(Application application) {
@@ -40,6 +42,7 @@ public class TerrariumRepository {
         terrariumMutableLiveData = new MutableLiveData<>();
         UpdateterrariumMutableLiveData = new MutableLiveData<>();
         temperatureMeasurementMutableLiveData = new MutableLiveData<>();
+        signalRApii = SignalRApi.getInstance();
         executorService = Executors.newFixedThreadPool(2);
 
 
@@ -134,6 +137,11 @@ public class TerrariumRepository {
 
 
     }
+
+    public void feedAnimal(String eui){
+        signalRApii.feedAnimal(eui);
+    }
+
 
 
 }

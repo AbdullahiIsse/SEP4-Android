@@ -59,7 +59,7 @@ public class TerrariumDetailsFragment extends Fragment {
     private ProgressBar progressBar;
 
 
-    // private Button foodBtn;
+    private Button foodBtn;
 
     private Button notifyMe;
 
@@ -81,7 +81,7 @@ public class TerrariumDetailsFragment extends Fragment {
         animalBtn = inflate.findViewById(R.id.terrarium_animals);
         humidityGraphBtn = inflate.findViewById(R.id.Humidity);
         co2GraphBtn = inflate.findViewById(R.id.CO2);
-        // foodBtn = inflate.findViewById(R.id.addFood);
+        foodBtn = inflate.findViewById(R.id.addFood);
         notifyMe = inflate.findViewById(R.id.notifyMe);
         sharedPreferences = getActivity().getSharedPreferences("terrariumId", Context.MODE_PRIVATE);
         Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
@@ -104,17 +104,15 @@ public class TerrariumDetailsFragment extends Fragment {
 
 
 
-//            foodBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    FoodDispenser addFood = new FoodDispenser(1, terrarium.getId());
-//
-//                    viewModel.addFood(addFood);
-//
-//
-//                }
-//            });
+            foodBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                  viewModel.feedAnimal(SaveInfo.getInstance().getTerrarium().getEui());
+
+
+                }
+            });
 
 
         viewModel.getTemperatureByUserIdAndEuiLiveData("jack",SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<TemperatureMeasurement>>() {

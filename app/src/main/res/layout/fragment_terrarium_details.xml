@@ -27,6 +27,15 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/addFood"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:text="AddFood"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="10dp"/>
+
 
 
     </LinearLayout>
@@ -52,14 +61,7 @@
 
             />
 
-<!--        <Button-->
-<!--            android:id="@+id/addFood"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="0.7"-->
-<!--            android:text="AddFood"-->
-<!--            android:textStyle="bold"-->
-<!--            android:layout_marginEnd="10dp"/>-->
+
 
         <Button
             android:id="@+id/notifyMe"

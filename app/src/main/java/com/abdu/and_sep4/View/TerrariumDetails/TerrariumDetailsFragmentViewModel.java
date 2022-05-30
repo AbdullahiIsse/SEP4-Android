@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.abdu.and_sep4.Repository.Web.MeasurementsRepository;
+import com.abdu.and_sep4.Repository.Web.TerrariumRepository;
 import com.abdu.and_sep4.Repository.WebOrLocale.MeasurementWebOrLocaleRepository;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class TerrariumDetailsFragmentViewModel extends AndroidViewModel {
 
     private MeasurementWebOrLocaleRepository measurementWebOrLocaleRepository;
+    private TerrariumRepository terrariumRepository;
     private LiveData<List<TemperatureMeasurement>> terrariumLiveData;
 
 
@@ -22,6 +24,7 @@ public class TerrariumDetailsFragmentViewModel extends AndroidViewModel {
     public TerrariumDetailsFragmentViewModel(Application application) {
         super(application);
         measurementWebOrLocaleRepository = MeasurementWebOrLocaleRepository.getInstance(application);
+        terrariumRepository = TerrariumRepository.getInstance(application);
 
 
     }
@@ -29,6 +32,10 @@ public class TerrariumDetailsFragmentViewModel extends AndroidViewModel {
 
     public LiveData<List<TemperatureMeasurement>> getTemperatureByUserIdAndEuiLiveData(String userId,String eui) {
         return measurementWebOrLocaleRepository.getTemperatureMeasurementsByUserIdAndEui(userId, eui);
+    }
+
+    public void feedAnimal(String eui){
+        terrariumRepository.feedAnimal(eui);
     }
 
 
