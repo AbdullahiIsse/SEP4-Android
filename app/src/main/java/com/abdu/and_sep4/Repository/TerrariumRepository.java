@@ -14,6 +14,7 @@ import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 import com.abdu.and_sep4.Shared.Terrarium;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -66,11 +67,18 @@ public class TerrariumRepository {
 
                 if (response.isSuccessful()) {
 
+                    List<Terrarium> terrariums = response.body();
                     terrariumListMutableLiveData.setValue(response.body());
 
-                    for (Terrarium t : response.body()) {
+                    terrariumListMutableLiveData.getValue();
+
+                    for (Terrarium t : Objects.requireNonNull(terrariumListMutableLiveData.getValue())) {
+                        Log.e("database", "test");
                         executorService.execute(() -> terrariumDao.addTerrarium(t));
                     }
+
+
+
 
                 }
 
