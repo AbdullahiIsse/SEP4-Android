@@ -2,12 +2,10 @@ package com.abdu.and_sep4.View.Account;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,10 +19,9 @@ import android.widget.Toast;
 
 import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
 import com.abdu.and_sep4.Shared.Animal;
-import com.abdu.and_sep4.Shared.TerrariumV2;
+import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.View.Adapter.PetAdapter;
 import com.abdu.and_sep4.R;
-import com.abdu.and_sep4.Shared.Pet;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -58,13 +55,13 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
 
         progressBar = inflate.findViewById(R.id.petprogress_bar);
         floatingActionButton = inflate.findViewById(R.id.fab);
-        petListError = inflate.findViewById(R.id.pet_list_error);
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
         recyclerView.hasFixedSize();
 
         petAdapter = new PetAdapter(petArrayList, this);
-        new ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(recyclerView);
+
 
         recyclerView.setAdapter(petAdapter);
 
@@ -73,7 +70,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
         getPetList();
 
 
-        animalListFragmentViewmodel.loading().observe(getViewLifecycleOwner(), this::setProgressbarVisibility);
+
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,22 +84,21 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
 
 
     private void getPetList() {
-        TerrariumV2 terrarium = SaveInfo.getInstance().getTerrarium();
+        Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
 
-        animalListFragmentViewmodel.getAnimalByEui(terrarium.getEui()).observe(getViewLifecycleOwner(), new Observer<List<Animal>>() {
+        animalListFragmentViewmodel.getPetsLiveData("jack","abc123").observe(getViewLifecycleOwner(), new Observer<List<Animal>>() {
             @Override
             public void onChanged(List<Animal> animals) {
                 if (animals != null && !animals.isEmpty()) {
                     petArrayList.clear();
                     petArrayList.addAll(animals);
-                    petListError.setText("");
+                    animals.clear();
                     petAdapter.notifyDataSetChanged();
                     Log.e("terrarium", animals.toString());
-                    petListError.setVisibility(View.GONE);
+
 
                 } else {
-                    petListError.setVisibility(View.VISIBLE);
-                    petListError.setText("Can not find any pets");
+
 
                 }
             }
@@ -112,17 +108,7 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     }
 
 
-    private void setProgressbarVisibility(Boolean aBoolean) {
-        if (aBoolean) {
-            progressBar.setVisibility(View.VISIBLE);
-            floatingActionButton.setVisibility(View.GONE);
-        } else {
-            progressBar.setVisibility(View.GONE);
-            floatingActionButton.setVisibility(View.VISIBLE);
 
-        }
-
-    }
 
 
     @Override
@@ -134,18 +120,5 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     }
 
 
-    ItemTouchHelper.SimpleCallback itemTouchHelperCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
-        }
 
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            Animal remove = petArrayList.remove(viewHolder.getAdapterPosition());
-            petAdapter.notifyDataSetChanged();
-            animalListFragmentViewmodel.deletingPet(remove.getId());
-
-        }
-    };
 }

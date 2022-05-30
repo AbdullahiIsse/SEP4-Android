@@ -1,26 +1,21 @@
 package com.abdu.and_sep4.View.AddTerrarium;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.abdu.and_sep4.R;
-import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
-import com.abdu.and_sep4.Shared.TerrariumV2;
-import com.abdu.and_sep4.Shared.User;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class AddTerrariumFragment extends Fragment {
@@ -33,6 +28,7 @@ public class AddTerrariumFragment extends Fragment {
     private AppCompatEditText et_humMin;
     private AppCompatEditText et_co2Max;
     private Button addTerrariumBtn;
+    private SharedPreferences sharedPreferences;
     private AddTerrariumFragmentViewModel addTerrariumFragmentViewModel;
 
 
@@ -49,7 +45,7 @@ public class AddTerrariumFragment extends Fragment {
         et_humMin = inflate.findViewById(R.id.Hum_min);
         et_co2Max = inflate.findViewById(R.id.CO2_max);
         addTerrariumBtn = inflate.findViewById(R.id.addTerrarium);
-
+        sharedPreferences = getActivity().getSharedPreferences("CriticalValues", Context.MODE_PRIVATE);
         addTerrariumFragmentViewModel = new ViewModelProvider(this).get(AddTerrariumFragmentViewModel.class);
 
         addTerrariumBtn.setOnClickListener(this::addTerrarium);
@@ -71,6 +67,18 @@ public class AddTerrariumFragment extends Fragment {
 
             addTerrariumToDb(eui, Double.parseDouble(tempMin), Double.parseDouble(tempMax), Double.parseDouble(humMin), Double.parseDouble(humMax), Integer.parseInt(co2Max));
 
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString("tempMax",tempMax);
+            editor.putString("tempMin",tempMin);
+            editor.putString("humMax",humMax);
+            editor.putString("humMin",humMin);
+            editor.putString("co2Max",co2Max);
+
+            editor.apply();
+
+
             et_TerrariumEui.setText("");
             et_tempMax.setText("");
             et_tempMin.setText("");
@@ -84,17 +92,15 @@ public class AddTerrariumFragment extends Fragment {
     }
 
     private void addTerrariumToDb(String eui, double tempMin, double tempMax, double humMin, double humMax, int co2Max) {
-        TerrariumV2 terrariumV2 = new TerrariumV2(eui, "jack",
+        Terrarium terrarium = new Terrarium(eui, "jack",
                 tempMin, tempMax
                 , humMin, humMax, co2Max);
 
 
-        addTerrariumFragmentViewModel.addTerrariumToDb(terrariumV2).observe(getViewLifecycleOwner(), new Observer<TerrariumV2>() {
-            @Override
-            public void onChanged(TerrariumV2 terrariumV2) {
-                Log.e("addedTerrarium", terrariumV2.toString());
-            }
-        });
+        addTerrariumFragmentViewModel.addTerrariumToDb(terrarium);
+        Navigation.findNavController(inflate).navigate(R.id.action_addTerrariumFragment_to_homeFragment);
+
+
     }
 
 

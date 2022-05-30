@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.abdu.and_sep4.Repository.TerrariumRepository;
-import com.abdu.and_sep4.Shared.Pet;
 import com.abdu.and_sep4.Shared.Terrarium;
 
 public class UpdateTerrariumFragmentViewModel extends ViewModel {
@@ -17,8 +16,8 @@ public class UpdateTerrariumFragmentViewModel extends ViewModel {
     }
 
 
-    public LiveData<Terrarium> updateTerrarium(long id, Terrarium terrarium){
-        return terrariumRepository.updateTerrarium(id,terrarium);
+    public LiveData<Terrarium> updateTerrarium(String eui, Terrarium terrarium){
+        return terrariumRepository.updateTerrarium(eui,terrarium);
     }
 
 

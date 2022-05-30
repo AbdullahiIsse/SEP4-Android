@@ -1,5 +1,7 @@
 package com.abdu.and_sep4.Shared;
 
+import java.io.Serializable;
+
 public class Animal {
 
     private int id;
@@ -7,20 +9,32 @@ public class Animal {
     private String name;
     private int age;
     private String species;
-    private char gender;
-    private boolean shedding;
-    private boolean hibernating;
+    private String gender;
     private boolean hasOffSpring;
+    private boolean hibernating;
+    private boolean shedding;
 
-    public Animal( String eui, String name, int age, String species, char gender, boolean shedding, boolean hibernating, boolean hasOffSpring) {
+    public Animal(String eui, String name, int age, String species, String gender, boolean hasOffSpring, boolean hibernating, boolean shedding) {
         this.eui = eui;
         this.name = name;
         this.age = age;
         this.species = species;
         this.gender = gender;
-        this.shedding = shedding;
-        this.hibernating = hibernating;
         this.hasOffSpring = hasOffSpring;
+        this.hibernating = hibernating;
+        this.shedding = shedding;
+    }
+
+    public Animal(int id, String eui, String name, int age, String species, String gender, boolean hasOffSpring, boolean hibernating, boolean shedding) {
+        this.id = id;
+        this.eui = eui;
+        this.name = name;
+        this.age = age;
+        this.species = species;
+        this.gender = gender;
+        this.hasOffSpring = hasOffSpring;
+        this.hibernating = hibernating;
+        this.shedding = shedding;
     }
 
     public int getId() {
@@ -63,11 +77,11 @@ public class Animal {
         this.species = species;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -103,10 +117,10 @@ public class Animal {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", species='" + species + '\'' +
-                ", gender=" + gender +
-                ", shedding=" + shedding +
-                ", hibernating=" + hibernating +
+                ", gender='" + gender + '\'' +
                 ", hasOffSpring=" + hasOffSpring +
+                ", hibernating=" + hibernating +
+                ", shedding=" + shedding +
                 '}';
     }
 }

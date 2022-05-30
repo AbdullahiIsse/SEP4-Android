@@ -45,37 +45,6 @@ public class UserRepository {
     }
 
 
-    public LiveData<User>validateUser(String username, String password){
-
-        TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
-        Call<User> call = terrariumApi.validateUser(username,password);
-
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-
-                if (response.code() == 404){
-                    userMutableLiveData.setValue(null);
-                }
-
-                if (response.isSuccessful()){
-                    Log.e("test","det virker");
-                    userMutableLiveData.setValue(response.body());
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e("Retrofit", t.getMessage());
-            }
-        });
-
-
-        return userMutableLiveData;
-
-    }
-
 
     public LiveData<User> addUser(User user){
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
@@ -96,7 +65,6 @@ public class UserRepository {
                 Log.e("Retrofit", "Something went wrong adding a user :(");
             }
         });
-
 
 
         return addUserMutableLiveData;

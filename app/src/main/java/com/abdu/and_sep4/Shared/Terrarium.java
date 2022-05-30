@@ -2,35 +2,31 @@ package com.abdu.and_sep4.Shared;
 
 public class Terrarium {
 
-
-    private int id;
-    private String terrariumName;
+    private String eui;
     private String userId;
+    private double minTemperature;
+    private double maxTemperature;
+    private double minHumidity;
+    private double maxHumidity;
+    private int maxCarbonDioxide;
 
-    public Terrarium(String terrariumName, String userId) {
-        this.terrariumName = terrariumName;
+    public Terrarium(String eui, String userId, double minTemperature, double maxTemperature, double minHumidity, double maxHumidity, int maxCarbonDioxide) {
+        this.eui = eui;
         this.userId = userId;
+        this.minTemperature = minTemperature;
+        this.maxTemperature = maxTemperature;
+        this.minHumidity = minHumidity;
+        this.maxHumidity = maxHumidity;
+        this.maxCarbonDioxide = maxCarbonDioxide;
     }
 
-    public Terrarium(int id, String terrariumName) {
-        this.id = id;
-        this.terrariumName = terrariumName;
+
+    public String getEui() {
+        return eui;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTerrariumName() {
-        return terrariumName;
-    }
-
-    public void setTerrariumName(String terrariumName) {
-        this.terrariumName = terrariumName;
+    public void setEui(String eui) {
+        this.eui = eui;
     }
 
     public String getUserId() {
@@ -39,5 +35,58 @@ public class Terrarium {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public double getMinTemperature() {
+        return minTemperature;
+    }
+
+    public void setMinTemperature(double minTemperature) {
+        this.minTemperature = minTemperature;
+    }
+
+    public double getMaxTemperature() {
+        return maxTemperature;
+    }
+
+    public void setMaxTemperature(double maxTemperature) {
+        this.maxTemperature = maxTemperature;
+    }
+
+    public double getMinHumidity() {
+        return minHumidity;
+    }
+
+    public void setMinHumidity(double minHumidity) {
+        this.minHumidity = minHumidity;
+    }
+
+    public double getMaxHumidity() {
+        return maxHumidity;
+    }
+
+    public void setMaxHumidity(double maxHumidity) {
+        this.maxHumidity = maxHumidity;
+    }
+
+    public int getMaxCarbonDioxide() {
+        return maxCarbonDioxide;
+    }
+
+    public void setMaxCarbonDioxide(int maxCarbonDioxide) {
+        this.maxCarbonDioxide = maxCarbonDioxide;
+    }
+
+    @Override
+    public String toString() {
+        return "TerrariumV2{" +
+                "eui='" + eui + '\'' +
+                ", userId='" + userId + '\'' +
+                ", minTemperature=" + minTemperature +
+                ", maxTemperature=" + maxTemperature +
+                ", minHumidity=" + minHumidity +
+                ", maxHumidity=" + maxHumidity +
+                ", maxCarbonDioxide=" + maxCarbonDioxide +
+                '}';
     }
 }

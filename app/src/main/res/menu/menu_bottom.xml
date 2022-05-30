@@ -10,12 +10,7 @@
 
         />
 
-    <item
-        android:id="@+id/criticalValueFragment"
-        android:icon="@drawable/ic_baseline_dangerous_24"
-        android:title="Critical Values"
-
-        />
+   
 
 
     

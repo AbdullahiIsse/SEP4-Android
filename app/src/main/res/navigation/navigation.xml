@@ -99,11 +99,6 @@
             app:destination="@id/homeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/criticalValueFragment"
-        android:name="com.abdu.and_sep4.View.CriticalValue.CriticalValueFragment"
-        android:label="Critical Values"
-        tools:layout="@layout/fragment_critical_value" />
-    <fragment
         android:id="@+id/humidityFragment"
         android:name="com.abdu.and_sep4.View.Humidity.HumidityFragment"
         android:label="Humidity"

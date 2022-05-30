@@ -47,7 +47,7 @@ dependencies {
     implementation 'com.robinhood.spark:spark:1.2.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+   // implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
     // JUnit
     testImplementation 'junit:junit:4.13.2'
@@ -69,14 +69,14 @@ dependencies {
 /*    compile 'com.android.support:appcompat-v7:24.2.1'*/
 /*    compile 'com.android.support:multidex:1.0.1'*/
 
-    implementation 'com.microsoft.signalr:signalr:5.0.5'
+   // implementation 'com.microsoft.signalr:signalr:5.0.5'
     implementation 'org.slf4j:slf4j-jdk14:1.7.25'
 
     //SignalR 
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    api 'io.reactivex.rxjava2:rxjava:2.2.2'
-    implementation 'org.slf4j:slf4j-api:1.7.25'
+//    implementation 'com.google.code.gson:gson:2.8.5'
+//    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+//    api 'io.reactivex.rxjava2:rxjava:2.2.2'
+//    implementation 'org.slf4j:slf4j-api:1.7.25'
 
 
     //firebase

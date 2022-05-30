@@ -14,34 +14,25 @@ import java.util.List;
 public class SignUpActivityViewModel extends ViewModel {
 
     private UserRepository userRepository;
-    private TerrariumRepository terrariumRepository;
-    private final MutableLiveData<Boolean> loading;
+
 
 
 
     public SignUpActivityViewModel() {
 
         userRepository = UserRepository.getInstance();
-        terrariumRepository = TerrariumRepository.getInstance();
-        loading = new MutableLiveData<>(true);
+
 
 
     }
 
 
 
-//    public LiveData<User> addUser(User user){
-//        return userRepository.addUser(user);
-//    }
-
-    public MutableLiveData<User> addUser(User user){
-        return   terrariumRepository.addUser(() -> loading.setValue(false),user);
+    public LiveData<User> addUser(User user){
+        return userRepository.addUser(user);
     }
 
 
-    public LiveData<Boolean> loading() {
-        return loading;
-    }
 
 
 

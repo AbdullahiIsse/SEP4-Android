@@ -1,87 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.UpdatePet.UpdatePetFragment"
-    android:orientation="vertical"
-    android:padding="20dp"
+    android:fillViewport="true"
     >
 
-    <com.google.android.material.textfield.TextInputLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        android:layout_margin="20dp"
+        android:orientation="vertical">
 
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/update_name"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
-            android:inputType="textCapWords"
-            android:textColor="#363A43"
-            android:textColorHint="#7A8089"
-
-            />
+            android:layout_marginTop="20dp">
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/Updatename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:inputType="textCapWords"
+                android:textColor="#363A43"
+                android:textColorHint="#7A8089"
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                />
 
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/update_species"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Species"
-            android:inputType="textCapWords"
-            android:textColor="#363A43"
-            android:textColorHint="#7A8089"
-
-            />
+            android:layout_marginTop="20dp">
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/Updatespecies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Species"
+                android:inputType="textCapWords"
+                android:textColor="#363A43"
+                android:textColorHint="#7A8089"
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                />
 
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/update_age"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Age"
-            android:inputType="number"
-            android:textColor="#363A43"
-            android:textColorHint="#7A8089"
-
-            />
+            android:layout_marginTop="20dp">
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/Updateage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Age"
+                android:inputType="number"
+                android:textColor="#363A43"
+                android:textColorHint="#7A8089"
+
+                />
 
 
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
 
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/Updategender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Gender"
+                android:inputType="textCapWords"
+                android:textColor="#363A43"
+                android:textColorHint="#7A8089"
 
-    <Button
-        android:layout_marginTop="20dp"
-        android:id="@+id/updatePet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Update PET"
-        />
+                />
 
 
-</LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/Updateshedding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Shedding"
+                android:inputType="textCapWords"
+                android:textColor="#363A43"
+                android:textColorHint="#7A8089"
+
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/Updatehibernating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hibernating"
+                android:inputType="textCapWords"
+                android:textColor="#363A43"
+                android:textColorHint="#7A8089"
+
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/UpdatehasOffSpring"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Has Off Spring"
+                android:inputType="textCapWords"
+                android:textColor="#363A43"
+                android:textColorHint="#7A8089"
+
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/updatePet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Update PET" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView >

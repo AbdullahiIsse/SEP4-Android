@@ -4,21 +4,18 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Animal;
-import com.abdu.and_sep4.Shared.Pet;
 import com.abdu.and_sep4.Shared.SaveInfo;
-import com.abdu.and_sep4.Shared.TerrariumV2;
+import com.abdu.and_sep4.Shared.Terrarium;
 
 
 public class AddPetFragment extends Fragment {
@@ -33,7 +30,7 @@ public class AddPetFragment extends Fragment {
     private AppCompatEditText et_hibernating;
     private AppCompatEditText et_hasOffSpring;
     private Button addPet;
-    private TerrariumV2 terrarium;
+    private Terrarium terrarium;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,9 +67,9 @@ public class AddPetFragment extends Fragment {
         String hibernating = et_hibernating.getText().toString();
         String hasOffSpring = et_hasOffSpring.getText().toString();
 
-        if (validations(name, species, age, gender, shedding, hibernating, hasOffSpring)) {
+        if (validations(name, species, age, gender, hasOffSpring, hibernating, shedding)) {
 
-            addPetToDb(name, Integer.parseInt(age), species, gender.charAt(0), Boolean.parseBoolean(shedding), Boolean.parseBoolean(hibernating), Boolean.parseBoolean(hasOffSpring));
+            addPetToDb(name, Integer.parseInt(age), species, gender,Boolean.parseBoolean(hasOffSpring) , Boolean.parseBoolean(hibernating), Boolean.parseBoolean(shedding));
 
             et_name.setText("");
             et_species.setText("");
@@ -87,19 +84,13 @@ public class AddPetFragment extends Fragment {
     }
 
 
-    private void addPetToDb(String name, int age, String species, char gender, boolean shedding, boolean hibernating, boolean hasOffSpring) {
+    private void addPetToDb(String name, int age, String species, String gender, boolean shedding, boolean hibernating, boolean hasOffSpring) {
 
 
-        Animal animal = new Animal(terrarium.getEui(), name, age, species, gender, shedding, hibernating, hasOffSpring);
+        Animal animal = new Animal("abc123", name, age, species, gender, shedding, hibernating, hasOffSpring);
+        Log.e("animal", animal.toString());
 
-        addPetVM.addAnimal(animal).observe(getViewLifecycleOwner(), new Observer<Animal>() {
-            @Override
-            public void onChanged(Animal animal) {
-                if (animal != null) {
-                    Navigation.findNavController(inflate).navigate(R.id.action_AddPetFragments_to_animalListFragment);
-                }
-            }
-        });
+        addPetVM.addAnimal(animal);
 
     }
 
@@ -141,11 +132,13 @@ public class AddPetFragment extends Fragment {
             return false;
         }
 
-        if (!gender.equals("m") || !gender.equals("f") || !gender.equals("M") || !gender.equals("M")) {
-            et_gender.setError("Gender must be M or F");
+        if ( !gender.contentEquals("m") && !gender.contentEquals("f")  && !gender.contentEquals("M") && !gender.contentEquals("F")) {
+            et_gender.setError("Gender must be m or f");
             et_gender.requestFocus();
             return false;
         }
+
+
 
         if (shedding.isEmpty()) {
             et_shedding.setError("Shedding can not be empty");
@@ -153,13 +146,39 @@ public class AddPetFragment extends Fragment {
             return false;
         }
 
-        if (!shedding.equals(Boolean.getBoolean("true")) || !shedding.equals(Boolean.getBoolean("false"))) {
+        if (!shedding.equalsIgnoreCase("true") && !shedding.equalsIgnoreCase("false") ) {
             et_shedding.setError("Shedding must be true or false");
             et_shedding.requestFocus();
             return false;
-        } else {
+        }
+
+        if (hibernating.isEmpty()) {
+            et_hibernating.setError("hibernating can not be empty");
+            et_hibernating.requestFocus();
+            return false;
+        }
+
+        if (!hibernating.equalsIgnoreCase("true") && !hibernating.equalsIgnoreCase("false") ) {
+            et_hibernating.setError("hibernating must be true or false");
+            et_hibernating.requestFocus();
+            return false;
+        }
+
+        if (hasOffSpring.isEmpty()) {
+            et_hasOffSpring.setError("hasOffSpring can not be empty");
+            et_hasOffSpring.requestFocus();
+            return false;
+        }
+
+        if (!hasOffSpring.equalsIgnoreCase("true") && !hasOffSpring.equalsIgnoreCase("false") ) {
+            et_hasOffSpring.setError("hasOffSpring must be true or false");
+            et_hasOffSpring.requestFocus();
+            return false;
+        }
+        else {
             return true;
         }
+
     }
 
 

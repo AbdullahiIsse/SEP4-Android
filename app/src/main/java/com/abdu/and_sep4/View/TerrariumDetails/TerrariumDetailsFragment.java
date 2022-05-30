@@ -26,13 +26,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.abdu.and_sep4.R;
-import com.abdu.and_sep4.Shared.Co2Measurement;
-import com.abdu.and_sep4.Shared.HumidityMeasurement;
-import com.abdu.and_sep4.Shared.Measurements;
 import com.abdu.and_sep4.Shared.SaveInfo;
-import com.abdu.and_sep4.Shared.Temperatur;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
-import com.abdu.and_sep4.Shared.TerrariumV2;
+import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.View.Adapter.TemperatureSparkAdapter;
 
 
@@ -53,9 +49,7 @@ public class TerrariumDetailsFragment extends Fragment {
     private TextView textViewDate;
     private SparkView sparkView;
     private TextView terrariumTemp;
-    private ArrayList<Measurements> temperaturArrayList = new ArrayList<>();
     private ArrayList<TemperatureMeasurement> temperatureMeasurementArrayList = new ArrayList<>();
-    private List<Temperatur> temperatureMeasurements = new ArrayList<>();
     private TemperatureSparkAdapter temperatureSparkAdapter;
     private Button animalBtn;
     private View inflate;
@@ -90,7 +84,7 @@ public class TerrariumDetailsFragment extends Fragment {
         // foodBtn = inflate.findViewById(R.id.addFood);
         notifyMe = inflate.findViewById(R.id.notifyMe);
         sharedPreferences = getActivity().getSharedPreferences("terrariumId", Context.MODE_PRIVATE);
-        TerrariumV2 terrarium = SaveInfo.getInstance().getTerrarium();
+        Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
         terrariumName.setText(terrarium.getEui());
         terrariumCurrentTemp.setText(Double.toString(20.1));
 
@@ -99,7 +93,7 @@ public class TerrariumDetailsFragment extends Fragment {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-       // editor.putInt("id", terrarium.getId());
+       editor.putString("id", terrarium.getEui());
 
         editor.apply();
 
@@ -123,7 +117,7 @@ public class TerrariumDetailsFragment extends Fragment {
 //            });
 
 
-        viewModel.getTemp("abc123").observe(getViewLifecycleOwner(), new Observer<List<TemperatureMeasurement>>() {
+        viewModel.getTemperatureByUserIdAndEuiLiveData("jack","abc123").observe(getViewLifecycleOwner(), new Observer<List<TemperatureMeasurement>>() {
             @Override
             public void onChanged(List<TemperatureMeasurement> temperatureMeasurements) {
                 List<TemperatureMeasurement> body = temperatureMeasurements;
@@ -142,7 +136,7 @@ public class TerrariumDetailsFragment extends Fragment {
             }
         });
 
-        viewModel.loading().observe(getViewLifecycleOwner(), this::setProgressbarVisibility);
+
 
 
 
@@ -193,12 +187,7 @@ public class TerrariumDetailsFragment extends Fragment {
         return inflate;
     }
 
-    private void setProgressbarVisibility(Boolean aBoolean) {
-        if (aBoolean)
-            progressBar.setVisibility(View.VISIBLE);
-        else
-            progressBar.setVisibility(View.INVISIBLE);
-    }
+
 
 
 

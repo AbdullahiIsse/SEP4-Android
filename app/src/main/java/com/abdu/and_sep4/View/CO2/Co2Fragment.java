@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Co2Measurement;
 import com.abdu.and_sep4.Shared.SaveInfo;
-import com.abdu.and_sep4.Shared.TerrariumV2;
+import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.View.Adapter.Co2SparkAdapter;
 import com.robinhood.spark.SparkView;
 
@@ -50,13 +50,13 @@ public class Co2Fragment extends Fragment {
         sparkView = inflate.findViewById(R.id.sparkview);
         terrariumTemp = inflate.findViewById(R.id.tv_temp);
         progressBar = inflate.findViewById(R.id.progressBar);
-        TerrariumV2 terrarium = SaveInfo.getInstance().getTerrarium();
+        Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
         terrariumName.setText(terrarium.getEui());
 
         viewModel = new ViewModelProvider(this).get(Co2FragmentViewModel.class);
 
 
-        viewModel.getCo2("abc123").observe(getViewLifecycleOwner(), new Observer<List<Co2Measurement>>() {
+        viewModel.getCo2("jack","abc123").observe(getViewLifecycleOwner(), new Observer<List<Co2Measurement>>() {
             @Override
             public void onChanged(List<Co2Measurement> co2Measurements) {
                 List<Co2Measurement> body = co2Measurements;
@@ -76,18 +76,13 @@ public class Co2Fragment extends Fragment {
             }
         });
 
-        viewModel.loading().observe(getViewLifecycleOwner(), this::setProgressbarVisibility);
+
 
         return inflate;
     }
 
 
-    private void setProgressbarVisibility(Boolean aBoolean) {
-        if (aBoolean)
-            progressBar.setVisibility(View.VISIBLE);
-        else
-            progressBar.setVisibility(View.INVISIBLE);
-    }
+
 
     private void updateDisplayWithData(List<Co2Measurement> dailyData) {
 

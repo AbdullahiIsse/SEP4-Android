@@ -1,8 +1,6 @@
 package com.abdu.and_sep4.View.Adapter;
 
 import com.abdu.and_sep4.Shared.HumidityMeasurement;
-import com.abdu.and_sep4.Shared.MeasurementsType;
-import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 import com.robinhood.spark.SparkAdapter;
 
 import java.util.List;

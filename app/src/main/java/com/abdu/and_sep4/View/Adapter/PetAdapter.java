@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.abdu.and_sep4.ClickListener.OnListItemClickListener;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Animal;
-import com.abdu.and_sep4.Shared.Pet;
 
 import java.util.ArrayList;
 
@@ -50,7 +49,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
         holder.species.setText(pets.get(position).getSpecies());
         holder.name.setText(pets.get(position).getName());
         holder.age.setText(Integer.toString(pets.get(position).getAge()));
-        holder.petGender.setText(Character.toString(pets.get(position).getGender()));
+        holder.petGender.setText(pets.get(position).getGender());
         holder.shedding.setText(Boolean.toString(pets.get(position).isShedding()));
         holder.hibernating.setText(Boolean.toString(pets.get(position).isHibernating()));
         holder.hasOfSpring.setText(Boolean.toString(pets.get(position).isHasOffSpring()));
@@ -58,12 +57,14 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetsViewHolder> 
         holder.petEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putLong("id",pets.get(position).getId());
+                bundle.putInt("id",pets.get(position).getId());
                 bundle.putString("name", pets.get(position).getName());
                 bundle.putString("species",pets.get(position).getSpecies());
                 bundle.putInt("age",pets.get(position).getAge());
-
-
+                bundle.putString("gender", pets.get(position).getGender());
+                bundle.putBoolean("shedding", pets.get(position).isShedding());
+                bundle.putBoolean("hibernating", pets.get(position).isHibernating());
+                bundle.putBoolean("hasOfSpring", pets.get(position).isHasOffSpring());
 
                 Navigation.findNavController(holder.itemView).navigate(R.id.action_animalListFragment_to_updatePetFragment,bundle);
             }

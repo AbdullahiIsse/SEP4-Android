@@ -4,21 +4,22 @@ package com.abdu.and_sep4.View.UpdatePet;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.abdu.and_sep4.Repository.PetRepository;
-import com.abdu.and_sep4.Shared.Pet;
+import com.abdu.and_sep4.Repository.AnimalRepository;
+import com.abdu.and_sep4.Shared.Animal;
 
 public class UpdatePetFragmentViewModel extends ViewModel {
 
-    private PetRepository petRepository;
+    private AnimalRepository animalRepository;
 
 
     public UpdatePetFragmentViewModel() {
-        petRepository = PetRepository.getInstance();
+        animalRepository = AnimalRepository.getInstance();
     }
 
 
-    public LiveData<Pet>updatePet(long id,Pet pet){
-        return petRepository.updatePet(id, pet);
+    public LiveData<Animal>updatePet(int id, Animal animal){
+
+        return animalRepository.updateAnimals(id,animal);
     }
 
 
