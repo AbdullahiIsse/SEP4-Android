@@ -25,7 +25,7 @@ import retrofit2.Response;
 public class TerrariumRepository {
 
     private static TerrariumRepository instance;
-    //private final TerrariumDao terrariumDao;
+    private final TerrariumDao terrariumDao;
 
     private final MutableLiveData<List<Terrarium>> terrariumListMutableLiveData;
     private final MutableLiveData<Terrarium> terrariumMutableLiveData;
@@ -34,9 +34,9 @@ public class TerrariumRepository {
     private final ExecutorService executorService;
 
 
-    public TerrariumRepository() {
-       // TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
-      //  terrariumDao = terrariumDatabase.terrariumDao();
+    public TerrariumRepository(Application application) {
+        TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
+        terrariumDao = terrariumDatabase.terrariumDao();
         terrariumListMutableLiveData = new MutableLiveData<>();
         terrariumMutableLiveData = new MutableLiveData<>();
         UpdateterrariumMutableLiveData = new MutableLiveData<>();
@@ -46,10 +46,10 @@ public class TerrariumRepository {
 
     }
 
-    public static synchronized TerrariumRepository getInstance() {
+    public static synchronized TerrariumRepository getInstance(Application application) {
 
         if (instance == null) {
-            instance = new TerrariumRepository();
+            instance = new TerrariumRepository(application);
         }
 
         return instance;
@@ -66,9 +66,10 @@ public class TerrariumRepository {
             public void onResponse(Call<List<Terrarium>> call, Response<List<Terrarium>> response) {
 
                 if (response.isSuccessful()) {
-
+                    for (Terrarium t : response.body()) {
+                        executorService.execute(() -> terrariumDao.addTerrarium(t));
+                    }
                     terrariumListMutableLiveData.setValue(response.body());
-
                 }
 
             }

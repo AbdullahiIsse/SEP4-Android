@@ -9,14 +9,15 @@ import androidx.lifecycle.ViewModel;
 import com.abdu.and_sep4.Repository.TerrariumRepository;
 import com.abdu.and_sep4.Shared.Terrarium;
 
-public class UpdateTerrariumFragmentViewModel extends ViewModel {
+public class UpdateTerrariumFragmentViewModel extends AndroidViewModel {
 
 
     private TerrariumRepository terrariumRepository;
 
-    public UpdateTerrariumFragmentViewModel() {
+    public UpdateTerrariumFragmentViewModel(Application application) {
+        super(application);
 
-        terrariumRepository = TerrariumRepository.getInstance();
+        terrariumRepository = TerrariumRepository.getInstance(application);
     }
 
 

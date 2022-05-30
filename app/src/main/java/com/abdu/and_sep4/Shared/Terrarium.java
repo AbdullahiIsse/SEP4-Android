@@ -5,10 +5,11 @@ import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
-
+@Entity(tableName = "terrarium_table")
 public class Terrarium {
 
-
+    @PrimaryKey
+    @NotNull
     private String eui;
     private String userId;
     private double minTemperature;

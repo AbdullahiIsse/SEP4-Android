@@ -29,12 +29,12 @@ public class CriticalValueWorker extends Worker {
 
 
     private static final String CHANNEL_ID = "channel-1";
-    private MeasurementsRepository measurementsRepository;
+
 
 
     public CriticalValueWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        measurementsRepository = MeasurementsRepository.getInstance();
+        
     }
 
     @NonNull

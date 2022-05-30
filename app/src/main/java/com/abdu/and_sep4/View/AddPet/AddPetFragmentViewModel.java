@@ -1,19 +1,23 @@
 package com.abdu.and_sep4.View.AddPet;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.abdu.and_sep4.Repository.AnimalRepository;
 import com.abdu.and_sep4.Shared.Animal;
 
-public class AddPetFragmentViewModel extends ViewModel {
+public class AddPetFragmentViewModel extends AndroidViewModel {
 
 
     private AnimalRepository animalRepository;
 
 
-    public AddPetFragmentViewModel() {
-        animalRepository = AnimalRepository.getInstance();
+    public AddPetFragmentViewModel(Application application) {
+        super(application);
+        animalRepository = AnimalRepository.getInstance(application);
 
 
     }

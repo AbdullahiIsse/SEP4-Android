@@ -1,6 +1,9 @@
 package com.abdu.and_sep4.View.Account;
 
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -9,15 +12,16 @@ import com.abdu.and_sep4.Shared.Animal;
 
 import java.util.List;
 
-public class AnimalListFragmentViewmodel extends ViewModel {
+public class AnimalListFragmentViewmodel extends AndroidViewModel {
 
     private AnimalRepository animalRepository;
 
 
 
-    public AnimalListFragmentViewmodel() {
+    public AnimalListFragmentViewmodel(Application application) {
+        super(application);
 
-        animalRepository = AnimalRepository.getInstance();
+        animalRepository = AnimalRepository.getInstance(application);
 
     }
 

@@ -17,7 +17,7 @@ public interface TerrariumDao {
     @Query("select * from terrarium_table where userId = :userId ")
     LiveData<List<Terrarium>> getTerrariumByUserId(String userId);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addTerrarium(Terrarium terrarium);
 
 

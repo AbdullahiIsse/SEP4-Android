@@ -14,16 +14,17 @@ import java.util.List;
 
 
 
-public class HomeFragmentViewModel extends ViewModel {
+public class HomeFragmentViewModel extends AndroidViewModel {
 
     private TerrariumRepository terrariumRepository;
     private LiveData<List<Terrarium>> terrariumLiveData;
 
 
 
-    public HomeFragmentViewModel() {
+    public HomeFragmentViewModel(Application application) {
+        super(application);
 
-        terrariumRepository = TerrariumRepository.getInstance();
+        terrariumRepository = TerrariumRepository.getInstance(application);
 
         terrariumLiveData = new MutableLiveData<>();
 

@@ -1,5 +1,6 @@
 package com.abdu.and_sep4.Repository;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -7,12 +8,16 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
+import com.abdu.and_sep4.Dao.MeasurementDao;
+import com.abdu.and_sep4.Dao.TerrariumDatabase;
 import com.abdu.and_sep4.Shared.Co2Measurement;
 import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,23 +26,28 @@ import retrofit2.Response;
 public class MeasurementsRepository {
 
     private static MeasurementsRepository instance;
+    private final MeasurementDao measurementDao;
 
     private final MutableLiveData<List<TemperatureMeasurement>> temperatureMeasurementMutableLiveData;
     private final MutableLiveData<List<HumidityMeasurement>> humidityMeasurementMutableLiveData;
     private final MutableLiveData<List<Co2Measurement>> co2MeasurementMutableLiveData;
+    private final ExecutorService executorService;
 
 
-    public MeasurementsRepository() {
+    public MeasurementsRepository(Application application) {
+        TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
+        measurementDao = terrariumDatabase.measurementDao();
         temperatureMeasurementMutableLiveData = new MutableLiveData<>();
         humidityMeasurementMutableLiveData = new MutableLiveData<>();
         co2MeasurementMutableLiveData = new MutableLiveData<>();
+        executorService = Executors.newFixedThreadPool(2);
 
     }
 
-    public static synchronized MeasurementsRepository getInstance() {
+    public static synchronized MeasurementsRepository getInstance(Application application) {
 
-        if (instance == null){
-            instance = new MeasurementsRepository();
+        if (instance == null) {
+            instance = new MeasurementsRepository(application);
         }
 
         return instance;
@@ -52,7 +62,7 @@ public class MeasurementsRepository {
         return humidityMeasurementMutableLiveData;
     }
 
-    public LiveData<List<TemperatureMeasurement>> getTemperatureMeasurementsByUserIdAndEui(String userid, String eui){
+    public LiveData<List<TemperatureMeasurement>> getTemperatureMeasurementsByUserIdAndEui(String userid, String eui) {
 
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
         Call<List<TemperatureMeasurement>> call = terrariumApi.getTemperatureMeasurementByUserId(userid, eui);
@@ -61,8 +71,10 @@ public class MeasurementsRepository {
             @Override
             public void onResponse(Call<List<TemperatureMeasurement>> call, Response<List<TemperatureMeasurement>> response) {
 
-                if (response.isSuccessful()){
-
+                if (response.isSuccessful()) {
+                    for (TemperatureMeasurement temp : response.body()) {
+                        executorService.execute(() -> measurementDao.addTemperatureMeasurement(temp));
+                    }
                     temperatureMeasurementMutableLiveData.setValue(response.body());
                 }
 
@@ -81,7 +93,7 @@ public class MeasurementsRepository {
     }
 
 
-    public LiveData<List<HumidityMeasurement>> getHumidityMeasurementsByUserIdAndEui(String userid, String eui){
+    public LiveData<List<HumidityMeasurement>> getHumidityMeasurementsByUserIdAndEui(String userid, String eui) {
 
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
         Call<List<HumidityMeasurement>> call = terrariumApi.getHumidityMeasurementByUserId(userid, eui);
@@ -90,8 +102,10 @@ public class MeasurementsRepository {
             @Override
             public void onResponse(Call<List<HumidityMeasurement>> call, Response<List<HumidityMeasurement>> response) {
 
-                if (response.isSuccessful()){
-
+                if (response.isSuccessful()) {
+                    for (HumidityMeasurement humidity : response.body()) {
+                        executorService.execute(() -> measurementDao.addHumidityMeasurement(humidity));
+                    }
                     humidityMeasurementMutableLiveData.setValue(response.body());
                 }
 
@@ -110,8 +124,7 @@ public class MeasurementsRepository {
     }
 
 
-
-    public LiveData<List<Co2Measurement>> getCo2MeasurementsByUserIdAndEui(String userid, String eui){
+    public LiveData<List<Co2Measurement>> getCo2MeasurementsByUserIdAndEui(String userid, String eui) {
 
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
         Call<List<Co2Measurement>> call = terrariumApi.getCo2MeasurementByUserId(userid, eui);
@@ -120,8 +133,10 @@ public class MeasurementsRepository {
             @Override
             public void onResponse(Call<List<Co2Measurement>> call, Response<List<Co2Measurement>> response) {
 
-                if (response.isSuccessful()){
-
+                if (response.isSuccessful()) {
+                    for (Co2Measurement co2 : response.body()) {
+                        executorService.execute(() -> measurementDao.addCo2Measurement(co2));
+                    }
                     co2MeasurementMutableLiveData.setValue(response.body());
                 }
 
@@ -138,17 +153,6 @@ public class MeasurementsRepository {
         return co2MeasurementMutableLiveData;
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

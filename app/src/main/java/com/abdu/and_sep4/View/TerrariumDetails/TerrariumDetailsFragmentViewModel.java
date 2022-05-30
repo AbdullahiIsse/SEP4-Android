@@ -1,5 +1,8 @@
 package com.abdu.and_sep4.View.TerrariumDetails;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -9,15 +12,16 @@ import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 
 import java.util.List;
 
-public class TerrariumDetailsFragmentViewModel extends ViewModel {
+public class TerrariumDetailsFragmentViewModel extends AndroidViewModel {
 
     private MeasurementsRepository measurementsRepository;
     private LiveData<List<TemperatureMeasurement>> terrariumLiveData;
 
 
 
-    public TerrariumDetailsFragmentViewModel() {
-        measurementsRepository = MeasurementsRepository.getInstance();
+    public TerrariumDetailsFragmentViewModel(Application application) {
+        super(application);
+        measurementsRepository = MeasurementsRepository.getInstance(application);
 
 
     }

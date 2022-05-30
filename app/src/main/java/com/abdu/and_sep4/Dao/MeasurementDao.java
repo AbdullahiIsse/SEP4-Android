@@ -3,6 +3,7 @@ package com.abdu.and_sep4.Dao;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.abdu.and_sep4.Shared.Co2Measurement;
@@ -27,13 +28,13 @@ public interface MeasurementDao {
     LiveData<List<Co2Measurement>> getCo2MeasurementByEui(String eui);
 
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addTemperatureMeasurement(TemperatureMeasurement temperatureMeasurement);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addHumidityMeasurement(HumidityMeasurement humidityMeasurement);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addCo2Measurement(Co2Measurement co2Measurement);
 
 

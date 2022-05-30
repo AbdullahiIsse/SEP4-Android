@@ -1,5 +1,6 @@
 package com.abdu.and_sep4.Repository;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -7,9 +8,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.abdu.and_sep4.API.ServiceGenerator;
 import com.abdu.and_sep4.API.TerrariumApi;
+import com.abdu.and_sep4.Dao.AnimalDao;
+import com.abdu.and_sep4.Dao.MeasurementDao;
+import com.abdu.and_sep4.Dao.TerrariumDatabase;
 import com.abdu.and_sep4.Shared.Animal;
+import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,6 +25,7 @@ import retrofit2.Response;
 public class AnimalRepository {
 
     private static AnimalRepository instance;
+    private final AnimalDao animalDao;
 
     private final MutableLiveData <Animal> addAnimalMutableLiveData;
 
@@ -25,19 +33,24 @@ public class AnimalRepository {
 
     private final MutableLiveData<Animal> updateAnimals;
 
+    private final ExecutorService executorService;
 
-    public AnimalRepository() {
+
+    public AnimalRepository(Application application) {
+        TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
+        animalDao = terrariumDatabase.animalDao();
         addAnimalMutableLiveData = new MutableLiveData<>();
         getAllAnimalsByUserIdMutableLiveData = new MutableLiveData<>();
         updateAnimals = new MutableLiveData<>();
+        executorService = Executors.newFixedThreadPool(2);
 
     }
 
 
-    public static synchronized AnimalRepository getInstance() {
+    public static synchronized AnimalRepository getInstance(Application application) {
 
         if (instance == null){
-            instance = new AnimalRepository();
+            instance = new AnimalRepository(application);
         }
 
         return instance;
@@ -84,7 +97,6 @@ public class AnimalRepository {
 
 
 
-
     public LiveData <List<Animal>> getAllAnimalsByUserId(String userId,String eui) {
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
         Call<List<Animal>> call = terrariumApi.getAnimalByUserId(userId,eui);
@@ -94,6 +106,9 @@ public class AnimalRepository {
             public void onResponse(Call<List<Animal>> call, Response<List<Animal>> response) {
 
                 if (response.isSuccessful()){
+                    for (Animal animal : response.body()) {
+                        executorService.execute(() -> animalDao.addAnimal(animal));
+                    }
                     getAllAnimalsByUserIdMutableLiveData.setValue(response.body());
                     Log.e("Retrofit", "its working Animals :(" + getAllAnimalsByUserIdMutableLiveData.getValue().size());
 
