@@ -53,9 +53,9 @@
 
     <fragment
         android:id="@+id/AddPetFragments"
-        android:name="com.abdu.and_sep4.View.AddPet.AddPetFragment"
+        android:name="com.abdu.and_sep4.View.AddPet.AddAnimalFragment"
         android:label="Add Animal"
-        tools:layout="@layout/fragment_add_pet" >
+        tools:layout="@layout/fragment_add_animal" >
         <action
             android:id="@+id/action_AddPetFragments_to_animalListFragment"
             app:destination="@id/animalListFragment" />
@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/updatePetFragment"
-        android:name="com.abdu.and_sep4.View.UpdatePet.UpdatePetFragment"
+        android:name="com.abdu.and_sep4.View.UpdatePet.UpdateAnimalFragment"
         android:label="Update Pet"
         tools:layout="@layout/fragment_update_pet" >
         <action

@@ -19,9 +19,9 @@ import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
 
 
-public class AddPetFragment extends Fragment {
+public class AddAnimalFragment extends Fragment {
 
-    private AddPetFragmentViewModel addPetVM;
+    private AddAnimalFragmentViewModel addPetVM;
     private View inflate;
     private AppCompatEditText et_name;
     private AppCompatEditText et_species;
@@ -37,7 +37,7 @@ public class AddPetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        inflate = inflater.inflate(R.layout.fragment_add_pet, container, false);
+        inflate = inflater.inflate(R.layout.fragment_add_animal, container, false);
 
 
         et_name = inflate.findViewById(R.id.name);
@@ -50,7 +50,7 @@ public class AddPetFragment extends Fragment {
         addPet = inflate.findViewById(R.id.addPet);
         terrarium = SaveInfo.getInstance().getTerrarium();
 
-        addPetVM = new ViewModelProvider(this).get(AddPetFragmentViewModel.class);
+        addPetVM = new ViewModelProvider(this).get(AddAnimalFragmentViewModel.class);
 
         addPet.setOnClickListener(this::addPet);
 

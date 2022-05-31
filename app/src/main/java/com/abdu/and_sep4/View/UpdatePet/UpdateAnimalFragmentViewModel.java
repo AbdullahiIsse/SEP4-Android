@@ -10,12 +10,12 @@ import com.abdu.and_sep4.Repository.Web.AnimalRepo.AnimalRepository;
 import com.abdu.and_sep4.Repository.Web.AnimalRepo.AnimalRepositoryImpl;
 import com.abdu.and_sep4.Shared.Animal;
 
-public class UpdatePetFragmentViewModel extends AndroidViewModel implements IUpdatePetFragment {
+public class UpdateAnimalFragmentViewModel extends AndroidViewModel implements IUpdateAnimalFragment {
 
     private AnimalRepository animalRepository;
 
 
-    public UpdatePetFragmentViewModel(Application application) {
+    public UpdateAnimalFragmentViewModel(Application application) {
         super(application);
         animalRepository = AnimalRepositoryImpl.getInstance(application);
     }

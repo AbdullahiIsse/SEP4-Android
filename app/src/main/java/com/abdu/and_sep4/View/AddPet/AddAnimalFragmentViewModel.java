@@ -9,13 +9,13 @@ import com.abdu.and_sep4.Repository.Web.AnimalRepo.AnimalRepository;
 import com.abdu.and_sep4.Repository.Web.AnimalRepo.AnimalRepositoryImpl;
 import com.abdu.and_sep4.Shared.Animal;
 
-public class AddPetFragmentViewModel extends AndroidViewModel implements IAddPetFragment {
+public class AddAnimalFragmentViewModel extends AndroidViewModel implements IAddPetFragment {
 
 
     private AnimalRepository animalRepository;
 
 
-    public AddPetFragmentViewModel(Application application) {
+    public AddAnimalFragmentViewModel(Application application) {
         super(application);
         animalRepository = AnimalRepositoryImpl.getInstance(application);
 

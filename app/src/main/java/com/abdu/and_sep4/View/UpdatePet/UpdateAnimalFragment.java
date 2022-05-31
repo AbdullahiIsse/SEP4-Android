@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class UpdatePetFragment extends Fragment {
+public class UpdateAnimalFragment extends Fragment {
 
 
     private View inflate;
@@ -32,7 +32,7 @@ public class UpdatePetFragment extends Fragment {
     private AppCompatEditText et_hibernating;
     private AppCompatEditText et_hasOffSpring;
     private Button updateBtnPet;
-    private UpdatePetFragmentViewModel updatePetFragmentViewModel;
+    private UpdateAnimalFragmentViewModel updatePetFragmentViewModel;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     @Override
@@ -50,7 +50,7 @@ public class UpdatePetFragment extends Fragment {
         updateBtnPet = inflate.findViewById(R.id.updatePet);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        updatePetFragmentViewModel = new ViewModelProvider(this).get(UpdatePetFragmentViewModel.class);
+        updatePetFragmentViewModel = new ViewModelProvider(this).get(UpdateAnimalFragmentViewModel.class);
 
 
         et_name.setText(getArguments().getString("name"));

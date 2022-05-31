@@ -46,11 +46,6 @@ public class CriticalValueWorker extends Worker {
 
         double tempMax = Double.parseDouble(sharedPreferencesCriticalValues.getString("tempMax", "0"));
         double tempMin = Double.parseDouble(sharedPreferencesCriticalValues.getString("tempMin", "0"));
-//        double humMax = Double.parseDouble(sharedPreferencesCriticalValues.getString("humMax", "0"));
-//        double humMin = Double.parseDouble(sharedPreferencesCriticalValues.getString("humMin", "0"));
-//        double co2Max = Double.parseDouble(sharedPreferencesCriticalValues.getString("co2Max", "0"));
-//        double co2Min = Double.parseDouble(sharedPreferencesCriticalValues.getString("co2Min", "0"));
-
 
         TerrariumApi terrariumApi = ServiceGenerator.getTerrariumApi();
         Call<List<TemperatureMeasurement>> call = terrariumApi.getTemperatureMeasurementByUserId("jack",id);
