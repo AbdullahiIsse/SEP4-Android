@@ -12,6 +12,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,8 @@ import com.abdu.and_sep4.View.Adapter.PetAdapter;
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +49,8 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
     private View inflate;
     private TextView petListError;
     private Bundle bundle = new Bundle();
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
 
     @Override
@@ -55,10 +61,12 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
 
 
         recyclerView = inflate.findViewById(R.id.rv_Petlist);
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         progressBar = inflate.findViewById(R.id.petprogress_bar);
         floatingActionButton = inflate.findViewById(R.id.fab);
-
+        error = inflate.findViewById(R.id.animal_error);
+        error.setVisibility(View.GONE);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
         recyclerView.hasFixedSize();
@@ -93,9 +101,9 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
 
 
     private void getPetList() {
-        Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
 
-        animalListFragmentViewmodel.getPetsLiveData("jack",SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<Animal>>() {
+
+        animalListFragmentViewmodel.getPetsLiveData(firebaseUser.getUid(),SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<Animal>>() {
             @Override
             public void onChanged(List<Animal> animals) {
                 if (animals != null && !animals.isEmpty()) {
@@ -108,6 +116,19 @@ public class AnimalListFragment extends Fragment implements OnListItemClickListe
 
 
                 } else {
+                    Handler handler = new Handler(Looper.getMainLooper());
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (petAdapter.getItemCount() == 0){
+                                progressBar.setVisibility(View.GONE);
+                                error.setVisibility(View.VISIBLE);
+                                return;
+                            }
+
+                        }
+                    },5000);
 
 
                 }

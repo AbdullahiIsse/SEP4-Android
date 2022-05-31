@@ -60,10 +60,8 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         firebaseUser = firebaseAuth.getCurrentUser();
         error = inflate.findViewById(R.id.terrarium_error);
         progressBar = inflate.findViewById(R.id.progress_bar3);
-       // error = inflate.findViewById(R.id.terrariumError);
         floatingActionButton = inflate.findViewById(R.id.fab);
-//      progressBar.setVisibility(View.GONE);
-          error.setVisibility(View.GONE);
+        error.setVisibility(View.GONE);
         recyclerView = inflate.findViewById(R.id.rv_home);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
         recyclerView.hasFixedSize();
@@ -122,41 +120,42 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
     private void getTerrariumByUserId() {
 
 
+        if (firebaseUser != null){
+
 
             homeFragmentViewModel.getTerrariumLiveData(firebaseUser.getUid()).observe(getViewLifecycleOwner(), new Observer<List<Terrarium>>() {
                 @Override
-                public void onChanged(List<Terrarium> terrariums) {
-                    if (terrariums != null && !terrariums.isEmpty()) {
+                public void onChanged(List<Terrarium> terrariumslist) {
+                    if (terrariumslist != null && !terrariumslist.isEmpty()) {
                         progressBar.setVisibility(View.GONE);
-                        HomeFragment.this.terrariums.clear();
-                        HomeFragment.this.terrariums.addAll(terrariums);
                         terrariums.clear();
+                        terrariums.addAll(terrariumslist);
+                        terrariumslist.clear();
                         terrariumAdapter.notifyDataSetChanged();
+
+                    } else {
                         Handler handler = new Handler(Looper.getMainLooper());
 
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (terrariums != null && !terrariums.isEmpty()){
+                                if (terrariumAdapter.getItemCount() == 0){
+                                    progressBar.setVisibility(View.GONE);
                                     error.setVisibility(View.VISIBLE);
+                                    return;
                                 }
 
-
                             }
-                        },500);
+                        },2000);
 
 
 
-
-                    } else {
-//                        error.setVisibility(View.VISIBLE);
-//                        error.setText("Can not find any Terrarium");
-
-                        Log.e("Viewmodel-Terrarium", "terrariumV2s.toString()");
                     }
 
                 }
             });
+        }
+
 
 
 

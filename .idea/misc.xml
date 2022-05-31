@@ -46,6 +46,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28894927536231885" />
         <entry key="app/src/main/res/layout/fragment_account.xml" value="0.28894927536231885" />
         <entry key="app/src/main/res/layout/fragment_add_pet.xml" value="0.25679347826086957" />
+        <entry key="app/src/main/res/layout/fragment_animal_list.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_co2.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.28894927536231885" />
         <entry key="app/src/main/res/layout/fragment_humidity.xml" value="0.19610507246376813" />

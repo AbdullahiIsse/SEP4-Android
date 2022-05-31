@@ -7,6 +7,15 @@
     android:orientation="vertical"
     tools:context=".View.Account.AnimalListFragment">
 
+    <TextView
+        android:id="@+id/animal_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Animal list is empty"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/petprogress_bar"

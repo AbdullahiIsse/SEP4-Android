@@ -6,7 +6,10 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.abdu.and_sep4.R;
+import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.User;
 import com.abdu.and_sep4.View.Login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -60,18 +64,40 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     private void Register(View view) {
+        if (ifNetworkIsAvailable()) {
+            String name = etName.getText().toString();
+            String email = et_Email.getText().toString();
+            String password = et_Password.getText().toString();
 
-        String name = etName.getText().toString();
-        String email = et_Email.getText().toString();
-        String password = et_Password.getText().toString();
+            validations(name, email, password);
 
-        validations(name, email, password);
+            firebaseAuthAndSave(name, email, password);
 
-        firebaseAuthAndSave(name, email, password);
+            etName.setText("");
+            et_Email.setText("");
+            et_Password.setText("");
+        } else {
+            Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_LONG).show();
+        }
 
-        etName.setText("");
-        et_Email.setText("");
-        et_Password.setText("");
+
+
+
+    }
+
+    public boolean ifNetworkIsAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+
+        if (info != null) {
+            if (info.isConnected()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
 
     }
 
