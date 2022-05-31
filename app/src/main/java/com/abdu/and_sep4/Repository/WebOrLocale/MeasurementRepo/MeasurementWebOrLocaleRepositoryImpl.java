@@ -1,4 +1,4 @@
-package com.abdu.and_sep4.Repository.WebOrLocale;
+package com.abdu.and_sep4.Repository.WebOrLocale.MeasurementRepo;
 
 import android.app.Application;
 import android.content.Context;
@@ -7,35 +7,33 @@ import android.net.NetworkInfo;
 
 import androidx.lifecycle.LiveData;
 
-import com.abdu.and_sep4.Repository.Locale.MeasurementRepositoryOffline;
-import com.abdu.and_sep4.Repository.Locale.TerrariumRepositoryOffline;
-import com.abdu.and_sep4.Repository.Web.MeasurementsRepository;
-import com.abdu.and_sep4.Repository.Web.TerrariumRepository;
+import com.abdu.and_sep4.Repository.Locale.MeassurementRepo.MeasurementRepositoryOfflineImpl;
+import com.abdu.and_sep4.Repository.Web.MeasurementsRepo.MeasurementsRepositoryImpl;
 import com.abdu.and_sep4.Shared.Co2Measurement;
 import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 
 import java.util.List;
 
-public class MeasurementWebOrLocaleRepository {
+public class MeasurementWebOrLocaleRepositoryImpl implements MeasurementWebOrLocaleRepository{
 
-    private static MeasurementWebOrLocaleRepository instance;
-    private final MeasurementRepositoryOffline measurementRepositoryOffline;
-    private final MeasurementsRepository measurementsRepository;
+    private static MeasurementWebOrLocaleRepositoryImpl instance;
+    private final MeasurementRepositoryOfflineImpl measurementRepositoryOfflineImpl;
+    private final MeasurementsRepositoryImpl measurementsRepositoryImpl;
     private Application application;
 
-    public MeasurementWebOrLocaleRepository(Application application) {
-        measurementRepositoryOffline = MeasurementRepositoryOffline.getInstance(application);
-        measurementsRepository = MeasurementsRepository.getInstance(application);
+    public MeasurementWebOrLocaleRepositoryImpl(Application application) {
+        measurementRepositoryOfflineImpl = MeasurementRepositoryOfflineImpl.getInstance(application);
+        measurementsRepositoryImpl = MeasurementsRepositoryImpl.getInstance(application);
         this.application = application;
 
     }
 
 
-    public static synchronized MeasurementWebOrLocaleRepository getInstance(Application application) {
+    public static synchronized MeasurementWebOrLocaleRepositoryImpl getInstance(Application application) {
 
         if (instance == null) {
-            instance = new MeasurementWebOrLocaleRepository(application);
+            instance = new MeasurementWebOrLocaleRepositoryImpl(application);
         }
 
         return instance;
@@ -62,27 +60,27 @@ public class MeasurementWebOrLocaleRepository {
 
     public LiveData<List<TemperatureMeasurement>> getTemperatureMeasurementsByUserIdAndEui(String userid, String eui){
         if (ifNetworkIsAvailable()) {
-            return measurementsRepository.getTemperatureMeasurementsByUserIdAndEui(userid,eui);
+            return measurementsRepositoryImpl.getTemperatureMeasurementsByUserIdAndEui(userid,eui);
         } else {
-            return measurementRepositoryOffline.getTempMeasurementByEui(eui);
+            return measurementRepositoryOfflineImpl.getTempMeasurementByEui(eui);
         }
 
     }
 
     public LiveData<List<HumidityMeasurement>> getHumidityMeasurementsByUserIdAndEui(String userid, String eui){
         if (ifNetworkIsAvailable()) {
-            return measurementsRepository.getHumidityMeasurementsByUserIdAndEui(userid, eui);
+            return measurementsRepositoryImpl.getHumidityMeasurementsByUserIdAndEui(userid, eui);
         } else {
-            return measurementRepositoryOffline.getHumidityMeasurementByEui(eui);
+            return measurementRepositoryOfflineImpl.getHumidityMeasurementByEui(eui);
         }
 
     }
 
     public LiveData<List<Co2Measurement>> getCo2MeasurementsByUserIdAndEui(String userid, String eui){
         if (ifNetworkIsAvailable()) {
-            return measurementsRepository.getCo2MeasurementsByUserIdAndEui(userid,eui);
+            return measurementsRepositoryImpl.getCo2MeasurementsByUserIdAndEui(userid,eui);
         } else {
-            return measurementRepositoryOffline.getCo2MeasurementByEui(eui);
+            return measurementRepositoryOfflineImpl.getCo2MeasurementByEui(eui);
         }
 
     }

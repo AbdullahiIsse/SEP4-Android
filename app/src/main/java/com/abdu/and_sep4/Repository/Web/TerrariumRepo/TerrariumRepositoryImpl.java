@@ -1,4 +1,4 @@
-package com.abdu.and_sep4.Repository.Web;
+package com.abdu.and_sep4.Repository.Web.TerrariumRepo;
 
 import android.app.Application;
 import android.util.Log;
@@ -22,9 +22,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TerrariumRepository {
+public class TerrariumRepositoryImpl implements TerrariumRepository {
 
-    private static TerrariumRepository instance;
+    private static TerrariumRepositoryImpl instance;
     private final TerrariumDao terrariumDao;
 
     private final MutableLiveData<List<Terrarium>> terrariumListMutableLiveData;
@@ -35,7 +35,7 @@ public class TerrariumRepository {
     private final SignalRApi signalRApii;
 
 
-    public TerrariumRepository(Application application) {
+    public TerrariumRepositoryImpl(Application application) {
         TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
         terrariumDao = terrariumDatabase.terrariumDao();
         terrariumListMutableLiveData = new MutableLiveData<>();
@@ -48,10 +48,10 @@ public class TerrariumRepository {
 
     }
 
-    public static synchronized TerrariumRepository getInstance(Application application) {
+    public static synchronized TerrariumRepositoryImpl getInstance(Application application) {
 
         if (instance == null) {
-            instance = new TerrariumRepository(application);
+            instance = new TerrariumRepositoryImpl(application);
         }
 
         return instance;

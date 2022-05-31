@@ -1,4 +1,4 @@
-package com.abdu.and_sep4.Repository.Web;
+package com.abdu.and_sep4.Repository.Web.MeasurementsRepo;
 
 import android.app.Application;
 import android.util.Log;
@@ -23,9 +23,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MeasurementsRepository {
+public class MeasurementsRepositoryImpl implements MeasurementsRepository {
 
-    private static MeasurementsRepository instance;
+    private static MeasurementsRepositoryImpl instance;
     private final MeasurementDao measurementDao;
 
     private final MutableLiveData<List<TemperatureMeasurement>> temperatureMeasurementMutableLiveData;
@@ -34,7 +34,7 @@ public class MeasurementsRepository {
     private final ExecutorService executorService;
 
 
-    public MeasurementsRepository(Application application) {
+    public MeasurementsRepositoryImpl(Application application) {
         TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
         measurementDao = terrariumDatabase.measurementDao();
         temperatureMeasurementMutableLiveData = new MutableLiveData<>();
@@ -44,10 +44,10 @@ public class MeasurementsRepository {
 
     }
 
-    public static synchronized MeasurementsRepository getInstance(Application application) {
+    public static synchronized MeasurementsRepositoryImpl getInstance(Application application) {
 
         if (instance == null) {
-            instance = new MeasurementsRepository(application);
+            instance = new MeasurementsRepositoryImpl(application);
         }
 
         return instance;

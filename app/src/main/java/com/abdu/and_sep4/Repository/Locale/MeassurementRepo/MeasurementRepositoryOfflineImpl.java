@@ -1,13 +1,11 @@
-package com.abdu.and_sep4.Repository.Locale;
+package com.abdu.and_sep4.Repository.Locale.MeassurementRepo;
 
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
 import com.abdu.and_sep4.Dao.MeasurementDao;
-import com.abdu.and_sep4.Dao.TerrariumDao;
 import com.abdu.and_sep4.Dao.TerrariumDatabase;
-import com.abdu.and_sep4.Repository.Web.MeasurementsRepository;
 import com.abdu.and_sep4.Shared.Co2Measurement;
 import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
@@ -16,24 +14,24 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MeasurementRepositoryOffline {
+public class MeasurementRepositoryOfflineImpl implements MeasurementRepositoryOffline {
 
     private final MeasurementDao measurementDao;
-    private static MeasurementRepositoryOffline instance;
+    private static MeasurementRepositoryOfflineImpl instance;
     private final ExecutorService executorService;
 
 
-    public MeasurementRepositoryOffline(Application application) {
+    public MeasurementRepositoryOfflineImpl(Application application) {
         TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
         measurementDao = terrariumDatabase.measurementDao();
         executorService = Executors.newFixedThreadPool(2);
     }
 
 
-    public static synchronized MeasurementRepositoryOffline getInstance(Application application) {
+    public static synchronized MeasurementRepositoryOfflineImpl getInstance(Application application) {
 
         if (instance == null) {
-            instance = new MeasurementRepositoryOffline(application);
+            instance = new MeasurementRepositoryOfflineImpl(application);
         }
 
         return instance;

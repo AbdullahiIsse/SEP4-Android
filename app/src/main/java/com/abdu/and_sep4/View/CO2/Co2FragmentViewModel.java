@@ -5,20 +5,20 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.abdu.and_sep4.Repository.Web.MeasurementsRepository;
-import com.abdu.and_sep4.Repository.WebOrLocale.MeasurementWebOrLocaleRepository;
+import com.abdu.and_sep4.Repository.WebOrLocale.MeasurementRepo.MeasurementWebOrLocaleRepository;
+import com.abdu.and_sep4.Repository.WebOrLocale.MeasurementRepo.MeasurementWebOrLocaleRepositoryImpl;
 import com.abdu.and_sep4.Shared.Co2Measurement;
 
 import java.util.List;
 
-public class Co2FragmentViewModel extends AndroidViewModel {
+public class Co2FragmentViewModel extends AndroidViewModel implements ICo2Fragment {
 
     private MeasurementWebOrLocaleRepository measurementWebOrLocaleRepository;
 
 
     public Co2FragmentViewModel(Application application) {
         super(application);
-        measurementWebOrLocaleRepository = MeasurementWebOrLocaleRepository.getInstance(application);
+        measurementWebOrLocaleRepository = MeasurementWebOrLocaleRepositoryImpl.getInstance(application);
 
     }
 

@@ -6,13 +6,13 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.abdu.and_sep4.Repository.Web.AnimalRepository;
-import com.abdu.and_sep4.Repository.WebOrLocale.AnimalWebOrLocaleRepository;
+import com.abdu.and_sep4.Repository.WebOrLocale.AnimalRepo.AnimalWebOrLocaleRepository;
+import com.abdu.and_sep4.Repository.WebOrLocale.AnimalRepo.AnimalWebOrLocaleRepositoryImpl;
 import com.abdu.and_sep4.Shared.Animal;
 
 import java.util.List;
 
-public class AnimalListFragmentViewmodel extends AndroidViewModel {
+public class AnimalListFragmentViewmodel extends AndroidViewModel implements IAnimalListFragment {
 
     private AnimalWebOrLocaleRepository animalWebOrLocaleRepository;
 
@@ -21,7 +21,7 @@ public class AnimalListFragmentViewmodel extends AndroidViewModel {
     public AnimalListFragmentViewmodel(Application application) {
         super(application);
 
-        animalWebOrLocaleRepository = AnimalWebOrLocaleRepository.getInstance(application);
+        animalWebOrLocaleRepository = AnimalWebOrLocaleRepositoryImpl.getInstance(application);
 
     }
 

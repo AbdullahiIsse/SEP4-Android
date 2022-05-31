@@ -5,10 +5,11 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.abdu.and_sep4.Repository.Web.TerrariumRepository;
+import com.abdu.and_sep4.Repository.Web.TerrariumRepo.TerrariumRepository;
+import com.abdu.and_sep4.Repository.Web.TerrariumRepo.TerrariumRepositoryImpl;
 import com.abdu.and_sep4.Shared.Terrarium;
 
-public class AddTerrariumFragmentViewModel extends AndroidViewModel {
+public class AddTerrariumFragmentViewModel extends AndroidViewModel implements IAddTerrariumFragment{
 
     private TerrariumRepository terrariumRepository;
 
@@ -18,7 +19,7 @@ public class AddTerrariumFragmentViewModel extends AndroidViewModel {
         super(application);
 
 
-        terrariumRepository = TerrariumRepository.getInstance(application);
+        terrariumRepository = TerrariumRepositoryImpl.getInstance(application);
 
     }
 

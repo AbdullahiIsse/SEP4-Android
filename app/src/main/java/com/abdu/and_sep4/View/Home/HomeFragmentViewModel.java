@@ -6,15 +6,15 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.abdu.and_sep4.Repository.Web.TerrariumRepository;
-import com.abdu.and_sep4.Repository.WebOrLocale.TerrariumWebOrLocaleRepository;
+import com.abdu.and_sep4.Repository.WebOrLocale.TerrariumRepo.TerrariumWebOrLocaleRepository;
+import com.abdu.and_sep4.Repository.WebOrLocale.TerrariumRepo.TerrariumWebOrLocaleRepositoryImpl;
 import com.abdu.and_sep4.Shared.Terrarium;
 
 import java.util.List;
 
 
 
-public class HomeFragmentViewModel extends AndroidViewModel {
+public class HomeFragmentViewModel extends AndroidViewModel implements IHomeFragment {
 
     private TerrariumWebOrLocaleRepository terrariumWebOrLocaleRepository;
     private LiveData<List<Terrarium>> terrariumLiveData;
@@ -24,7 +24,7 @@ public class HomeFragmentViewModel extends AndroidViewModel {
     public HomeFragmentViewModel(Application application) {
         super(application);
 
-        terrariumWebOrLocaleRepository = TerrariumWebOrLocaleRepository.getInstance(application);
+        terrariumWebOrLocaleRepository = TerrariumWebOrLocaleRepositoryImpl.getInstance(application);
 
         terrariumLiveData = new MutableLiveData<>();
 

@@ -1,4 +1,4 @@
-package com.abdu.and_sep4.Repository.Web;
+package com.abdu.and_sep4.Repository.Web.UserRepo;
 
 import android.util.Log;
 
@@ -13,27 +13,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserRepository {
+public class UserRepositoryImpl implements UserRepository  {
 
 
-    private static UserRepository instance;
+    private static UserRepositoryImpl instance;
 
     private final MutableLiveData<User> userMutableLiveData;
 
     private final MutableLiveData<User> addUserMutableLiveData;
 
 
-    public UserRepository() {
+    public UserRepositoryImpl() {
         userMutableLiveData = new MutableLiveData<>();
         addUserMutableLiveData = new MutableLiveData<>();
 
 
     }
 
-    public static synchronized UserRepository getInstance() {
+    public static synchronized UserRepositoryImpl getInstance() {
 
         if (instance == null){
-            instance = new UserRepository();
+            instance = new UserRepositoryImpl();
         }
 
         return instance;

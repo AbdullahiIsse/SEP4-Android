@@ -1,4 +1,4 @@
-package com.abdu.and_sep4.Repository.Web;
+package com.abdu.and_sep4.Repository.Web.AnimalRepo;
 
 import android.app.Application;
 import android.util.Log;
@@ -20,9 +20,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AnimalRepository {
+public class AnimalRepositoryImpl implements AnimalRepository {
 
-    private static AnimalRepository instance;
+    private static AnimalRepositoryImpl instance;
     private final AnimalDao animalDao;
 
     private final MutableLiveData <Animal> addAnimalMutableLiveData;
@@ -34,7 +34,7 @@ public class AnimalRepository {
     private final ExecutorService executorService;
 
 
-    public AnimalRepository(Application application) {
+    public AnimalRepositoryImpl(Application application) {
         TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
         animalDao = terrariumDatabase.animalDao();
         addAnimalMutableLiveData = new MutableLiveData<>();
@@ -45,10 +45,10 @@ public class AnimalRepository {
     }
 
 
-    public static synchronized AnimalRepository getInstance(Application application) {
+    public static synchronized AnimalRepositoryImpl getInstance(Application application) {
 
         if (instance == null){
-            instance = new AnimalRepository(application);
+            instance = new AnimalRepositoryImpl(application);
         }
 
         return instance;

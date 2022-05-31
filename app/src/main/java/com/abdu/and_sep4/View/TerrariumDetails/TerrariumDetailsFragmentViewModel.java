@@ -5,15 +5,16 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.abdu.and_sep4.Repository.Web.MeasurementsRepository;
-import com.abdu.and_sep4.Repository.Web.TerrariumRepository;
-import com.abdu.and_sep4.Repository.WebOrLocale.MeasurementWebOrLocaleRepository;
+import com.abdu.and_sep4.Repository.Web.TerrariumRepo.TerrariumRepository;
+import com.abdu.and_sep4.Repository.Web.TerrariumRepo.TerrariumRepositoryImpl;
+import com.abdu.and_sep4.Repository.WebOrLocale.MeasurementRepo.MeasurementWebOrLocaleRepository;
+import com.abdu.and_sep4.Repository.WebOrLocale.MeasurementRepo.MeasurementWebOrLocaleRepositoryImpl;
 import com.abdu.and_sep4.Shared.TemperatureMeasurement;
 
 
 import java.util.List;
 
-public class TerrariumDetailsFragmentViewModel extends AndroidViewModel {
+public class TerrariumDetailsFragmentViewModel extends AndroidViewModel implements ITerrariumDetailsFragment {
 
     private MeasurementWebOrLocaleRepository measurementWebOrLocaleRepository;
     private TerrariumRepository terrariumRepository;
@@ -23,8 +24,8 @@ public class TerrariumDetailsFragmentViewModel extends AndroidViewModel {
 
     public TerrariumDetailsFragmentViewModel(Application application) {
         super(application);
-        measurementWebOrLocaleRepository = MeasurementWebOrLocaleRepository.getInstance(application);
-        terrariumRepository = TerrariumRepository.getInstance(application);
+        measurementWebOrLocaleRepository = MeasurementWebOrLocaleRepositoryImpl.getInstance(application);
+        terrariumRepository = TerrariumRepositoryImpl.getInstance(application);
 
 
     }
