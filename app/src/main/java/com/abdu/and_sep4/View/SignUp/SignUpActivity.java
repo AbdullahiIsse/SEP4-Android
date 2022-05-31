@@ -73,6 +73,8 @@ public class SignUpActivity extends AppCompatActivity {
 
             firebaseAuthAndSave(name, email, password);
 
+            Toast.makeText(this,"User has been added",Toast.LENGTH_SHORT).show();
+
             etName.setText("");
             et_Email.setText("");
             et_Password.setText("");

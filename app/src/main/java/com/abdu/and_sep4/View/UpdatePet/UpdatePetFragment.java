@@ -15,6 +15,9 @@ import android.widget.Button;
 
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Animal;
+import com.abdu.and_sep4.Shared.SaveInfo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class UpdatePetFragment extends Fragment {
@@ -30,7 +33,8 @@ public class UpdatePetFragment extends Fragment {
     private AppCompatEditText et_hasOffSpring;
     private Button updateBtnPet;
     private UpdatePetFragmentViewModel updatePetFragmentViewModel;
-
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class UpdatePetFragment extends Fragment {
         et_hibernating = inflate.findViewById(R.id.Updatehibernating);
         et_hasOffSpring = inflate.findViewById(R.id.UpdatehasOffSpring);
         updateBtnPet = inflate.findViewById(R.id.updatePet);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         updatePetFragmentViewModel = new ViewModelProvider(this).get(UpdatePetFragmentViewModel.class);
 
 
@@ -60,7 +66,7 @@ public class UpdatePetFragment extends Fragment {
         updateBtnPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updatePetFragmentViewModel.updatePet(getArguments().getInt("id"),new Animal("abc123",
+                updatePetFragmentViewModel.updatePet(getArguments().getInt("id"),new Animal(SaveInfo.getInstance().getTerrarium().getEui(),
                         et_name.getText().toString(),Integer.parseInt(et_age.getText().toString()),
                         et_species.getText().toString(),et_gender.getText().toString(),
                         Boolean.parseBoolean(et_hasOffSpring.getText().toString()),Boolean.parseBoolean(et_hibernating.getText().toString()),

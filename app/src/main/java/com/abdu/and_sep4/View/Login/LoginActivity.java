@@ -141,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth.signInWithCredential(credential).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
+                loginActivityViewModel.addUser(new User(authResult.getUser().getUid()));
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
 

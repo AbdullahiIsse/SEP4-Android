@@ -14,6 +14,8 @@ import android.widget.Button;
 
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Terrarium;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class UpdateTerrariumFragment extends Fragment {
@@ -27,6 +29,8 @@ public class UpdateTerrariumFragment extends Fragment {
     private AppCompatEditText et_humMax;
     private AppCompatEditText et_humMin;
     private AppCompatEditText et_co2Max;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +43,8 @@ public class UpdateTerrariumFragment extends Fragment {
         et_humMax = inflate.findViewById(R.id.UpdateHum_max);
         et_humMin = inflate.findViewById(R.id.UpdateHum_min);
         et_co2Max = inflate.findViewById(R.id.UpdateCO2_max);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         updateBtnTerrarium = inflate.findViewById(R.id.updateTerrarium);
         updateTerrariumFragmentViewModel = new ViewModelProvider(this).get(UpdateTerrariumFragmentViewModel.class);
 
@@ -57,7 +63,7 @@ public class UpdateTerrariumFragment extends Fragment {
             public void onClick(View view) {
                 updateTerrariumFragmentViewModel.updateTerrarium(getArguments().getString("TerrariumEui"),
                         new Terrarium(et_TerrariumEui.getText().toString(),
-                               "jack",
+                                firebaseUser.getUid(),
                                 Double.parseDouble(et_tempMin.getText().toString()),
                                 Double.parseDouble(et_tempMax.getText().toString()),
                                 Double.parseDouble(et_humMin.getText().toString()),

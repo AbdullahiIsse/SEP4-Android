@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Terrarium;
@@ -104,7 +105,8 @@ public class AddTerrariumFragment extends Fragment {
 
 
         addTerrariumFragmentViewModel.addTerrariumToDb(terrarium);
-        Navigation.findNavController(inflate).navigate(R.id.action_addTerrariumFragment_to_homeFragment);
+        Toast.makeText(getContext(),"Terrarium has been added",Toast.LENGTH_SHORT).show();
+
 
 
     }

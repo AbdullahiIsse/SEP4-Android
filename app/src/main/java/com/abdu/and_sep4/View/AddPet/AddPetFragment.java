@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Animal;
@@ -91,6 +92,8 @@ public class AddPetFragment extends Fragment {
         Log.e("animal", animal.toString());
 
         addPetVM.addAnimal(animal);
+
+        Toast.makeText(getContext(),"Pet has been added",Toast.LENGTH_SHORT).show();
 
     }
 

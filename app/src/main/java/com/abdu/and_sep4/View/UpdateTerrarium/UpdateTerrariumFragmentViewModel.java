@@ -11,7 +11,7 @@ import com.abdu.and_sep4.Shared.Terrarium;
 public class UpdateTerrariumFragmentViewModel extends AndroidViewModel {
 
 
-    private TerrariumRepository terrariumRepository;
+    private final TerrariumRepository terrariumRepository;
 
     public UpdateTerrariumFragmentViewModel(Application application) {
         super(application);
