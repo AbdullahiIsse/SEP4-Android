@@ -4,19 +4,19 @@
 
 - [x] Som bruger vil jeg aflæse temperaturen i terrariet, så jeg kan se den seneste aflæste temperatur.
 - [x] Som bruger vil jeg have besked hvis temperaturen i terrariet falder uden for en sat rækkevidde, så jeg kan reagere på forkert temperatur
-- []  Som bruger vil jeg have besked hvis luftfugtigheden i terrariet falder uden for en sat rækkevidde, så jeg kan reagere på forkert fugtighed
+- [ ] Som bruger vil jeg have besked hvis luftfugtigheden i terrariet falder uden for en sat rækkevidde, så jeg kan reagere på forkert fugtighed
 - [x] Som bruger vil jeg indstille kritiske niveauer for temperatur, luftfugtighed og CO2 for at bestemme, hvornår jeg får besked om kritiske niveauer. 
 - [x] Som bruger vil jeg se en oversigt over den seneste temperatur-, luftfugtighed- og CO2-måling, så jeg kan se øjebliksbilledet for mit terrarie
 - [x] Som bruger vil jeg fodre mit dyr uden at være fysisk tilstede, så jeg har muligheden for at være hjemmefra i længere perioder.
-- []  Som bruger vil jeg have besked, hvis CO2-niveauet i terrariet overskrider en sat rækkevidde, så jeg kan reagere på forhøjede CO2-niveauer
+- [ ] Som bruger vil jeg have besked, hvis CO2-niveauet i terrariet overskrider en sat rækkevidde, så jeg kan reagere på forhøjede CO2-niveauer
 - [x] Som bruger vil jeg se en oversigt over de seneste målinger af temperatur i terrariet, så jeg kan se udviklingen over tid.
 - [x] Som bruger vil jeg se en oversigt over de seneste målinger af luftfugtighed i terrariet, så jeg kan se udviklingen over tid.
 - [x] Som bruger vil jeg se en oversigt over de seneste målinger af CO2 niveau i terrariet, så jeg kan se udviklingen over tid.
 - [x] Som bruger vil jeg koble flere terrarier til systemet og have individuelle målinger for dem, så jeg kan overvåge flere terrarier sideløbende. 
 - [x] Som bruger vil jeg kunne tilføje dyr til systemet, så jeg kan holde styr på hvor mange dyr, jeg har i mit terrarie.
-- []  Som bruger vil jeg kunne slette et dyr fra systemet, så jeg har mulighed for at fjerne et dyr fra et terrarie. 
+- [ ] Som bruger vil jeg kunne slette et dyr fra systemet, så jeg har mulighed for at fjerne et dyr fra et terrarie. 
 - [x] Som bruger vil jeg kunne redigere et dyr, så jeg kan opdatere info for det pågældende dyr.
-- []  Som bruger vil jeg kunne slette et terrarie, så jeg kan skille et terrarium fra et dyr.
+- [ ] Som bruger vil jeg kunne slette et terrarie, så jeg kan skille et terrarium fra et dyr.
 - [x] Som bruger vil jeg kunne redigere et terrarie, så jeg kan opdatere grænseværdierne for klimaforholdet i terrariet.
 
 - [x] The application must retrieve, parse and display relevant data from a webservice
