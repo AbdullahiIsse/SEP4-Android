@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,8 @@ import com.abdu.and_sep4.Shared.Co2Measurement;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.View.Adapter.Co2SparkAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.robinhood.spark.SparkView;
 
 import java.util.ArrayList;
@@ -37,6 +41,9 @@ public class Co2Fragment extends Fragment {
     private Co2FragmentViewModel viewModel;
     private ProgressBar progressBar;
 
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+
 
 
     @Override
@@ -44,6 +51,8 @@ public class Co2Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         inflate = inflater.inflate(R.layout.fragment_co2, container, false);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         terrariumName = inflate.findViewById(R.id.tv_terrarium_name);
         terrariumCurrentTemp = inflate.findViewById(R.id.tv_current_temp);
         textViewDate = inflate.findViewById(R.id.tv_date);
@@ -56,7 +65,7 @@ public class Co2Fragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(Co2FragmentViewModel.class);
 
 
-        viewModel.getCo2("jack",SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<Co2Measurement>>() {
+        viewModel.getCo2(firebaseUser.getUid(),SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<Co2Measurement>>() {
             @Override
             public void onChanged(List<Co2Measurement> co2Measurements) {
                 progressBar.setVisibility(View.GONE);
@@ -96,10 +105,19 @@ public class Co2Fragment extends Fragment {
         if (!dailyData.isEmpty()) {
             updateInfoForDate(dailyData.get(dailyData.size() - 1));
         } else {
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (dailyData.isEmpty()){
+                        textViewDate.setText("CO2 not available");
+                        terrariumTemp.setText("");
+                        terrariumCurrentTemp.setText("");
+                    }
 
-            terrariumCurrentTemp.setText("temperature is not available for terrarium");
-            textViewDate.setText("");
-            terrariumTemp.setText("");
+
+                }
+            },500);
         }
 
     }

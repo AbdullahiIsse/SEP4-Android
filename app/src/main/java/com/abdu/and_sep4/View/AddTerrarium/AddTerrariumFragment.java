@@ -16,6 +16,8 @@ import android.widget.Button;
 
 import com.abdu.and_sep4.R;
 import com.abdu.and_sep4.Shared.Terrarium;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class AddTerrariumFragment extends Fragment {
@@ -30,6 +32,8 @@ public class AddTerrariumFragment extends Fragment {
     private Button addTerrariumBtn;
     private SharedPreferences sharedPreferences;
     private AddTerrariumFragmentViewModel addTerrariumFragmentViewModel;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
 
 
@@ -38,7 +42,8 @@ public class AddTerrariumFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         inflate = inflater.inflate(R.layout.fragment_add_terrarium, container, false);
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         et_TerrariumEui = inflate.findViewById(R.id.Terrarium_Eui);
         et_tempMax = inflate.findViewById(R.id.Temp_max);
         et_tempMin = inflate.findViewById(R.id.Temp_min);
@@ -93,7 +98,7 @@ public class AddTerrariumFragment extends Fragment {
     }
 
     private void addTerrariumToDb(String eui, double tempMin, double tempMax, double humMin, double humMax, int co2Max) {
-        Terrarium terrarium = new Terrarium(eui, "jack",
+        Terrarium terrarium = new Terrarium(eui, firebaseUser.getUid(),
                 tempMin, tempMax
                 , humMin, humMax, co2Max);
 

@@ -19,6 +19,8 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,8 @@ import com.abdu.and_sep4.View.Adapter.TemperatureSparkAdapter;
 
 
 import com.abdu.and_sep4.View.WorkManager.CriticalValueWorker;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.robinhood.spark.SparkView;
 
 
@@ -60,11 +64,16 @@ public class TerrariumDetailsFragment extends Fragment {
     private Button humidityGraphBtn;
     private Button co2GraphBtn;
     private ProgressBar progressBar;
+    private TextView temp_error;
+
 
 
     private Button foodBtn;
 
     private Button notifyMe;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
 
     private TerrariumDetailsFragmentViewModel viewModel;
@@ -77,6 +86,8 @@ public class TerrariumDetailsFragment extends Fragment {
         inflate = inflater.inflate(R.layout.fragment_terrarium_details, container, false);
         terrariumName = inflate.findViewById(R.id.tv_terrarium_name);
         terrariumCurrentTemp = inflate.findViewById(R.id.tv_current_temp);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         textViewDate = inflate.findViewById(R.id.tv_date);
         sparkView = inflate.findViewById(R.id.sparkview);
         terrariumTemp = inflate.findViewById(R.id.tv_temp);
@@ -86,10 +97,11 @@ public class TerrariumDetailsFragment extends Fragment {
         co2GraphBtn = inflate.findViewById(R.id.CO2);
         foodBtn = inflate.findViewById(R.id.addFood);
         notifyMe = inflate.findViewById(R.id.notifyMe);
+
         sharedPreferences = getActivity().getSharedPreferences("terrariumId", Context.MODE_PRIVATE);
         Terrarium terrarium = SaveInfo.getInstance().getTerrarium();
         terrariumName.setText(terrarium.getEui());
-        terrariumCurrentTemp.setText(Double.toString(20.1));
+       // terrariumCurrentTemp.setText(Double.toString(20.1));
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(terrarium.getEui());
 
@@ -118,10 +130,11 @@ public class TerrariumDetailsFragment extends Fragment {
         });
 
 
-        viewModel.getTemperatureByUserIdAndEuiLiveData("jack", SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<TemperatureMeasurement>>() {
+        viewModel.getTemperatureByUserIdAndEuiLiveData(firebaseUser.getUid(), SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<TemperatureMeasurement>>() {
             @Override
             public void onChanged(List<TemperatureMeasurement> temperatureMeasurements) {
                 progressBar.setVisibility(View.GONE);
+
                 List<TemperatureMeasurement> body = temperatureMeasurements;
 
                 sparkView.setScrubEnabled(true);
@@ -219,10 +232,21 @@ public class TerrariumDetailsFragment extends Fragment {
         if (!dailyData.isEmpty()) {
             updateInfoForDate(dailyData.get(dailyData.size() - 1));
         } else {
+            Handler handler = new Handler(Looper.getMainLooper());
 
-            terrariumCurrentTemp.setText("temperature is not available for terrarium");
-            textViewDate.setText("");
-            terrariumTemp.setText("");
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (dailyData.isEmpty()){
+                        textViewDate.setText("temp not available");
+                        terrariumTemp.setText("");
+                        terrariumCurrentTemp.setText("");
+                    }
+
+
+                }
+            },500);
+
         }
 
     }

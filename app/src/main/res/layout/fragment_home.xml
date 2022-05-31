@@ -8,6 +8,16 @@
     android:layout_weight="1"
     >
 
+   <TextView
+       android:id="@+id/terrarium_error"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_marginBottom="10dp"
+       android:gravity="center"
+       android:text="Terrarium is not avalible"
+       android:textSize="30sp"
+       android:textStyle="bold" />
+
    <ProgressBar
        android:id="@+id/progress_bar3"
        android:layout_width="wrap_content"

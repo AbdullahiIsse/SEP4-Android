@@ -12,6 +12,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +47,7 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private ProgressBar progressBar;
+
     private TextView error;
 
 
@@ -55,12 +58,12 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
         inflate = inflater.inflate(R.layout.fragment_home, container, false);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-
+        error = inflate.findViewById(R.id.terrarium_error);
         progressBar = inflate.findViewById(R.id.progress_bar3);
        // error = inflate.findViewById(R.id.terrariumError);
         floatingActionButton = inflate.findViewById(R.id.fab);
 //      progressBar.setVisibility(View.GONE);
-
+          error.setVisibility(View.GONE);
         recyclerView = inflate.findViewById(R.id.rv_home);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflate.getContext()));
         recyclerView.hasFixedSize();
@@ -120,7 +123,7 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
 
 
 
-            homeFragmentViewModel.getTerrariumLiveData("jack").observe(getViewLifecycleOwner(), new Observer<List<Terrarium>>() {
+            homeFragmentViewModel.getTerrariumLiveData(firebaseUser.getUid()).observe(getViewLifecycleOwner(), new Observer<List<Terrarium>>() {
                 @Override
                 public void onChanged(List<Terrarium> terrariums) {
                     if (terrariums != null && !terrariums.isEmpty()) {
@@ -129,12 +132,26 @@ public class HomeFragment extends Fragment implements OnListItemClickListener {
                         HomeFragment.this.terrariums.addAll(terrariums);
                         terrariums.clear();
                         terrariumAdapter.notifyDataSetChanged();
+                        Handler handler = new Handler(Looper.getMainLooper());
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (terrariums != null && !terrariums.isEmpty()){
+                                    error.setVisibility(View.VISIBLE);
+                                }
+
+
+                            }
+                        },500);
+
 
 
 
                     } else {
 //                        error.setVisibility(View.VISIBLE);
 //                        error.setText("Can not find any Terrarium");
+
                         Log.e("Viewmodel-Terrarium", "terrariumV2s.toString()");
                     }
 

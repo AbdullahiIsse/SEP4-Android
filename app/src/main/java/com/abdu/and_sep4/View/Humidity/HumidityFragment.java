@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,8 @@ import com.abdu.and_sep4.Shared.HumidityMeasurement;
 import com.abdu.and_sep4.Shared.SaveInfo;
 import com.abdu.and_sep4.Shared.Terrarium;
 import com.abdu.and_sep4.View.Adapter.HumiditySparkAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.robinhood.spark.SparkView;
 
 import java.util.ArrayList;
@@ -41,6 +45,9 @@ public class HumidityFragment extends Fragment {
     private HumidityFragmentViewModel viewModel;
     private ProgressBar progressBar;
 
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+
 
 
     @Override
@@ -48,6 +55,8 @@ public class HumidityFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         inflate = inflater.inflate(R.layout.fragment_humidity, container, false);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         terrariumName = inflate.findViewById(R.id.tv_terrarium_name);
         terrariumCurrentTemp = inflate.findViewById(R.id.tv_current_temp);
         textViewDate = inflate.findViewById(R.id.tv_date);
@@ -60,7 +69,7 @@ public class HumidityFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(HumidityFragmentViewModel.class);
 
 
-        viewModel.getHum("jack",SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<HumidityMeasurement>>() {
+        viewModel.getHum(firebaseUser.getUid(),SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<HumidityMeasurement>>() {
             @Override
             public void onChanged(List<HumidityMeasurement> humidityMeasurements) {
                 progressBar.setVisibility(View.GONE);
@@ -98,10 +107,22 @@ public class HumidityFragment extends Fragment {
         if (!dailyData.isEmpty()) {
             updateInfoForDate(dailyData.get(dailyData.size() - 1));
         } else {
+            Handler handler = new Handler(Looper.getMainLooper());
 
-            terrariumCurrentTemp.setText("temperature is not available for terrarium");
-            textViewDate.setText("");
-            terrariumTemp.setText("");
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (dailyData.isEmpty()){
+                        textViewDate.setText("humidity not available");
+                        terrariumTemp.setText("");
+                        terrariumCurrentTemp.setText("");
+                    }
+
+
+                }
+            },500);
+
+
         }
 
     }
