@@ -22,7 +22,7 @@ public class MeasurementWebOrLocaleRepositoryImpl implements MeasurementWebOrLoc
     private final MeasurementsRepositoryImpl measurementsRepositoryImpl;
     private Application application;
 
-    public MeasurementWebOrLocaleRepositoryImpl(Application application) {
+    private MeasurementWebOrLocaleRepositoryImpl(Application application) {
         measurementRepositoryOfflineImpl = MeasurementRepositoryOfflineImpl.getInstance(application);
         measurementsRepositoryImpl = MeasurementsRepositoryImpl.getInstance(application);
         this.application = application;

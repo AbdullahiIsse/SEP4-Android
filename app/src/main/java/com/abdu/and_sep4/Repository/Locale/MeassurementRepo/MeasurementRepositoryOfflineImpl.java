@@ -21,7 +21,7 @@ public class MeasurementRepositoryOfflineImpl implements MeasurementRepositoryOf
     private final ExecutorService executorService;
 
 
-    public MeasurementRepositoryOfflineImpl(Application application) {
+    private MeasurementRepositoryOfflineImpl(Application application) {
         TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
         measurementDao = terrariumDatabase.measurementDao();
         executorService = Executors.newFixedThreadPool(2);

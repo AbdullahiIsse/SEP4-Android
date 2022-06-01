@@ -34,7 +34,7 @@ public class MeasurementsRepositoryImpl implements MeasurementsRepository {
     private final ExecutorService executorService;
 
 
-    public MeasurementsRepositoryImpl(Application application) {
+    private MeasurementsRepositoryImpl(Application application) {
         TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
         measurementDao = terrariumDatabase.measurementDao();
         temperatureMeasurementMutableLiveData = new MutableLiveData<>();

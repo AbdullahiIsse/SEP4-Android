@@ -23,7 +23,7 @@ public class UserRepositoryImpl implements UserRepository  {
     private final MutableLiveData<User> addUserMutableLiveData;
 
 
-    public UserRepositoryImpl() {
+    private UserRepositoryImpl() {
         userMutableLiveData = new MutableLiveData<>();
         addUserMutableLiveData = new MutableLiveData<>();
 

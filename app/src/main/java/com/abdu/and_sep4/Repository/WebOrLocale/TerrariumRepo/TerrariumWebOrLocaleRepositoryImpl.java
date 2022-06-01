@@ -20,7 +20,7 @@ public class TerrariumWebOrLocaleRepositoryImpl implements TerrariumWebOrLocaleR
     private final TerrariumRepositoryImpl terrariumRepositoryImpl;
     private Application application;
 
-    public TerrariumWebOrLocaleRepositoryImpl(Application application) {
+    private TerrariumWebOrLocaleRepositoryImpl(Application application) {
         terrariumRepositoryOfflineImpl = TerrariumRepositoryOfflineImpl.getInstance(application);
         terrariumRepositoryImpl = TerrariumRepositoryImpl.getInstance(application);
         this.application = application;

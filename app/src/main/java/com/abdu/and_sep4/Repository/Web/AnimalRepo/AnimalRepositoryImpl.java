@@ -34,7 +34,7 @@ public class AnimalRepositoryImpl implements AnimalRepository {
     private final ExecutorService executorService;
 
 
-    public AnimalRepositoryImpl(Application application) {
+    private AnimalRepositoryImpl(Application application) {
         TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
         animalDao = terrariumDatabase.animalDao();
         addAnimalMutableLiveData = new MutableLiveData<>();

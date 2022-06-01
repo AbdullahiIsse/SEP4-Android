@@ -35,7 +35,7 @@ public class TerrariumRepositoryImpl implements TerrariumRepository {
     private final SignalRApi signalRApii;
 
 
-    public TerrariumRepositoryImpl(Application application) {
+    private TerrariumRepositoryImpl(Application application) {
         TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
         terrariumDao = terrariumDatabase.terrariumDao();
         terrariumListMutableLiveData = new MutableLiveData<>();

@@ -18,7 +18,7 @@ public class TerrariumRepositoryOfflineImpl implements TerrariumRepositoryOfflin
     private static TerrariumRepositoryOfflineImpl instance;
     private final ExecutorService executorService;
 
-    public TerrariumRepositoryOfflineImpl(Application application) {
+    private TerrariumRepositoryOfflineImpl(Application application) {
         TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
         terrariumDao = terrariumDatabase.terrariumDao();
         executorService = Executors.newFixedThreadPool(2);

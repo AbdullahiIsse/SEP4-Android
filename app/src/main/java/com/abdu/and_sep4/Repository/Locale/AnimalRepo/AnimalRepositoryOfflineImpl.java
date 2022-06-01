@@ -19,7 +19,7 @@ public class AnimalRepositoryOfflineImpl implements AnimalRepositoryOffline {
     private final ExecutorService executorService;
 
 
-    public AnimalRepositoryOfflineImpl(Application application) {
+    private AnimalRepositoryOfflineImpl(Application application) {
         TerrariumDatabase terrariumDatabase = TerrariumDatabase.getInstance(application);
         animalDao = terrariumDatabase.animalDao();
         executorService = Executors.newFixedThreadPool(2);

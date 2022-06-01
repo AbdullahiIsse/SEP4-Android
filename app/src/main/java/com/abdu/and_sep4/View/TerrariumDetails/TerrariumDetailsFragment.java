@@ -130,7 +130,8 @@ public class TerrariumDetailsFragment extends Fragment {
         });
 
 
-        viewModel.getTemperatureByUserIdAndEuiLiveData(firebaseUser.getUid(), SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<TemperatureMeasurement>>() {
+        viewModel.getTemperatureByUserIdAndEuiLiveData(firebaseUser.getUid(),
+                SaveInfo.getInstance().getTerrarium().getEui()).observe(getViewLifecycleOwner(), new Observer<List<TemperatureMeasurement>>() {
             @Override
             public void onChanged(List<TemperatureMeasurement> temperatureMeasurements) {
                 progressBar.setVisibility(View.GONE);
@@ -150,7 +151,6 @@ public class TerrariumDetailsFragment extends Fragment {
                 Log.e("Viewmodel-temp", temperatureMeasurements.toString());
             }
         });
-
 
         notifyMe.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)

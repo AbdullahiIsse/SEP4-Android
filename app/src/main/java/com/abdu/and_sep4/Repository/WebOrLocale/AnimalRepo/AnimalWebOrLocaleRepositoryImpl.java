@@ -21,7 +21,7 @@ public class AnimalWebOrLocaleRepositoryImpl implements AnimalWebOrLocaleReposit
     private final AnimalRepositoryImpl animalRepositoryImpl;
     private Application application;
 
-    public AnimalWebOrLocaleRepositoryImpl(Application application) {
+    private AnimalWebOrLocaleRepositoryImpl(Application application) {
         animalRepositoryOfflineImpl = AnimalRepositoryOfflineImpl.getInstance(application);
         animalRepositoryImpl = AnimalRepositoryImpl.getInstance(application);
         this.application = application;
