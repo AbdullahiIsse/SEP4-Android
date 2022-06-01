@@ -109,7 +109,6 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                        //    User user = new User(FirebaseAuth.getInstance().getCurrentUser().getUid(), name, email);
                             User user1 = new User(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             signUpActivityViewModel.addUser(user1);
                         } else {

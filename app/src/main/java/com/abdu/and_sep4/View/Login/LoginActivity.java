@@ -93,9 +93,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_LONG).show();
         }
-
-
-
     }
 
     public boolean ifNetworkIsAvailable() {

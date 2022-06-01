@@ -36,6 +36,35 @@
 
 # Screenshots
 
+### SignUp:
+![app/SignUp.png](app/SignUp.png)
+
 ### Login:
 ![app/Login.png](app/Login.png)
 
+### AddTerrarium:
+![app/AddTerrarium.png](app/AddTerrarium.png)
+
+### TerrariumList:
+![app/TerrariumList.png](app/TerrariumList.png)
+
+### EditTerrarium:
+![app/EditTerrarium.png](app/EditTerrarium.png)
+
+### DataVisualisation:
+![app/DataVisualisation.png](app/DataVisualisation.png)
+
+### AddAnimal:
+![app/AddAnimal.png](app/AddAnimal.png)
+
+### AnimalList:
+![app/AnimalList.png](app/AnimalList.png)
+
+### UpdatePet:
+![app/UpdatePet.png](app/UpdatePet.png)
+
+### FeedPet:
+![app/FeedPet.png](app/FeedPet.png)
+
+### Setting:
+![app/Setting.png](app/Setting.png)
