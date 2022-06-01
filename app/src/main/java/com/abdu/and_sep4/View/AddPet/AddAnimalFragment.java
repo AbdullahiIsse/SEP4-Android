@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -94,6 +95,7 @@ public class AddAnimalFragment extends Fragment {
         addPetVM.addAnimal(animal);
 
         Toast.makeText(getContext(),"Pet has been added",Toast.LENGTH_SHORT).show();
+        Navigation.findNavController(inflate).navigate(R.id.action_AddPetFragments_to_animalListFragment);
 
     }
 

@@ -106,7 +106,7 @@ public class AddTerrariumFragment extends Fragment {
 
         addTerrariumFragmentViewModel.addTerrariumToDb(terrarium);
         Toast.makeText(getContext(),"Terrarium has been added",Toast.LENGTH_SHORT).show();
-
+        Navigation.findNavController(inflate).navigate(R.id.action_addTerrariumFragment_to_homeFragment);
 
 
     }
