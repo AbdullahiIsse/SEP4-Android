@@ -1,5 +1,9 @@
 # TerraEyes
 
+Demonstration of app:
+https://www.youtube.com/watch?v=Z2ItRI6-z3M
+
+
 ### Requirements
 
 - [x] Som bruger vil jeg aflæse temperaturen i terrariet, så jeg kan se den seneste aflæste temperatur.
